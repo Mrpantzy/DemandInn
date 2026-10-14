@@ -59,6 +59,76 @@ code{background:var(--cream);padding:1px 5px;border-radius:5px;font-size:.92em}
 @media (max-width:1023px){.app-full{display:flex;flex-direction:column}.app-full .app-side{flex:none}.app-full .app-main{flex:1;min-height:0}.app-full .app-body{max-height:none}.side-sep,.side-back span{display:none}.side-back{order:2}}
 </style>
 <style>
+/* Demand: covers cards */
+.cov-num{font-family:var(--f-display);font-weight:600;font-size:56px;line-height:1;color:var(--forest);margin-top:12px;letter-spacing:-.02em}
+.cov-range{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.cov-split{display:flex;flex-wrap:wrap;gap:10px 22px;margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.cov-split dt{font-size:12.5px;color:var(--muted)}
+.cov-split dd{margin:0;font-size:20px;font-weight:600;color:var(--ink)}
+
+/* Demand: floor plan */
+.floor{position:relative;min-width:720px;max-width:1100px;margin:0 auto;aspect-ratio:16/9.4}
+.fz{position:absolute;border:1.5px solid var(--sage2);border-radius:14px;background:var(--cream)}
+.fz.out{border-style:dashed;background:transparent}
+.fz.closed{opacity:.5}
+.fz-l{position:absolute;left:12px;top:8px;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.ft{position:absolute;transform:translate(-50%,-50%);width:70px;height:68px;border-radius:10px;border:1.5px solid var(--sage2);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;font-size:11px;color:var(--muted)}
+.ft.s4{width:92px}.ft.s6{width:140px}
+.ft.round{border-radius:50%;width:68px}.ft.round.s4{width:84px;height:84px}
+.ft.counter{width:150px;height:46px;border-radius:24px}
+.ft b{font-size:20px;color:var(--ink);font-weight:700}
+.ft.hotel{background:var(--forest);border-color:var(--forest);color:var(--on-dark-muted)}.ft.hotel b{color:#fff}
+.ft.walk{background:var(--amber-pale);border-color:var(--amber-d);color:var(--amber-ink)}.ft.walk b{color:var(--amber-ink)}
+.ft.event{background:#5e8a75;border-color:#5e8a75;color:#e6f0ea}.ft.event b{color:#fff}
+.ft.off{opacity:.45}
+
+/* Team: staff calendar */
+.rc-wrap{overflow-x:auto}
+.rc{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
+.rc th,.rc td{border-bottom:1px solid var(--line);padding:0}
+.rc thead th{background:var(--surface);font-weight:600;font-size:12px;color:var(--muted);text-align:center;padding:8px 2px 6px;text-transform:uppercase;letter-spacing:.04em}
+.rc thead th b{display:block;font-size:15px;color:var(--ink);letter-spacing:0}
+.rc .rc-name{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;padding:8px 12px;min-width:176px;border-right:1px solid var(--line);text-transform:none;letter-spacing:0}
+.rc .rc-name b{display:block;font-size:14.5px;color:var(--ink);font-weight:600}
+.rc .rc-name span{display:block;font-size:12.5px;color:var(--muted);font-weight:400}
+.rc thead .rc-name{font-size:12px;color:var(--muted)}
+.rc-group th.rc-name,.rc-group td{background:var(--cream)}
+.rc-group th.rc-name{font-family:var(--f-display);font-size:16px;color:var(--forest);font-weight:600;padding:9px 12px 7px}
+.rc-group th.rc-name span{display:inline;font-family:var(--f-body);font-size:12.5px;margin-left:6px}
+.rc td.rc-cell{padding:3px 2px;text-align:center;min-width:34px}
+.rc.week td.rc-cell{min-width:112px;padding:4px}
+.rc.month td.rc-cell{min-width:28px}
+.rc.month .rc-name{min-width:150px}
+.rc.month .rc-sh{font-size:12px;min-height:30px}
+.rc .wknd{background:hsla(42,30%,88%,.45)}
+.rc thead th.today b{background:var(--forest);color:var(--on-dark);border-radius:999px;width:28px;height:28px;line-height:28px;margin:2px auto 0}
+.rc td.today{box-shadow:inset 1.5px 0 0 var(--amber-d),inset -1.5px 0 0 var(--amber-d)}
+.rc-sh{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:32px;border-radius:7px;border:0;font:inherit;font-weight:700;font-size:13px;line-height:1.15;padding:0 2px;box-sizing:border-box}
+button.rc-sh{cursor:pointer}
+button.rc-sh:hover{filter:brightness(.95)}
+.rc.week .rc-sh{min-height:46px}
+.rc-sh small{font-weight:500;font-size:11.5px;opacity:.85}
+.rc-A{background:var(--amber-pale);color:var(--amber-ink)}
+.rc-P{background:var(--forest);color:var(--on-dark)}
+.rc-off{background:transparent;color:var(--edge);font-weight:500}
+.rc.week .rc-off{border:1px dashed var(--line)}
+.past .rc-sh{opacity:.4}
+.rc-req{outline:2px dashed var(--urgent);outline-offset:-2px}
+.rc .rc-hrs{padding:6px 12px;white-space:nowrap;text-align:left;font-size:13.5px;min-width:96px;text-transform:none;letter-spacing:0}
+.rc tfoot th,.rc tfoot td{background:var(--surface);font-size:13.5px;padding:8px 2px;text-align:center;font-weight:700;border-bottom:0;border-top:1.5px solid var(--forest)}
+.rc tfoot th.rc-name{text-align:left;padding-left:12px}
+.rc tfoot td.gap{background:var(--amber-pale);color:var(--amber-ink)}
+.rc .gapdot{display:block;width:7px;height:7px;border-radius:50%;background:var(--amber-d);margin:3px auto 0}
+.rc-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--muted)}
+.rc-legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.rc-legend .lg-free{border:1.5px solid var(--sage2);background:#fff}
+.rc-legend .lg-req{outline:2px dashed var(--urgent);outline-offset:-2px}
+.rc-legend .lg-gap{background:var(--amber-pale);border:1.5px solid var(--amber-d)}
+.rc-legend .lg-hotel{background:var(--forest)}
+.rc-legend .lg-walk{background:var(--amber-pale);border:1.5px solid var(--amber-d)}
+.rc-legend .lg-event{background:#5e8a75}
+</style>
+<style>
 /* ---------- Landing page (scoped to .lp, the demo app is untouched) ---------- */
 .lp .card,.lp .rounded-\[16px\],.lp .rounded-\[20px\]{border-radius:14px}
 .lp .paper{background-color:var(--cream);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .14 0 0 0 0 .22 0 0 0 0 .18 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -1677,10 +1747,9 @@ function TeamScreen({ intent }) {
           <h3 className="font-serif text-[22px] text-head mt-0 mb-1">Expected guests, ${dowName(date)}</h3>
           <p className="mt-0 mb-4 text-muted text-[15px]">Hotel guests staying with you, and walk-ins from outside.</p>
           <ul className="list-none p-0 m-0 grid grid-cols-2 gap-3 mb-5">
-            ${MEALS.map((m) => { const x = f.meals[m]; const hp = x.covers ? Math.round((x.hotel / x.covers) * 100) : 0; return html`
+            ${MEALS.map((m) => { const x = f.meals[m]; return html`
               <li key=${m} className="rounded-xl bg-cream p-3">
                 <div className="flex items-baseline justify-between"><span className="text-[15px] text-muted">${MEAL_LABEL[m]}</span><span className="font-serif text-[26px] text-head leading-none">${x.covers}</span></div>
-                <div className="flex h-2.5 rounded-full overflow-hidden mt-2.5 bg-surface" aria-hidden="true"><div className="bg-forest" style=${{ width: hp + "%" }}></div><div className="bar-hatch" style=${{ width: 100 - hp + "%" }}></div></div>
                 <div className="flex justify-between text-[13px] mt-1.5"><span>Hotel ${x.hotel}</span><span>Walk-in ${x.walkIn}</span></div>
               </li>`; })}
           </ul>
@@ -1708,26 +1777,8 @@ function TeamScreen({ intent }) {
         ${sug && html`<div className="mt-3 rounded-[14px] bg-sage p-4 flex flex-wrap items-center justify-between gap-3"><p className="m-0 text-[16px] flex gap-3 items-start"><${Icon} name="clipboard" size=${22} cls="mt-0.5 text-head" />Busier days also need more stock. There is a suggested order from ${sug.supplier.name.toLowerCase()} for ${dowName(sug.needed)}.</p><button type="button" className="btn btn-secondary" onClick=${() => nav.openPanel("order", sug.id)}>See the suggestion</button></div>`}
       <//>
 
-      <${Section} title="Weekly rota" right=${html`<span className="text-sm text-muted">Labour is about ${Math.round((cost / rev) * 100)}% of expected revenue this week. For information only.</span>`}>
-        <div className="card overflow-x-auto" tabIndex="0" role="region" aria-label="Weekly rota, scrolls sideways on small screens">
-          <table className="tbl w-full min-w-[1000px]">
-            <thead><tr><th>Team member</th>${days.map((d) => html`<th key=${dayKey(d)}>${dowShort(d)} ${d.getDate()}</th>`)}<th>Hours</th></tr></thead>
-            <tbody>
-              ${EMPLOYEES.map((e) => {
-                const hrs = weekHours(rota, e);
-                const clash = e.off.filter((o) => rota[e.id][o.dow] !== "-");
-                return html`<tr key=${e.id}>
-                  <th scope="row" className="text-left"><span className="block font-semibold">${e.name}</span><span className="block text-sm text-muted font-normal">${e.title}</span></th>
-                  ${days.map((d) => html`<td key=${dayKey(d)}><select aria-label=${`${e.name}, ${dowName(d)}`} className=${cls("field shift-select", "sh-" + (rota[e.id][d.getDay()] === "-" ? "off" : rota[e.id][d.getDay()]))} value=${rota[e.id][d.getDay()]} onChange=${(ev) => S.setShift(e.id, d.getDay(), ev.target.value)}><option value="-">Off</option><option value="A">Morning</option><option value="P">Evening</option></select></td>`)}
-                  <td className="whitespace-nowrap"><span className="font-semibold">${hrs}</span> of ${e.contract}
-                    ${hrs > e.contract && html`<div className="mt-1"><${Chip} tone="amber" icon="info">Check hours<//></div>`}
-                    ${clash.map((o) => html`<div key=${o.dow} className="mt-1"><${Chip} tone="amber" icon="info">Check hours: time off ${DOW_NAMES[o.dow].slice(0, 3)}<//></div>`)}
-                  </td></tr>`;
-              })}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-sm text-muted mt-2 mb-0">Morning is 06:30 to 14:30 (breakfast and lunch). Evening is 15:00 to 23:00 (dinner and bar). Change any shift from the list.</p>
+      <${Section} title="Staff calendar" right=${html`<span className="text-sm text-muted">Labour is about ${Math.round((cost / rev) * 100)}% of expected revenue this week. For information only.</span>`}>
+        <${RotaCalendar} rota=${rota} onShift=${S.setShift} gaps=${tg.gaps} />
       <//>
 
       <${Section} title="Your team">
@@ -2154,7 +2205,6 @@ function TodayScreen() {
               <li key=${mm}>
                 <div className="flex items-baseline justify-between gap-3"><span className="text-[15px]">${MEAL_LABEL[mm]}</span>
                   <span className="tnum"><span className="font-serif text-[24px] text-head">${x.covers}</span> <span className="text-[13px] text-muted">likely ${x.p10} to ${x.p90}</span>${Math.abs(vn) >= 0.08 && html` <span className=${cls("chip ml-1", vn > 0 ? "chip-amber" : "chip-info")}>${vn > 0 ? "+" : "−"}${Math.round(Math.abs(vn) * 100)}% vs normal</span>`}</span></div>
-                <div className="mt-1.5"><${RangeBar} lo=${x.p10} mid=${x.covers} hi=${x.p90} max=${Math.max(...MEALS.map((q) => f.meals[q].p90)) * 1.05} /></div>
               </li>`; })}
           </ul>
           <button type="button" className="btn btn-quiet btn-sm !px-0 mt-3" onClick=${() => nav.go("demand", { dateOff: focus })}>Covers, menu and ingredients<${Icon} name="arrow" size=${16} /></button>
@@ -2215,14 +2265,19 @@ function CoversTab({ f, d, dateOff }) {
   const sc = useMemo(() => scenario(d, wm, { extraCovers: extra }), [d, wm, extra]);
   const diffs = PRODUCTS.map((p) => { const a = (sc.ingNew.byIng[p.id] || { p50: 0 }).p50, b = (sc.ingBase.byIng[p.id] || { p50: 0 }).p50; return { p, a, b, dv: a - b }; }).filter((x) => Math.abs(x.dv) > 0.05).sort((x, y) => y.dv * y.p.price - x.dv * x.p.price).slice(0, 5);
   return html`<div className="grid gap-5">
-    <div className="grid md:grid-cols-2 gap-4">
-      ${MEALS.map((m) => { const x = f.meals[m]; const vn = vsNormal(f, m); const tot = Math.max(1, x.covers); return html`
-        <article key=${m} className="card p-5">
-          <div className="flex items-start justify-between gap-3"><div><h4 className="m-0 font-serif text-[19px] text-head">${MEAL_LABEL[m]}</h4><p className="m-0 text-[13.5px] text-muted">likely ${x.p10} to ${x.p90}, best estimate ${x.covers}</p></div><div className="font-serif text-[40px] leading-none text-head tnum">${x.covers}</div></div>
-          <div className="mt-3"><${RangeBar} lo=${x.p10} mid=${x.covers} hi=${x.p90} /></div>
-          <div className="flex h-3 rounded-full overflow-hidden mt-4" aria-hidden="true"><div className="bar-fill" style=${{ width: (x.hotel - x.eventCovers) / tot * 100 + "%" }}></div><div className="bg-[#7aa28f]" style=${{ width: x.eventCovers / tot * 100 + "%" }}></div><div className="bar-hatch" style=${{ width: x.walkIn / tot * 100 + "%" }}></div></div>
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-[13.5px] mt-2 tnum"><span>Hotel guests ${Math.max(0, x.hotel - x.eventCovers)}</span>${x.eventCovers > 0 && html`<span>Booked event ${x.eventCovers}</span>`}<span>Walk-ins ${x.walkIn}</span>${x.roomService > 0 && html`<span>Room service about ${x.roomService}</span>`}</div>
-          ${Math.abs(vn) >= 0.05 && html`<p className="mt-2 mb-0 text-[14px]"><span className=${cls("chip", vn > 0 ? "chip-amber" : "chip-info")}>${vn > 0 ? "+" : "−"}${Math.round(Math.abs(vn) * 100)}% vs a normal ${dowName(d)}</span></p>`}
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      ${MEALS.map((m) => { const x = f.meals[m]; const vn = vsNormal(f, m); return html`
+        <article key=${m} className="card p-5 cov-card">
+          <div className="flex items-center justify-between gap-2"><h4 className="m-0 font-serif text-[19px] text-head">${MEAL_LABEL[m]}</h4>
+            ${Math.abs(vn) >= 0.05 && html`<span className=${cls("chip", vn > 0 ? "chip-amber" : "chip-info")} title=${`Compared with a normal ${dowName(d)}`}>${vn > 0 ? "+" : "−"}${Math.round(Math.abs(vn) * 100)}% vs usual</span>`}</div>
+          <div className="cov-num tnum">${x.covers}</div>
+          <p className="cov-range tnum">likely ${x.p10} to ${x.p90}</p>
+          <dl className="cov-split tnum">
+            <div><dt>Hotel guests</dt><dd>${Math.max(0, x.hotel - x.eventCovers)}</dd></div>
+            ${x.eventCovers > 0 && html`<div><dt>Event</dt><dd>${x.eventCovers}</dd></div>`}
+            <div><dt>Walk-ins</dt><dd>${x.walkIn}</dd></div>
+            ${x.roomService > 0 && html`<div><dt>Room service</dt><dd>${x.roomService}</dd></div>`}
+          </dl>
         </article>`; })}
     </div>
 
@@ -2309,12 +2364,144 @@ function IngredientsTab({ d }) {
   </div>`;
 }
 
+/* ---------- Floor plan: where tomorrow's guests will sit ---------- */
+const FLOOR_ZONES = [
+  { id: "dining", label: "Dining room", box: [1.5, 3, 62.5, 94] },
+  { id: "bar", label: "Bar", box: [67, 3, 31.5, 36] },
+  { id: "terrace", label: "Terrace", box: [67, 43, 31.5, 54], outdoor: true },
+];
+const FLOOR_TABLES = [
+  { n: 1, z: "dining", s: 2, x: 10, y: 22 }, { n: 2, z: "dining", s: 2, x: 23, y: 22 }, { n: 3, z: "dining", s: 4, x: 38, y: 22 }, { n: 4, z: "dining", s: 4, x: 54, y: 22 },
+  { n: 5, z: "dining", s: 6, x: 14, y: 52 }, { n: 6, z: "dining", s: 4, x: 33, y: 52 }, { n: 7, z: "dining", s: 2, x: 46, y: 52 }, { n: 8, z: "dining", s: 2, x: 57, y: 52 },
+  { n: 9, z: "dining", s: 2, x: 10, y: 82 }, { n: 10, z: "dining", s: 2, x: 22, y: 82 }, { n: 11, z: "dining", s: 6, x: 38, y: 82 }, { n: 12, z: "dining", s: 4, x: 55, y: 82 },
+  { n: 20, z: "bar", s: 6, x: 82.5, y: 17, counter: true }, { n: 21, z: "bar", s: 2, x: 73, y: 31 }, { n: 22, z: "bar", s: 2, x: 82.5, y: 31 }, { n: 23, z: "bar", s: 2, x: 92, y: 31 },
+  { n: 30, z: "terrace", s: 2, x: 74, y: 57, round: true }, { n: 31, z: "terrace", s: 2, x: 91, y: 57, round: true }, { n: 32, z: "terrace", s: 4, x: 74, y: 74, round: true },
+  { n: 33, z: "terrace", s: 4, x: 91, y: 74, round: true }, { n: 34, z: "terrace", s: 2, x: 74, y: 90, round: true }, { n: 35, z: "terrace", s: 2, x: 91, y: 90, round: true },
+];
+// Share of a service's covers seated at the same time, at its busiest moment
+const FLOOR_PEAK = { breakfast: { share: 0.45, at: "08:30" }, lunch: { share: 0.8, at: "13:00" }, dinner: { share: 0.75, at: "20:00" }, bar: { share: 0.6, at: "21:30" } };
+function terraceFor(f, m) {
+  const w = f.weather || {};
+  const fair = w.kind === "sunny" || w.kind === "partly";
+  const warm = (w.hi || 0) >= 18;
+  const open = fair && (m === "breakfast" || m === "lunch" || warm);
+  return { open, why: open ? `${w.label || "Fair"}, ${w.hi}°` : !fair ? `${w.label || "Weather"} expected` : `Too cool in the evening (${w.hi}° by day)` };
+}
+function floorPlan(f, m) {
+  const x = f.meals[m], pk = FLOOR_PEAK[m], ter = terraceFor(f, m);
+  const ev = m === "bar" ? 0 : x.eventCovers || 0, rs = x.roomService || 0;
+  const parties = [];
+  for (let r = ev; r > 0; r -= 6) parties.push({ size: Math.min(6, r), kind: "event" });
+  for (let r = Math.round(Math.max(0, x.hotel - ev - rs) * pk.share); r > 0;) { const n = r === 3 ? 3 : Math.min(2, r); parties.push({ size: n, kind: "hotel" }); r -= n; }
+  const cyc = [2, 4, 2, 3];
+  for (let r = Math.round(x.walkIn * pk.share), i = 0; r > 0; i++) { const n = Math.min(cyc[i % 4], r); parties.push({ size: n, kind: "walk" }); r -= n; }
+  const zones = [m === "bar" ? "bar" : "dining", ...(ter.open ? ["terrace"] : [])];
+  const tables = FLOOR_TABLES.filter((t) => zones.includes(t.z));
+  const seat = {};
+  let waiting = 0;
+  parties.sort((a, b) => (b.kind === "event") - (a.kind === "event") || b.size - a.size);
+  parties.forEach((p) => {
+    const t = tables.filter((t) => !seat[t.n] && t.s >= p.size).sort((a, b) => a.s - b.s || zones.indexOf(a.z) - zones.indexOf(b.z))[0];
+    if (t) seat[t.n] = p; else waiting += p.size;
+  });
+  const seated = Object.values(seat).reduce((a, p) => a + p.size, 0);
+  const seats = tables.reduce((a, t) => a + t.s, 0);
+  return { seat, zones, ter, waiting, seated, used: Object.keys(seat).length, tables: tables.length, seats, rs, at: pk.at };
+}
+function FloorTab({ f, d }) {
+  const [m, setM] = useState("dinner");
+  const fp = useMemo(() => floorPlan(f, m), [f, m]);
+  const kindLabel = { hotel: "hotel guests", walk: "walk-ins", event: "event group" };
+  return html`<div className="grid gap-4">
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="seg" role="group" aria-label="Service">${MEALS.map((k) => html`<button key=${k} type="button" aria-pressed=${m === k} onClick=${() => setM(k)} className=${cls("seg-btn", m === k && "on")}>${MEAL_LABEL[k]}</button>`)}</div>
+      <p className="m-0 text-[14px] text-muted">${dowName(d)}, busiest moment around ${fp.at}</p>
+    </div>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <${MetricTile} icon="users" label="Seated at once" value=${fp.seated} sub=${`of ${f.meals[m].covers} covers in the service`} />
+      <${MetricTile} icon="plate" label="Tables in use" value=${`${fp.used} of ${fp.tables}`} sub=${`${fp.seats - fp.seated} seats free`} />
+      <${MetricTile} icon="sun" label="Terrace" value=${fp.ter.open ? "Open" : "Closed"} sub=${fp.ter.why} />
+      <${MetricTile} icon="home" label="Room service" value=${fp.rs} sub=${fp.rs ? "orders, not on the floor" : "none expected"} />
+    </div>
+    ${fp.waiting > 0 && html`<div className="rounded-[14px] p-3.5 text-[15px] flex gap-2.5 items-center" style=${{ background: "var(--amber-pale)", color: "var(--amber-ink)" }}><${Icon} name="info" size=${20} />About ${fp.waiting} ${plural(fp.waiting, "guest")} may wait for a table at ${fp.at}. A second seating or the terrace would help.</div>`}
+    <div className="card p-3 overflow-x-auto" tabIndex="0" role="region" aria-label="Floor plan, scrolls sideways on small screens">
+      <div className="floor" role="img" aria-label=${`Floor plan for ${MEAL_LABEL[m].toLowerCase()} at ${fp.at}: ${fp.seated} guests at ${fp.used} of ${fp.tables} tables.`}>
+        ${FLOOR_ZONES.map((z) => { const live = fp.zones.includes(z.id); const [l, t, w, h] = z.box; return html`<div key=${z.id} className=${cls("fz", z.outdoor && "out", !live && "closed")} style=${{ left: l + "%", top: t + "%", width: w + "%", height: h + "%" }}><span className="fz-l">${z.label}${!live ? (z.id === "terrace" ? " · closed" : " · not used") : ""}</span></div>`; })}
+        ${FLOOR_TABLES.map((t) => { const p = fp.seat[t.n]; const live = fp.zones.includes(t.z); return html`<div key=${t.n} className=${cls("ft", "s" + t.s, t.round && "round", t.counter && "counter", p && p.kind, !live && "off")} style=${{ left: t.x + "%", top: t.y + "%" }} title=${p ? `Table ${t.n}: ${p.size} ${kindLabel[p.kind]}, ${t.s} seats` : `Table ${t.n}: free, ${t.s} seats`}>
+          <span>${t.counter ? "Counter" : "T" + t.n}</span><b className="tnum">${p ? p.size : "–"}</b><span className="tnum">${p ? "of " + t.s : t.s + " seats"}</span></div>`; })}
+      </div>
+    </div>
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="rc-legend"><span><i className="lg-hotel"></i>Hotel guests</span><span><i className="lg-walk"></i>Walk-ins</span>${fp.seat && Object.values(fp.seat).some((p) => p.kind === "event") && html`<span><i className="lg-event"></i>Event group</span>`}<span><i className="lg-free"></i>Free table</span></div>
+      <${SimTag} text="Simulated seating from the forecast" />
+    </div>
+  </div>`;
+}
+
+/* ---------- Staff calendar, week or month, grouped by profile ---------- */
+const PROFILES = [["management", "Management"], ["kitchen", "Kitchen"], ["floor", "Floor"], ["bar", "Bar"], ["breakfast", "Breakfast"]];
+const profileOf = (e) => (e.title === "F&B manager" ? "management" : e.role);
+const NEXT_SHIFT = { "-": "A", A: "P", P: "-" };
+function RotaCalendar({ rota, onShift, gaps }) {
+  const [view, setView] = useState("week");
+  const [k, setK] = useState(0);
+  const first = view === "month" ? new Date(TODAY.getFullYear(), TODAY.getMonth() + k, 1) : addDays(TODAY, k * 7);
+  const days = view === "month"
+    ? Array.from({ length: new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate() }, (_, i) => new Date(first.getFullYear(), first.getMonth(), i + 1))
+    : Array.from({ length: 7 }, (_, i) => addDays(first, i));
+  const title = view === "month" ? fmtDate(first, { month: "long", year: "numeric" }) : `${fmtDate(days[0], { day: "numeric", month: "short" })} to ${fmtDate(days[6], { day: "numeric", month: "short" })}`;
+  const gapDays = new Set(gaps.map((g) => dayKey(g.date)));
+  const isToday = (d) => dayKey(d) === dayKey(TODAY);
+  const reqOn = (e, d) => off(d) >= 0 && off(d) <= 6 && e.off.find((o) => o.dow === d.getDay());
+  const week = view === "week";
+  const hoursIn = (e) => days.reduce((a, d) => a + SHIFTS[rota[e.id][d.getDay()]].hours, 0);
+  const switchView = (v) => { setView(v); setK(0); };
+  return html`<div className="grid gap-3">
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="seg" role="group" aria-label="Calendar view">${[["week", "Week"], ["month", "Month"]].map(([v, l]) => html`<button key=${v} type="button" aria-pressed=${view === v} onClick=${() => switchView(v)} className=${cls("seg-btn", view === v && "on")}>${l}</button>`)}</div>
+        <button type="button" className="btn btn-secondary btn-sm !px-3" aria-label=${week ? "Previous week" : "Previous month"} onClick=${() => setK(k - 1)}><${Icon} name="arrow" size=${16} cls="rotate-180" /></button>
+        <button type="button" className="btn btn-secondary btn-sm !px-3" aria-label=${week ? "Next week" : "Next month"} onClick=${() => setK(k + 1)}><${Icon} name="arrow" size=${16} /></button>
+        ${k !== 0 && html`<button type="button" className="btn btn-quiet btn-sm" onClick=${() => setK(0)}>Today</button>`}
+        <b className="font-serif text-[20px] text-head ml-1" aria-live="polite">${title}</b>
+      </div>
+      <div className="rc-legend"><span><i className="rc-A"></i>Morning 06:30–14:30</span><span><i className="rc-P"></i>Evening 15:00–23:00</span><span><i className="lg-free"></i>Off</span><span><i className="lg-req"></i>Time off requested</span><span><i className="lg-gap"></i>Short-staffed</span></div>
+    </div>
+    <div className="card rc-wrap" tabIndex="0" role="region" aria-label="Staff calendar, scrolls sideways on small screens">
+      <table className=${cls("rc", week ? "week" : "month")}>
+        <thead><tr><th className="rc-name" scope="col">Team member</th>
+          ${days.map((d) => html`<th key=${dayKey(d)} scope="col" className=${cls(isToday(d) && "today", (d.getDay() === 0 || d.getDay() === 6) && "wknd")}>${week ? dowShort(d) : DOW_NAMES[d.getDay()].slice(0, 1)}<b className="tnum">${d.getDate()}</b></th>`)}
+          <th scope="col" className="rc-hrs">Hours</th></tr></thead>
+        <tbody>
+          ${PROFILES.map(([pid, plabel]) => { const team = EMPLOYEES.filter((e) => profileOf(e) === pid); if (!team.length) return null; return html`
+            <tr key=${pid} className="rc-group"><th className="rc-name" scope="rowgroup">${plabel} <span>${team.length}</span></th><td colSpan=${days.length + 1}></td></tr>
+            ${team.map((e) => { const hrs = hoursIn(e); const cap = Math.round((e.contract * days.length) / 7); return html`<tr key=${e.id}>
+              <th scope="row" className="rc-name"><b>${e.name}</b><span>${e.title}</span></th>
+              ${days.map((d) => { const c = rota[e.id][d.getDay()]; const sh = SHIFTS[c]; const req = reqOn(e, d); const past = off(d) < 0;
+                const label = `${e.name}, ${dowName(d)} ${d.getDate()}: ${sh.label}${req ? ", time off requested (" + req.note + ")" : ""}`;
+                const body = html`${c === "-" ? (week ? "Off" : "") : html`<span>${week ? sh.label : c === "A" ? "M" : "E"}</span>`}${week && c !== "-" && html`<small>${sh.time.replace(" to ", "–")}</small>`}`;
+                const k2 = c === "-" ? "off" : c;
+                return html`<td key=${dayKey(d)} className=${cls("rc-cell", isToday(d) && "today", (d.getDay() === 0 || d.getDay() === 6) && "wknd", past && "past")}>
+                  ${week && !past ? html`<button type="button" className=${cls("rc-sh", "rc-" + k2, req && "rc-req")} aria-label=${label + ". Change shift"} title=${label} onClick=${() => onShift(e.id, d.getDay(), NEXT_SHIFT[c])}>${body}</button>`
+                    : html`<span className=${cls("rc-sh", "rc-" + k2, req && "rc-req")} title=${label} aria-label=${label}>${body}</span>`}</td>`; })}
+              <td className="rc-hrs"><b className="tnum">${hrs}</b> <span className="text-muted">of ${cap} h</span>${week && hrs > cap ? html`<div className="mt-1"><${Chip} tone="amber" icon="info">Check hours<//></div>` : null}</td>
+            </tr>`; })}`; })}
+        </tbody>
+        <tfoot><tr><th className="rc-name" scope="row">On shift</th>
+          ${days.map((d) => { const n = EMPLOYEES.filter((e) => rota[e.id][d.getDay()] !== "-").length; const g = gapDays.has(dayKey(d)); return html`<td key=${dayKey(d)} className=${cls(isToday(d) && "today", g && "gap")} title=${g ? "Short-staffed for the forecast" : ""}><span className="tnum">${n}</span>${g && html`<i className="gapdot" aria-label="short-staffed"></i>`}</td>`; })}
+          <td></td></tr></tfoot>
+      </table>
+    </div>
+    <p className="text-sm text-muted m-0">${week ? "Click a shift to change it: Off, Morning, Evening. The rota repeats every week, so a change applies to that weekday each week." : "Month view is read-only. Switch to Week to change shifts."} Short-staffed days are checked for the next 7 days.</p>
+  </div>`;
+}
+
 function DemandScreen({ intent }) {
   const nav = useNav();
   const [dateOff, setDateOff] = useState(intent && intent.dateOff != null ? clamp(intent.dateOff, 0, 6) : 1);
   const [tab, setTab] = useState((intent && intent.tab) || "covers");
   const d = addDays(TODAY, dateOff), f = fcDay(d);
-  const tabs = [["covers", "Covers", "users"], ["menu", "Menu", "plate"], ["ingredients", "Ingredients", "leaf"]];
+  const tabs = [["covers", "Covers", "users"], ["floor", "Floor plan", "home"], ["menu", "Menu", "plate"], ["ingredients", "Ingredients", "leaf"]];
   return html`
     <div className="grid gap-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
@@ -2324,6 +2511,7 @@ function DemandScreen({ intent }) {
       <${PipelineStrip} date=${d} />
       <div className="seg self-start" role="tablist" aria-label="Demand view">${tabs.map(([k, l, ic]) => html`<button key=${k} type="button" role="tab" aria-selected=${tab === k} onClick=${() => setTab(k)} className=${cls("seg-btn inline-flex items-center gap-2", tab === k && "on")}><${Icon} name=${ic} size=${16} />${l}</button>`)}</div>
       ${tab === "covers" && html`<${CoversTab} f=${f} d=${d} dateOff=${dateOff} />`}
+      ${tab === "floor" && html`<${FloorTab} f=${f} d=${d} />`}
       ${tab === "menu" && html`<${MenuTab} d=${d} />`}
       ${tab === "ingredients" && html`<${IngredientsTab} d=${d} />`}
     </div>`;
