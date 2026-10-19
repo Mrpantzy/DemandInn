@@ -143,3 +143,11 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`.
 
 #### 1.6 Grep for leftovers
 - Searched `index.html` for `[placeholder`, `[your-`, `TODO` and `lorem` after 1.1 to 1.5. Nothing visible to visitors is left. The only match is the code comment above `CONTACT_EMAIL` explaining the placeholder address. No commit needed.
+
+### Group 2. Head, metadata and small technical fixes
+
+#### 2.1 Language and character set
+- Files: `index.html`, first lines and the end of the stylesheets.
+- Before: `<html>` with no language, `<meta charset=utf8>` (not a valid name), and the `<head>` closed after the first stylesheet, so `<title>`, the description, the font links and the other styles sat inside `<body>`.
+- After: `<html lang="en">`, `<meta charset="utf-8">`, and one `<head>` that holds the title, meta tags, font links and all styles. `<body>` starts at `<div id="root">`. Nothing visible changes. Screen readers and search engines now know the page is in English.
+- Undo: `git revert <hash of 2.1>`
