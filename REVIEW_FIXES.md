@@ -453,3 +453,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (19 Oct): "How it works" used the day after tomorrow ("Wednesday: 18 of 28 rooms, 36 guests … 21 dinner covers"), while the hero and "A day at Hotel Aurora" used tomorrow (37 guests, 25 dinner covers). Two different days on one page, and neither section said which.
 - After: all three use tomorrow. "How it works" starts with "Tuesday 20 October: 18 of 28 rooms, 37 guests" and "25 dinner covers, likely 19 to 30". The "A day at Hotel Aurora" intro ends with "…three services, for Tuesday 20 October." The hero chip, the timeline cards and "How it works" all show 18 rooms, 37 guests and 25 dinner covers.
 - Undo: `git revert <hash of 8.1>`
+
+#### 4.5 (follow-up) "likely X–Y" in every cover range
+- Files and functions: `index.html`: `CoversTab`, `TodayScreen` ("How many will eat"), `ExplainPanel`, `HowItWorks`, `morningTips` and `buildEmail`.
+- Before: after 4.5 the landing cards said "likely 19–30", but six other places still said "likely 19 to 30" or "likely between 19 and 30".
+- After: every cover range reads "likely 19–30". Only the wording changed, not the numbers.
+- Undo: `git revert <hash of this commit>`
