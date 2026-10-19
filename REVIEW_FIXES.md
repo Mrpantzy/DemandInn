@@ -62,8 +62,12 @@ Every commit on the branch, oldest first. Filled in at the end of each group, so
 | 4.4 | `5656acf` | Cover parts (hotel, room service, walk-in, event) add up to the total | `git revert 5656acf` |
 | 4.5 | `35ca56b` | Landing cards use the likely X-Y range format | `git revert 35ca56b` |
 | 4.6 | `165b9e2` | Team evening card: Floor instead of Floor and breakfast | `git revert 165b9e2` |
+| 5.1 | `077964a` | Waste per cover uses kg, not euros | `git revert 077964a` |
+| 5.2 | `368ce2a` | Vegan main without dairy, gluten-free breakfast without bread, recipe tag check on load | `git revert 368ce2a` |
+| 5.3 | `0857c19` | Extend simulated history to 8 weeks and count matching weekdays | `git revert 0857c19` |
+| 5.4 | `7557e5b` | Head chef rota within Tue-Sun and 40 h; rota check for availability and hours | `git revert 7557e5b` |
 
-Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`, `fixes-group-4`.
+Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`, `fixes-group-4`, `fixes-group-5`.
 <!-- commit-index:end -->
 
 ## Items
