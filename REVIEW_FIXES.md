@@ -175,3 +175,12 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`.
 - Before: no analytics.
 - After: `<script defer src="/_vercel/insights/script.js"></script>`. **To do in the Vercel dashboard:** turn on Web Analytics for the project (Project → Analytics → Enable), otherwise the script returns 404 and nothing is counted. Locally the script also returns 404, which is expected and harmless.
 - Undo: `git revert <hash of 2.5>`
+
+#### 2.6 Pilot photo background: already in place
+- `.pilot-photo` already had `background: var(--forest2)` in the original commit `d6aeb83`. While the lazy-loaded photo arrives, the box shows that forest tone, and the photo loads into it (checked in the browser). No change and no commit.
+
+#### 2.7 Contrast of the small amber chips
+- Files: `index.html`, the `.text-terra` utility (used by the "Simulated demo data" and "Built from the live forecast" chips, and by a few amber notes).
+- Before: text `#9a6416` on `#fbebc8`: 4.23:1, below the 4.5:1 WCAG AA minimum for small text.
+- After: text `#8f5c12`: 4.81:1 on `#fbebc8` and 4.63:1 on the paler `#f7e7c3`. The darkest change that passes, so the colour still reads as the same amber.
+- Undo: `git revert <hash of 2.7>`
