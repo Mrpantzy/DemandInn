@@ -129,3 +129,9 @@ Group tags so far: `fixes-group-0`.
 - Tested locally: wrong format → error message; POST to a local address that does not exist → error message with the contact email; a stubbed successful POST → "Sending…" then the success message, with the right JSON body. The `mailto:` path was not clicked, so as not to open the mail app on the test machine.
 - **Waiting:** while `CONTACT_EMAIL` is the `.example` placeholder, pilot requests go nowhere. Add the real address, or a Formspree URL, before sharing the site.
 - Undo: `git revert <hash of 1.4>`
+
+#### 1.5 "Become a pilot" in the header and the hero
+- Files and functions: `index.html`: `NAV_LINKS`, `Hero`.
+- Before: the header nav ended with "Pilot". The hero's secondary button read "See a day at Hotel Aurora" (`#day`).
+- After: the nav item reads "Become a pilot" (`#pilot`), on desktop and in the mobile menu. It replaces "Pilot" rather than sitting next to it, so there aren't two links to the same place. The hero's secondary button reads "Become a pilot hotel" and links to `#pilot`. "A day at Aurora" is still in the nav.
+- Undo: `git revert <hash of 1.5>`

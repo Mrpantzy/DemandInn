@@ -3615,7 +3615,7 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
 }
 
 /* ---------- Landing ---------- */
-const NAV_LINKS = [["A day at Aurora", "#day"], ["How it works", "#how"], ["Your data", "#data"], ["ROI", "#roi"], ["Pilot", "#pilot"]];
+const NAV_LINKS = [["A day at Aurora", "#day"], ["How it works", "#how"], ["Your data", "#data"], ["ROI", "#roi"], ["Become a pilot", "#pilot"]];
 function Logo({ light }) {
   return html`<a href="#top" className=${cls("inline-flex items-center gap-2.5 min-h-[44px] no-underline", light ? "text-head" : "text-on-dark")} aria-label=${`${PRODUCT_NAME}, home`}>
     <svg className="logo-mark" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M5 27h26M8 27a10 10 0 0 1 20 0" /><path d="M18 17v-3" /><circle cx="18" cy="12.5" r="1.6" fill="currentColor" stroke="none" /></svg>
@@ -3685,7 +3685,7 @@ function Hero() {
           <p className="kicker">Demand forecasting for hotel food and beverage</p>
           <h1 className="hero-title">${BRAND_LINE.includes(", ") ? html`${BRAND_LINE.slice(0, BRAND_LINE.indexOf(", ") + 1)} <em>${BRAND_LINE.slice(BRAND_LINE.indexOf(", ") + 2)}.</em>` : html`<em>${BRAND_LINE}.</em>`}</h1>
           <p className="hero-lede">Less food in the bin, lower food cost, calmer services for the kitchen team. ${PRODUCT_NAME} turns the bookings you already have into covers for breakfast, lunch and dinner, and into one clear order list, every evening.</p>
-          <div className="flex flex-wrap gap-3 mb-7"><a href="#/app" className="btn btn-primary btn-lg">Open the live demo<${Icon} name="arrow" size=${18} /></a><a href="#day" className="btn btn-secondary btn-lg">See a day at ${HOTEL.name}</a></div>
+          <div className="flex flex-wrap gap-3 mb-7"><a href="#/app" className="btn btn-primary btn-lg">Open the live demo<${Icon} name="arrow" size=${18} /></a><a href="#pilot" className="btn btn-secondary btn-lg">Become a pilot hotel</a></div>
           <p className="m-0 text-[15px] text-muted terms"><span><b className="text-head">Free</b> backtest on your data</span><span><b className="text-head">4 weeks</b> shadow mode, zero risk</span><span><b className="text-head">EUR 149</b>/month after</span></p>
         </div>
         <div className="hero-photos min-w-0">
