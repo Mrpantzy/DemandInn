@@ -207,3 +207,11 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - After: `https://demandinn.vercel.app/?date=2026-10-20#/app` fixes "today" to Tue 20 Oct 2026. Everything in the demo already counts from `TODAY`: the greeting date, the weekday logic, supplier days, bookings, events, the calendar, the rota, the morning email and the landing cards. The date must be `YYYY-MM-DD` and a real calendar date: `2026-02-30`, `20-10-2026` or a missing value fall back to the real today. When a date comes from the link, the banner adds "Demo date fixed to Tue, 20 Oct 2026 by the link." The query string survives moving between the site and the demo, because those links only change the `#` part.
 - Tested: `?date=2026-10-24` (a Saturday) → Sat 24 Oct everywhere; `?date=2026-02-30` → falls back to the real date.
 - Undo: `git revert <hash of 3>`
+
+### Group 4. Units and labels (guests and rooms)
+
+#### 4.1 Today → "Who is coming" counts guests
+- Files and functions: `index.html`: `forecastDay` (the `board` split), `TodayScreen` ("Who is coming" bar and sentence).
+- Before (Mon 19 Oct, planning for Tue 20): "29 of 18 rooms include breakfast or half board, 7 are room only". The 29 and 7 are guests, so the sentence compared guests with rooms, and the bar was 29/18 = more than full.
+- After: "29 of 37 guests have breakfast or half board, 8 are room only." Computed, not hard-coded. The board split is now rounded with the largest-remainder method, so bed and breakfast + half board + room only always equals the guests in house. Checked on 50 days (20 past, 30 ahead): no mismatch. The bar is now 29/37. (The review expected "7 are room only", but 29 + 7 is 36, not 37: rounding each type on its own lost a guest.)
+- Undo: `git revert <hash of 4.1>`

@@ -678,7 +678,7 @@ function forecastDay(date, opts = {}) {
     date, dow, type, n, asOf, occ: roomsR / HOTEL.rooms, rooms: roomsR, booked: Math.round(booked), pickup: Math.max(0, roomsR - Math.round(booked)),
     cancel: Math.round(cancelRooms), stay: roomsR, guests: Math.round(guests), adults: Math.round(adults), children: Math.round(children),
     arrivals: { rooms: Math.round(arrR), guests: Math.round(arrG) }, departures: { rooms: Math.round(depR), guests: Math.round(depG) },
-    board: { BB: Math.round(board.BB), HB: Math.round(board.HB), RO: Math.round(board.RO) }, channels,
+    board: allocate(Object.entries(board), Math.round(guests)), channels, // guests per board type, adds up to guests
     dietGuests: { veg: Math.round(dietGuests.veg), vegan: Math.round(dietGuests.vegan), gf: Math.round(dietGuests.gf) },
     weather, events, holiday: hol, group: (opts.noEvents ? null : groupOn(date)), meals, total, barGuests: meals.bar.covers,
     newSince: newSince.length, cancelledSince: cancelledSince.length, source: n > 21 ? "pace" : "books", hist,
@@ -2226,8 +2226,8 @@ function TodayScreen() {
             <div><div className="font-serif text-[32px] leading-none text-head">${f.arrivals.guests}</div><div className="text-[13px] text-muted mt-1">arriving</div></div>
             <div><div className="font-serif text-[32px] leading-none text-head">${f.departures.guests}</div><div className="text-[13px] text-muted mt-1">leaving</div></div>
           </div>
-          <div className="flex h-3 rounded-full overflow-hidden bg-sage mb-1.5" aria-hidden="true"><div className="bg-forest" style=${{ width: (f.board.BB + f.board.HB) / Math.max(1, f.rooms) * 100 + "%" }}></div></div>
-          <p className="text-[14px] text-muted mt-0 mb-3">${f.board.BB + f.board.HB} of ${f.rooms} rooms include breakfast or half board, ${f.board.RO} are room only. ${f.dietGuests.veg + f.dietGuests.vegan + f.dietGuests.gf > 0 ? `${f.dietGuests.veg} vegetarian, ${f.dietGuests.vegan} vegan and ${f.dietGuests.gf} gluten-free guests are planned for.` : ""}</p>
+          <div className="flex h-3 rounded-full overflow-hidden bg-sage mb-1.5" aria-hidden="true"><div className="bg-forest" style=${{ width: (f.board.BB + f.board.HB) / Math.max(1, f.guests) * 100 + "%" }}></div></div>
+          <p className="text-[14px] text-muted mt-0 mb-3">${f.board.BB + f.board.HB} of ${f.guests} guests have breakfast or half board, ${f.board.RO} are room only. ${f.dietGuests.veg + f.dietGuests.vegan + f.dietGuests.gf > 0 ? `${f.dietGuests.veg} vegetarian, ${f.dietGuests.vegan} vegan and ${f.dietGuests.gf} gluten-free guests are planned for.` : ""}</p>
           <div className="flex flex-wrap gap-2">
             ${f.group && html`<${Chip} tone="neutral" icon="heart">${f.group.name}, ${f.group.guests} guests<//>`}
             ${nextEv && html`<${Chip} tone="info" icon="music">${nextEv.name.split(" at ")[0]}, ${nextEv.time}<//>`}
