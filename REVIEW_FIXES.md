@@ -197,3 +197,12 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`.
 - Before: "Simulated demo data for Hotel Aurora. Every number is computed live by the forecasting engine. The history is simulated."
 - After: the same, plus "Changes reset when you reload." (Orders, waste entries and rota changes live only in the page's memory.) Item 7.10 later swaps the first part for the file name once a CSV is loaded.
 - Undo: `git revert <hash of 2.8>`
+
+### Group 3. Fixed demo date for presentations
+
+#### 3 Demo date from the link
+- Files and functions: `index.html`: new `parseDateParam()` and `DATE_FROM_LINK`, `TODAY`; the demo banner in `AppWindow`.
+- Before: `const TODAY = sod(new Date())`. The demo always showed the real day, so a presentation rehearsed on Monday looked different on Tuesday.
+- After: `https://demandinn.vercel.app/?date=2026-10-20#/app` fixes "today" to Tue 20 Oct 2026. Everything in the demo already counts from `TODAY`: the greeting date, the weekday logic, supplier days, bookings, events, the calendar, the rota, the morning email and the landing cards. The date must be `YYYY-MM-DD` and a real calendar date: `2026-02-30`, `20-10-2026` or a missing value fall back to the real today. When a date comes from the link, the banner adds "Demo date fixed to Tue, 20 Oct 2026 by the link." The query string survives moving between the site and the demo, because those links only change the `#` part.
+- Tested: `?date=2026-10-24` (a Saturday) → Sat 24 Oct everywhere; `?date=2026-02-30` → falls back to the real date.
+- Undo: `git revert <hash of 3>`
