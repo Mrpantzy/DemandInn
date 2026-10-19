@@ -603,7 +603,7 @@ function forecastDay(date, opts = {}) {
   const mean = {}, vr = {}, rsm = {}, dietM = {};
   MEALS.forEach((m) => { mean[m] = 0; vr[m] = 0; rsm[m] = 0; dietM[m] = { veg: 0, vegan: 0, gf: 0 }; });
   let rooms = 0, booked = 0, pickup = 0, guests = 0, adults = 0, children = 0, arrR = 0, arrG = 0, depR = 0, depG = 0, cancelRooms = 0;
-  const board = { BB: 0, HB: 0, RO: 0 }, dietGuests = { veg: 0, vegan: 0, gf: 0 }, channels = { direct: 0, ota: 0, corporate: 0, group: 0 };
+  const board = { BB: 0, HB: 0, RO: 0 }, boardRooms = { BB: 0, HB: 0, RO: 0 }, dietGuests = { veg: 0, vegan: 0, gf: 0 }, channels = { direct: 0, ota: 0, corporate: 0, group: 0 };
   const newSince = [], cancelledSince = [];
   cands.forEach((r) => {
     const cancelled = r.cancelledOff != null && r.cancelledOff <= asOf;
@@ -622,7 +622,7 @@ function forecastDay(date, opts = {}) {
     if (r.a <= n && n < r.dep) {
       rooms += w; if (isBooked) booked += w; else pickup += w;
       guests += r.guests * w; adults += r.adults * w; children += r.children * w;
-      board[r.board] += r.guests * w; channels[r.channel] += w;
+      board[r.board] += r.guests * w; boardRooms[r.board] += w; channels[r.channel] += w;
       dietGuests.veg += r.diet.veg * w; dietGuests.vegan += r.diet.vegan * w; dietGuests.gf += r.diet.gf * w;
       if (r.a > 0 || r.a === 0) cancelRooms += (isBooked ? 1 : PICKUP_P) * (1 - w / (isBooked ? 1 : PICKUP_P));
     }
@@ -679,6 +679,7 @@ function forecastDay(date, opts = {}) {
     cancel: Math.round(cancelRooms), stay: roomsR, guests: Math.round(guests), adults: Math.round(adults), children: Math.round(children),
     arrivals: { rooms: Math.round(arrR), guests: Math.round(arrG) }, departures: { rooms: Math.round(depR), guests: Math.round(depG) },
     board: allocate(Object.entries(board), Math.round(guests)), channels, // guests per board type, adds up to guests
+    boardRooms: allocate(Object.entries(boardRooms), roomsR), // rooms per board type, adds up to rooms
     dietGuests: { veg: Math.round(dietGuests.veg), vegan: Math.round(dietGuests.vegan), gf: Math.round(dietGuests.gf) },
     weather, events, holiday: hol, group: (opts.noEvents ? null : groupOn(date)), meals, total, barGuests: meals.bar.covers,
     newSince: newSince.length, cancelledSince: cancelledSince.length, source: n > 21 ? "pace" : "books", hist,
@@ -2324,8 +2325,9 @@ function CoversTab({ f, d, dateOff }) {
       <section className="card p-5">
         <h4 className="font-serif text-[19px] text-head mt-0 mb-1">Board type drives the breakfast</h4>
         <p className="text-[14px] text-muted mt-0 mb-3">Guests with breakfast included eat it far more often than room-only guests. Late arrivals are taken out of dinner and early departures out of breakfast.</p>
-        <table className="w-full text-[15px] tnum"><thead><tr className="text-left text-muted"><th className="py-1 font-medium">Board</th><th className="font-medium">Rooms</th><th className="font-medium">Eat breakfast</th><th className="font-medium">Eat dinner</th></tr></thead>
-          <tbody>${["BB", "HB", "RO"].map((b) => html`<tr key=${b} className="border-t border-line"><td className="py-2">${BOARD_NAME[b]}</td><td>${f.board[b]}</td><td>${Math.round(P_BREAKFAST[b] * 100)}%</td><td>${Math.round(P_DINNER[b] * 100)}%</td></tr>`)}</tbody></table>
+        <table className="w-full text-[15px] tnum"><thead><tr className="text-left text-muted"><th className="py-1 font-medium">Board</th><th className="font-medium">Guests</th><th className="font-medium">Eat breakfast</th><th className="font-medium">Eat dinner</th></tr></thead>
+          <tbody>${["BB", "HB", "RO"].map((b) => html`<tr key=${b} className="border-t border-line"><td className="py-2">${BOARD_NAME[b]}</td><td>${f.board[b]}</td><td>${Math.round(P_BREAKFAST[b] * 100)}%</td><td>${Math.round(P_DINNER[b] * 100)}%</td></tr>`)}
+            <tr className="border-t border-line font-semibold"><td className="py-2">Total</td><td>${f.guests}</td><td colSpan="2" className="font-normal text-muted">guests in ${f.rooms} ${plural(f.rooms, "room")}</td></tr></tbody></table>
         <p className="text-[13.5px] text-muted mt-3 mb-0">${f.booked} rooms are booked and ${f.pickup} more are expected to book (${Math.round(PICKUP_P * 100)}% pick-up). ${f.cancel} ${plural(f.cancel, "room")} allowed for cancellations and no-shows.</p>
       </section>
     </div>
@@ -3741,7 +3743,7 @@ function DayAtHotel() {
   const steps = [
     { t: "18:00", what: "Tomorrow's bookings are read", card: html`<div className="day-card">
         <p className="mono-k">Bookings · ${dowShort(d)} ${fmtDate(d, { day: "numeric", month: "short" })}</p>
-        <dl className="day-dl tnum"><div><dt>Rooms booked</dt><dd>${f.rooms}<small> / ${HOTEL.rooms}</small></dd></div><div><dt>Guests</dt><dd>${f.guests}</dd></div><div><dt>Arriving</dt><dd>${f.arrivals.rooms}<small> rooms</small></dd></div><div><dt>Half board</dt><dd>${f.board.HB}<small> rooms</small></dd></div></dl></div>` },
+        <dl className="day-dl tnum"><div><dt>Rooms booked</dt><dd>${f.rooms}<small> / ${HOTEL.rooms}</small></dd></div><div><dt>Guests</dt><dd>${f.guests}</dd></div><div><dt>Arriving</dt><dd>${f.arrivals.rooms}<small> rooms</small></dd></div><div><dt>Half board</dt><dd>${f.boardRooms.HB}<small> rooms</small></dd></div></dl></div>` },
     { t: "18:05", what: "Covers forecast for every service", card: html`<div className="day-card">
         <p className="mono-k">Covers forecast</p>
         ${covers.map(([l, x]) => html`<div key=${l} className="day-row tnum"><span>${l}</span><b>${x.covers}</b><span className="text-muted">likely ${x.p10}–${x.p90}</span></div>`)}</div>` },

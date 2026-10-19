@@ -215,3 +215,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (Mon 19 Oct, planning for Tue 20): "29 of 18 rooms include breakfast or half board, 7 are room only". The 29 and 7 are guests, so the sentence compared guests with rooms, and the bar was 29/18 = more than full.
 - After: "29 of 37 guests have breakfast or half board, 8 are room only." Computed, not hard-coded. The board split is now rounded with the largest-remainder method, so bed and breakfast + half board + room only always equals the guests in house. Checked on 50 days (20 past, 30 ahead): no mismatch. The bar is now 29/37. (The review expected "7 are room only", but 29 + 7 is 36, not 37: rounding each type on its own lost a guest.)
 - Undo: `git revert <hash of 4.1>`
+
+#### 4.2 Demand → "Board type drives the breakfast" counts guests
+- Files and functions: `index.html`: `forecastDay` (new `boardRooms`, rooms per board type, largest-remainder rounded to the rooms total), `CoversTab` (the board table), `DayAtHotel` (the landing "Bookings" card).
+- Before (Tue 20 Oct): the column "Rooms" showed 17 / 12 / 7, which are guests (18 rooms were booked), and the rows added up to 36. On the landing page, "Half board 12 rooms" was also a guest count.
+- After: the column is "Guests" (17 / 12 / 8) with a total row "Total 37 guests in 18 rooms", matching the pipeline strip above ("18 rooms, 37 guests"). The landing card's "Half board" now shows real rooms (6 rooms). Room counts per board type always add up to the rooms booked (checked on 50 days).
+- Undo: `git revert <hash of 4.2>`
