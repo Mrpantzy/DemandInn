@@ -48,8 +48,15 @@ Every commit on the branch, oldest first. Filled in at the end of each group, so
 | 1.3 | `fe23320` | Demo privacy card: remove placeholder, phrase as the pilot plan | `git revert fe23320` |
 | 1.4 | `63cbdf1` | Pilot form posts to PILOT_FORM_ENDPOINT or falls back to mailto | `git revert 63cbdf1` |
 | 1.5 | `36becc3` | Header and hero link to Become a pilot | `git revert 36becc3` |
+| 2.1 | `8f906c4` | html lang=en, charset utf-8, title and meta inside head | `git revert 8f906c4` |
+| 2.2 | `0f7bdf2` | Inline SVG favicon: amber cloche on forest green | `git revert 0f7bdf2` |
+| 2.3 | `cd47012` | Open Graph, Twitter card and canonical link | `git revert cd47012` |
+| 2.4 | `72a7afb` | noscript message and a fallback when the CDN scripts fail | `git revert 72a7afb` |
+| 2.5 | `61cf893` | Add the Vercel Web Analytics script | `git revert 61cf893` |
+| 2.7 | `64b664a` | Darken amber chip text to pass 4.5:1 contrast | `git revert 64b664a` |
+| 2.8 | `1ea7975` | Demo banner: changes reset when you reload | `git revert 1ea7975` |
 
-Group tags so far: `fixes-group-0`, `fixes-group-1`.
+Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`.
 <!-- commit-index:end -->
 
 ## Items
