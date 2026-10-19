@@ -169,3 +169,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`.
 - Before: with JavaScript off, or if a CDN failed, visitors saw an empty green page.
 - After: a `<noscript>` message: "DemandInn needs JavaScript to show this page. Please try another browser, or write to us at hello@demandinn.example." A `<noscript>` only shows when JavaScript is switched off, so there is also a hidden `#boot-fail` message that a one-line script turns on when React, ReactDOM or htm did not load: "The page could not load its scripts. Please check your connection and reload, or write to us at hello@demandinn.example." Tested with a deliberately broken React URL. Static HTML cannot read `CONTACT_EMAIL`, so the address is written in both messages, and comments next to the constant and the messages say to update all three together.
 - Undo: `git revert <hash of 2.4>`
+
+#### 2.5 Vercel Web Analytics
+- Files: `index.html`, after the CDN scripts.
+- Before: no analytics.
+- After: `<script defer src="/_vercel/insights/script.js"></script>`. **To do in the Vercel dashboard:** turn on Web Analytics for the project (Project → Analytics → Enable), otherwise the script returns 404 and nothing is counted. Locally the script also returns 404, which is expected and harmless.
+- Undo: `git revert <hash of 2.5>`
