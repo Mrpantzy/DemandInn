@@ -322,7 +322,8 @@ const off = (d) => diffDays(d, TODAY);
 const sameDay = (a, b) => diffDays(a, b) === 0;
 const nextDow = (dow) => { for (let i = 0; i < 7; i++) { const d = addDays(TODAY, i); if (d.getDay() === dow) return d; } };
 const dayKey = (d) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-const fmtDate = (d, o) => d.toLocaleDateString("en-GB", o || { weekday: "short", day: "numeric", month: "short" });
+// Dates outside the current year get the year, so "24 Sept 2027" never reads as a date that has passed
+const fmtDate = (d, o) => { const opt = o || { weekday: "short", day: "numeric", month: "short" }; return d.toLocaleDateString("en-GB", opt.month && !opt.year && d.getFullYear() !== TODAY.getFullYear() ? { ...opt, year: "numeric" } : opt); };
 const dowName = (d) => d.toLocaleDateString("en-GB", { weekday: "long" });
 const dowShort = (d) => d.toLocaleDateString("en-GB", { weekday: "short" });
 const dayWord = (d) => (off(d) === 0 ? "today" : off(d) === 1 ? "tomorrow" : dowName(d));

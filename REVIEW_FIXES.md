@@ -287,3 +287,11 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - After: Tomás, "--PPPPP": Tue to Sat evenings, **35 of 40 h**, all within Tue to Sun. Priya, "PP-PPP-": Sun, Mon and Wed to Fri evenings, 35 of 40 h, so every evening still has at least two people in the kitchen. All other rotas were already within their availability and contracts (checked). On the old rota the new check reports exactly the two review findings; on the new rota it reports nothing.
 - Effect on the team story: Saturday evening (the wedding dinner) now shows "2 extra pairs of hands" for the kitchen instead of 1, since the head chef is no longer double-booked. The other gaps are unchanged.
 - Undo: `git revert <hash of 5.4>`
+
+### Group 6. Dates in the demo
+
+#### 6.1 Year on dates outside the current year
+- Files and functions: `index.html`: `fmtDate` (used by every screen).
+- Before: no year, so on 19 Oct 2026 the pasta batch showed "use by 24 Sept" next to "60+ days left", which read as expired.
+- After: when a date that shows a month falls in another year than the demo's today, the year is added: "24 Sept 2027", "15 Aug 2027" (house wine), "14 Sept 2027" (rice). Dates in the current year stay short ("Thu 22 Oct"). Holds on any date, including around New Year.
+- Undo: `git revert <hash of 6.1>`
