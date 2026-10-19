@@ -66,8 +66,12 @@ Every commit on the branch, oldest first. Filled in at the end of each group, so
 | 5.2 | `368ce2a` | Vegan main without dairy, gluten-free breakfast without bread, recipe tag check on load | `git revert 368ce2a` |
 | 5.3 | `0857c19` | Extend simulated history to 8 weeks and count matching weekdays | `git revert 0857c19` |
 | 5.4 | `7557e5b` | Head chef rota within Tue-Sun and 40 h; rota check for availability and hours | `git revert 7557e5b` |
+| 6.1 | `52105c1` | fmtDate adds the year for dates outside the current year | `git revert 52105c1` |
+| 6.2 | `3499609` | Explain panel shows weekdays only within 6 days, dates further out | `git revert 3499609` |
+| 6.3 | `87beec6` | Forecast windows print real dates matching the window and the table | `git revert 87beec6` |
+| 6.4 | `916a754` | Calendar: suggested orders show Order by with the cut-off | `git revert 916a754` |
 
-Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`, `fixes-group-4`, `fixes-group-5`.
+Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`, `fixes-group-4`, `fixes-group-5`, `fixes-group-6`.
 <!-- commit-index:end -->
 
 ## Items
