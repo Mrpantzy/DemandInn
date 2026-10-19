@@ -74,3 +74,9 @@ Notes:
 - Before: no intro line.
 - After: "One platform at EUR 149 a month, where stacking separate tools for forecasting, inventory and staffing (such as Tenzo, MarketMan and Planday) costs a small hotel about EUR 400–550." Written with "EUR" like every other price on the site. No comparison table.
 - Undo: `git revert <hash of 0.7>`
+
+#### 0.8 Customer evidence: "What hotels told us"
+- Files and functions: `index.html`: `Principles` (right-hand card next to the Champions 12.3 card).
+- Before: a dashed card "In progress · Pilot results coming soon. We are starting pilots with independent hotels…".
+- After: the same card style, titled "What hotels told us", with the chip "Phone interviews, 10 Oct 2026", the line "5 of the 10 small hotels we called in the UK and Italy answered", three anonymised findings (walk-in guests make restaurant demand hard to predict from bookings alone; staffing came up as often as stock; most still plan by hand) and a small "Pilot results coming soon." line underneath. No hotel names.
+- Undo: `git revert <hash of 0.8>`
