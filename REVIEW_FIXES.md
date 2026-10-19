@@ -295,3 +295,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before: no year, so on 19 Oct 2026 the pasta batch showed "use by 24 Sept" next to "60+ days left", which read as expired.
 - After: when a date that shows a month falls in another year than the demo's today, the year is added: "24 Sept 2027", "15 Aug 2027" (house wine), "14 Sept 2027" (rice). Dates in the current year stay short ("Thu 22 Oct"). Holds on any date, including around New Year.
 - Undo: `git revert <hash of 6.1>`
+
+#### 6.2 Explain panel: weekday only within the week
+- Files and functions: `index.html`: new `dayOrDate()`; `ExplainPanel` ("Stock and open orders").
+- Before: `"use by " + dowShort(...)` printed a weekday even for dates months away: the house wine showed "use by Sun" while Stock said 15 Aug.
+- After: within the next 6 days, the weekday ("use by Thu"). Further out, the date ("best before 15 Aug 2027"). Long-life items say "best before" and fresh items "use by", as on the Stock screen. Open-order arrival days follow the same rule.
+- Undo: `git revert <hash of 6.2>`

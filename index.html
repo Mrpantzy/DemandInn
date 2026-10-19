@@ -327,6 +327,8 @@ const fmtDate = (d, o) => { const opt = o || { weekday: "short", day: "numeric",
 const dowName = (d) => d.toLocaleDateString("en-GB", { weekday: "long" });
 const dowShort = (d) => d.toLocaleDateString("en-GB", { weekday: "short" });
 const dayWord = (d) => (off(d) === 0 ? "today" : off(d) === 1 ? "tomorrow" : dowName(d));
+// A weekday is only clear within the coming week; further out, show the date
+const dayOrDate = (d) => (off(d) >= 0 && off(d) <= 6 ? dowShort(d) : fmtDate(d, { day: "numeric", month: "short" }));
 const dayWordShort = (d) => (off(d) === 0 ? "today" : off(d) === 1 ? "tomorrow" : dowShort(d));
 const eur = (n) => "EUR " + Math.round(n).toLocaleString("en-GB");
 const eur1 = (n) => "EUR " + (Math.round(n * 10) / 10).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -2161,8 +2163,8 @@ function ExplainPanel({ pid, sup, onClose }) {
 
       <h4 className="font-serif text-[19px] text-head mt-0 mb-2">Stock and open orders</h4>
       <ul className="list-none p-0 m-0 mb-5 grid gap-1.5 text-[15px]">
-        ${batches.length ? batches.map((b) => html`<li key=${b.id} className="flex justify-between gap-3"><span>${fmtQty(p, b.qty)} in stock</span><span className=${cls(b.eOff <= 1 ? "text-terra font-semibold" : "text-muted")}>${b.eOff < 0 ? "past date" : b.eOff === 0 ? "use today" : "use by " + dowShort(addDays(TODAY, b.eOff))}</span></li>`) : html`<li className="text-muted">Nothing in stock.</li>`}
-        ${inc.map((o) => html`<li key=${o.id} className="flex justify-between gap-3"><span>${fmtQty(p, o.lines.find((l) => l.p === p.id).qty)} on order, ${SUPPLIERS[o.sup].name}</span><span className="text-muted">arrives ${dowShort(addDays(TODAY, o.etaOff))}</span></li>`)}
+        ${batches.length ? batches.map((b) => html`<li key=${b.id} className="flex justify-between gap-3"><span>${fmtQty(p, b.qty)} in stock</span><span className=${cls(b.eOff <= 1 ? "text-terra font-semibold" : "text-muted")}>${b.eOff < 0 ? "past date" : b.eOff === 0 ? "use today" : (p.perish ? "use by " : "best before ") + dayOrDate(addDays(TODAY, b.eOff))}</span></li>`) : html`<li className="text-muted">Nothing in stock.</li>`}
+        ${inc.map((o) => html`<li key=${o.id} className="flex justify-between gap-3"><span>${fmtQty(p, o.lines.find((l) => l.p === p.id).qty)} on order, ${SUPPLIERS[o.sup].name}</span><span className="text-muted">arrives ${dayOrDate(addDays(TODAY, o.etaOff))}</span></li>`)}
       </ul>
       <p className="text-sm text-muted mt-0 mb-5">Other items you could make with what is expiring: ${p.idea || "none needed"}.</p>
       <div className="flex flex-wrap gap-3">
