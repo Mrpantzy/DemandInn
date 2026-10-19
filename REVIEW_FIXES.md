@@ -335,3 +335,10 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
   - Drinks order: EUR 610 of the EUR 660 headline → **EUR 0**. The headline is now EUR 12 (beef mince only). Item 7.6 rescales consumption, so the totals rise again there, but with the same logic.
   - Landing card: "Need 90, Stock 51, Order 60" (house wine) → "Beef mince, Need 1.8, Usable on Wed 0.8, Order 1", the butcher order due Tue 12:00.
 - Undo: `git revert <hash of 7.1>`
+
+#### 7.2 One explained message instead of two contradictory ones
+- Files and functions: `index.html`: `suggestionLines` (Stock), `POLine` and `POCard` (Purchasing).
+- Before: chicken breast and beef mince showed both "Order to avoid a shortage" and "May go unused (about EUR …)" with no link between the two. Purchasing put a bare "Waste risk" chip on recommended lines and on the order header.
+- After: when part of today's stock passes its date **and** the item still runs out later, Stock shows one message that explains both. Example (beef mince, Fri 23 Oct): "4.3 kg usable until Sun; short from Mon: order 2 kg by Sun 12:00 for Mon delivery and use the oldest batch first. About EUR 20 of today's stock passes its date before it is needed: run a burger of the day." "Usable until" is what stock and open orders cover before the gap. When only one of the two applies, the single message is unchanged.
+- Purchasing: the line chip now reads "May expire if demand is low", with a tooltip ("If demand comes in at the low end of the range, part of this order could pass its date before it is used"). The order header's status reads "Shortage risk", "Some may expire if demand is low" or "Balanced".
+- Undo: `git revert <hash of 7.2>`

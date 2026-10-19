@@ -2639,11 +2639,16 @@ function statusChips(r) {
 function suggestionLines(r) {
   const p = r.p, out = [];
   if (r.expired.length) out.push({ tone: "urgent", text: "Set the expired batch aside and log it as waste." });
-  if (r.wasteRisk) out.push({ tone: "amber", text: `May go unused (about ${eur(r.pr.wasteValue)}).${p.idea ? " " + p.idea + "." : ""}` });
-  else if (r.useFirst && p.idea) out.push({ tone: "amber", text: p.idea });
-  if (r.sug) {
-    const l = r.sug.lines.find((x) => x.p === p.id);
-    if (l) out.push({ tone: r.sug.late ? "amber" : "terra", text: `Order ${fmtQty(p, l.qty)} by ${r.sug.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, r.sug.deadlineOff))} ${r.sug.cutoff} (${SUPPLIERS[p.sup].name}, delivery ${dowShort(addDays(TODAY, r.sug.etaOff))}).` });
+  const l = r.sug ? r.sug.lines.find((x) => x.p === p.id) : null;
+  const by = l ? `by ${r.sug.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, r.sug.deadlineOff))} ${r.sug.cutoff}` : "";
+  if (l && r.wasteRisk && r.pr.firstShort !== null) {
+    // Part of today's stock passes its date before it is used, and the item still runs out later: one message that explains both
+    const keep = useOverDays(p, TODAY, r.pr.firstShort), short = addDays(TODAY, r.pr.firstShort); // what stock and open orders cover before the gap
+    out.push({ tone: "amber", text: `${fmtQty(p, keep)} usable until ${dayWordShort(addDays(short, -1))}; short from ${dayWordShort(short)}: order ${fmtQty(p, l.qty)} ${by} for ${dowShort(addDays(TODAY, r.sug.etaOff))} delivery and use the oldest batch first. About ${eur(r.pr.wasteValue)} of today's stock passes its date before it is needed${p.idea ? ": " + p.idea.charAt(0).toLowerCase() + p.idea.slice(1) : ""}.` });
+  } else {
+    if (r.wasteRisk) out.push({ tone: "amber", text: `May go unused (about ${eur(r.pr.wasteValue)}).${p.idea ? " " + p.idea + "." : ""}` });
+    else if (r.useFirst && p.idea) out.push({ tone: "amber", text: p.idea });
+    if (l) out.push({ tone: r.sug.late ? "amber" : "terra", text: `Order ${fmtQty(p, l.qty)} ${by} (${SUPPLIERS[p.sup].name}, delivery ${dowShort(addDays(TODAY, r.sug.etaOff))}).` });
   }
   if (r.riskWith !== null) {
     const inc = r.incoming.filter((o) => o.etaOff > r.riskWith).sort((a, b) => a.etaOff - b.etaOff)[0];
@@ -2769,7 +2774,7 @@ function POLine({ o, l }) {
           <button type="button" onClick=${() => nav.openPanel("explain", { pid: l.p })} className="bg-transparent border-0 p-0 cursor-pointer text-left font-semibold text-[16.5px] text-ink hover:underline">${p.name}</button>
           <div className="flex flex-wrap gap-1.5 mt-1">
             ${risk && html`<${Chip} tone="urgent" icon="alert">Short ${dayWordShort(addDays(TODAY, L.firstShort))}<//>`}
-            ${L.wasteLevel === "high" && html`<${Chip} tone="amber" icon="leaf">Waste risk<//>`}
+            ${L.wasteLevel === "high" && html`<span title="If demand comes in at the low end of the range, part of this order could pass its date before it is used."><${Chip} tone="amber" icon="leaf">May expire if demand is low<//></span>`}
             ${l.override && html`<${Chip} tone="info" icon="edit">Your change: ${l.override.reason}<//>`}
             ${l.manual && html`<${Chip} tone="neutral" icon="plus">Added by you<//>`}
           </div>
@@ -2812,7 +2817,7 @@ function POCard({ o }) {
           <h3 className="font-serif text-[22px] text-head m-0">${sup.name}</h3>
           <p className="m-0 mt-1 text-[14.5px] text-muted">Order by <span className="font-semibold text-ink">${dl === 0 ? "today" : dowShort(addDays(TODAY, dl))} ${o.cutoff}</span>, delivery <span className="font-semibold text-ink">${dowShort(addDays(TODAY, o.etaOff))} ${fmtDate(addDays(TODAY, o.etaOff), { day: "numeric", month: "short" })}</span>, lead time ${sup.lead} ${plural(sup.lead, "day")}.</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2"><${Chip} tone=${o.confidence === "stockout risk" ? "urgent" : o.confidence === "waste risk" ? "amber" : "ok"} icon=${o.confidence === "balanced" ? "check" : "alert"}>${cap(o.confidence)}<//><span className="font-serif text-[22px] text-head tnum">${eur(total)}</span></div>
+        <div className="flex flex-wrap items-center gap-2"><${Chip} tone=${o.confidence === "stockout risk" ? "urgent" : o.confidence === "waste risk" ? "amber" : "ok"} icon=${o.confidence === "balanced" ? "check" : "alert"}>${{ "stockout risk": "Shortage risk", "waste risk": "Some may expire if demand is low", balanced: "Balanced" }[o.confidence]}<//><span className="font-serif text-[22px] text-head tnum">${eur(total)}</span></div>
       </header>
       <div className="px-5 py-2">
         <p className="m-0 mt-2 text-[14.5px] text-muted">${o.reason}</p>
