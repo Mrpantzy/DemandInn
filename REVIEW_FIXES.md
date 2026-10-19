@@ -157,3 +157,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`.
 - Before: no favicon (the browser showed a blank page icon).
 - After: an inline SVG data URI: the logo's cloche (dome, handle and knob) in amber `#dfa550` on a rounded forest-green `#1b322a` square. No extra file to deploy.
 - Undo: `git revert <hash of 2.2>`
+
+#### 2.3 Open Graph, Twitter and canonical tags
+- Files: `index.html`, head.
+- Before: none, so a shared link showed no picture and a generic title.
+- After: `<link rel="canonical" href="https://demandinn.vercel.app/">`; `og:type`, `og:site_name`, `og:title` ("DemandInn: Tomorrow's covers, forecasted today", the same as `<title>`), `og:description` (the meta description from 0.4), `og:url`, `og:image` (the hero chef photo from Unsplash cropped to 1200×630, checked to return a JPEG), its width, height and alt text; `twitter:card summary_large_image`, `twitter:title`, `twitter:description`, `twitter:image`.
+- Undo: `git revert <hash of 2.3>`
