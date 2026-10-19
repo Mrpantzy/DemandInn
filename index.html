@@ -383,17 +383,33 @@ const CLASS_LABEL = { A: "Very fresh", B: "Fresh", C: "Chilled", D: "Long life" 
 // Dish recipes. bom = [ingredient, net quantity per portion]. Gross purchase quantity = net / yield.
 const DISHES = {
   bf_buffet: { name: "Continental buffet", veg: true, vegan: false, gf: false, bom: [["dough", 0.09], ["bread", 0.05], ["butter", 0.01], ["cheese", 0.025], ["milk", 0.08], ["berries", 0.012]] },
-  bf_cooked: { name: "Cooked breakfast", veg: true, vegan: false, gf: true, bom: [["eggs", 2], ["bread", 0.04], ["butter", 0.008], ["tomatoes", 0.05], ["milk", 0.03]] },
+  bf_cooked: { name: "Cooked breakfast", veg: true, vegan: false, gf: true, bom: [["eggs", 2], ["potatoes", 0.08], ["butter", 0.008], ["tomatoes", 0.05], ["milk", 0.03]] },
   bf_fruit: { name: "Fresh fruit plate", veg: true, vegan: true, gf: true, bom: [["berries", 0.09]] },
   soup: { name: "Tomato soup", veg: true, vegan: false, gf: false, bom: [["tomatoes", 0.22], ["cream", 0.03], ["bread", 0.06], ["butter", 0.01], ["herbs", 0.003]] },
   caesar: { name: "Chicken Caesar salad", veg: false, vegan: false, gf: false, bom: [["chicken", 0.14], ["salad", 0.09], ["cheese", 0.02], ["bread", 0.04], ["oil", 0.01]] },
   pasta: { name: "Seasonal pasta", veg: true, vegan: false, gf: false, bom: [["pasta", 0.11], ["tomatoes", 0.12], ["cream", 0.05], ["cheese", 0.025], ["herbs", 0.004], ["oil", 0.01]] },
   burger: { name: "Beef burger and fries", veg: false, vegan: false, gf: false, bom: [["mince", 0.17], ["potatoes", 0.3], ["bread", 0.12], ["cheese", 0.02], ["tomatoes", 0.04], ["salad", 0.02]] },
   salmon_salad: { name: "Salmon and potato salad", veg: false, vegan: false, gf: true, bom: [["salmon", 0.14], ["potatoes", 0.2], ["salad", 0.04], ["herbs", 0.003]] },
-  veg_main: { name: "Vegetarian main", veg: true, vegan: true, gf: true, bom: [["rice", 0.09], ["veg", 0.15], ["tomatoes", 0.06], ["cheese", 0.03], ["butter", 0.015], ["herbs", 0.004], ["oil", 0.01]] },
+  veg_main: { name: "Vegetarian main", veg: true, vegan: true, gf: true, bom: [["rice", 0.09], ["veg", 0.17], ["tomatoes", 0.08], ["herbs", 0.004], ["oil", 0.02]] },
   sea_bass: { name: "Sea bass", veg: false, vegan: false, gf: true, bom: [["seabass", 0.16], ["potatoes", 0.22], ["tomatoes", 0.09], ["herbs", 0.004], ["butter", 0.02], ["oil", 0.01]] },
   roast_chicken: { name: "Roast chicken", veg: false, vegan: false, gf: true, bom: [["chicken", 0.22], ["potatoes", 0.25], ["veg", 0.12], ["butter", 0.015], ["cream", 0.04], ["herbs", 0.004]] },
 };
+// Recipe check, run on load: a dish's dietary tags must agree with its ingredients
+const NOT_VEGAN = ["milk", "cream", "butter", "cheese", "eggs", "chicken", "mince", "seabass", "salmon"];
+const NOT_VEG = ["chicken", "mince", "seabass", "salmon"];
+const NOT_GF = ["bread", "pasta", "flour", "dough"];
+function checkDishTags() {
+  const problems = [];
+  Object.values(DISHES).forEach((d) => {
+    const has = (list) => d.bom.map(([pid]) => pid).filter((pid) => list.includes(pid));
+    [["vegan", NOT_VEGAN], ["veg", NOT_VEG], ["gf", NOT_GF]].forEach(([tag, list]) => {
+      if (d[tag] && has(list).length) problems.push(`${d.name} is tagged ${tag === "gf" ? "gluten-free" : tag === "veg" ? "vegetarian" : "vegan"} but contains ${has(list).join(", ")}`);
+    });
+  });
+  problems.forEach((x) => console.warn("DemandInn recipe check: " + x));
+  return problems;
+}
+checkDishTags();
 // Drinks and extras sold per cover (attach rates). They explode into ingredients just like dishes.
 const EXTRAS = {
   wine_glass: { name: "House wine (glass)", bom: [["wine", 1 / 6]] },

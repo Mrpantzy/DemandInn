@@ -259,3 +259,13 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before: `wastePerCover = wasteE / covers30`, euros divided by covers, printed as grams: **64 g** (EUR 146.94 / 2,284 covers).
 - After: `wastePerCover = wasteKg / covers30`: **10 g** (22.6 kg / 2,284 covers) on both screens. (The 30-day waste itself is rescaled in 7.6, so these numbers change again there.)
 - Undo: `git revert <hash of 5.1>`
+
+#### 5.2 Dietary tags agree with the recipes
+- Files and functions: `index.html`: `DISHES` (`veg_main`, `bf_cooked`), new `NOT_VEGAN`, `NOT_VEG`, `NOT_GF` and `checkDishTags()`, which runs once on load.
+- Before: "Vegetarian main" was tagged vegan and gluten-free but contained cheese and butter. It is the dish vegans are given at lunch and dinner. "Cooked breakfast" was tagged gluten-free but contained bread (spotted while writing the check).
+- After:
+  - Vegetarian main: rice 90 g, seasonal vegetables 170 g (was 150 g), tomatoes 80 g (was 60 g), herbs 4 g, olive oil 20 g (was 10 g). No cheese or butter, so it is truly vegan and gluten-free. All ingredients are already in stock.
+  - Cooked breakfast: the 40 g of bread is replaced by 80 g of potatoes (rösti), so the gluten-free tag is true.
+  - `checkDishTags()` warns in the console ("DemandInn recipe check: …") if a dish tagged vegan contains dairy, eggs, meat or fish, a dish tagged vegetarian contains meat or fish, or a dish tagged gluten-free contains bread, pasta, flour or croissant dough. On load it now finds nothing. Tested by adding cheese back to the vegan dish and tagging pasta gluten-free: it reported both.
+- Effect on numbers: a little less cheese, butter and bread and a little more vegetables, oil and potatoes are forecast and ordered.
+- Undo: `git revert <hash of 5.2>`
