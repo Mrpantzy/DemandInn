@@ -391,3 +391,16 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before: with case sizes, the middle half often collapsed to one case and showed as "likely 24–24".
 - After: "likely 24". Ranges with two different ends are unchanged ("likely 48–72").
 - Undo: `git revert <hash of this commit>`
+
+#### 7.4 The placed fish order no longer causes waste (and the starting kitchen follows the supplier calendar)
+- Done after 7.6 because the stock sizes depend on the new consumption.
+- Files and functions: `index.html`: `SEED_BATCHES` and `SEED_ORDERS` rebuilt, with new `lastDelivery`, `ORDER_ETA`, `ORDERED`, `CUSHION`, `reachDay`, `orderDays`, `MIN_DAYS` and `oLine`.
+- Before (Mon 19 Oct, original data): 5 kg of sea bass on hand "may go unused (EUR 136)" while the confirmed fish order brought 8 kg more on Tuesday. So the demo showed the system's own order causing waste. Seed orders also arrived on days the supplier does not deliver (dry goods on a Wednesday), and with the fixed stock some weekdays showed shortages even with the recommended order (on Fridays chicken, mince and bacon ran short on Sunday).
+- After: the kitchen looks as it would with DemandInn already running.
+  - Each item was bought at its supplier's last delivery. With any open order, it lasts until the first delivery an order placed today can still make, plus a cushion of about 7 hours.
+  - Open orders arrive on real delivery days, cover exactly until that next delivery, and never more than the item keeps.
+  - The story touches stay: an older box of tomatoes to use first, one box of salad past its date, plenty of dry goods, rice running low with an order on the way, and the drinks wholesaler running a day late.
+  - On 19 Oct: 1.3 kg of sea bass on hand (use by Tue), the confirmed fish order brings 3 kg on Tue to last until Thursday's delivery, and the recommendation is "Order 3 kg by Tue 14:00 (Fishmonger, delivery Thu)". **No "may go unused".**
+- Checked on nine dates (every day from Mon 19 to Sun 25 Oct, Thu 31 Dec, Sat 6 Feb): no "may go unused" caused by the seeded stock or orders, and no shortage the recommended orders cannot cover. The only expiry is the deliberate box of salad. 5 or 6 purchase orders are ready every day (EUR 318–836).
+- Note: with this cleaner kitchen, the double situation in 7.2 (part of the stock passes its date and the item still runs short) no longer occurs in the starting data. The combined message is still there for when it happens, for example after the user logs or edits stock.
+- Undo: `git revert <hash of 7.4>`
