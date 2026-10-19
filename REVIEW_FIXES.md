@@ -112,3 +112,9 @@ Group tags so far: `fixes-group-0`.
 - Before: "[Placeholder: confirm with your legal adviser before launch.] The plan is to collect only what the forecast needs, store it in the EU and never sell it. Guest names are not needed."
 - After: "For pilots, we collect only what the forecast needs: booking and cover counts, sales by item, recipes and stock. Guest names are not needed. The data is stored in the EU, never sold, and deleted when you ask." Same promises as before, written as the pilot plan. It is still worth a check by a legal adviser before launch.
 - Undo: `git revert <hash of 1.2>`
+
+#### 1.3 Demo "Use your own data" → Privacy card
+- Files and functions: `index.html`: `DataScreen` (Privacy card).
+- Before: "Real pilots: data stored in the EU, never sold, deletable on request [placeholder: confirm with a legal adviser]."
+- After: "For pilots, we collect only what the forecast needs. It is stored in the EU, never sold, and deleted when you ask." Matches the FAQ answer in 1.2.
+- Undo: `git revert <hash of 1.3>`
