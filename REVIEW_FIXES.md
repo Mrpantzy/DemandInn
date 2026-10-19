@@ -151,3 +151,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`.
 - Before: `<html>` with no language, `<meta charset=utf8>` (not a valid name), and the `<head>` closed after the first stylesheet, so `<title>`, the description, the font links and the other styles sat inside `<body>`.
 - After: `<html lang="en">`, `<meta charset="utf-8">`, and one `<head>` that holds the title, meta tags, font links and all styles. `<body>` starts at `<div id="root">`. Nothing visible changes. Screen readers and search engines now know the page is in English.
 - Undo: `git revert <hash of 2.1>`
+
+#### 2.2 Favicon
+- Files: `index.html`, `<link rel="icon">` in the head.
+- Before: no favicon (the browser showed a blank page icon).
+- After: an inline SVG data URI: the logo's cloche (dome, handle and knob) in amber `#dfa550` on a rounded forest-green `#1b322a` square. No extra file to deploy.
+- Undo: `git revert <hash of 2.2>`
