@@ -56,8 +56,14 @@ Every commit on the branch, oldest first. Filled in at the end of each group, so
 | 2.7 | `64b664a` | Darken amber chip text to pass 4.5:1 contrast | `git revert 64b664a` |
 | 2.8 | `1ea7975` | Demo banner: changes reset when you reload | `git revert 1ea7975` |
 | 3 | `2d3eb39` | Allow a fixed demo date from ?date=YYYY-MM-DD | `git revert 2d3eb39` |
+| 4.1 | `cf54f22` | Who is coming: count board types in guests, adding up to guests in house | `git revert cf54f22` |
+| 4.2 | `490bcb7` | Board table counts guests with a total; landing half board counts rooms | `git revert 490bcb7` |
+| 4.3 | `869fed9` | Arrivals and departures in guests and rooms on Today and Demand | `git revert 869fed9` |
+| 4.4 | `5656acf` | Cover parts (hotel, room service, walk-in, event) add up to the total | `git revert 5656acf` |
+| 4.5 | `35ca56b` | Landing cards use the likely X-Y range format | `git revert 35ca56b` |
+| 4.6 | `165b9e2` | Team evening card: Floor instead of Floor and breakfast | `git revert 165b9e2` |
 
-Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`.
+Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`, `fixes-group-4`.
 <!-- commit-index:end -->
 
 ## Items
