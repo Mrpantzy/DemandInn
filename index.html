@@ -265,7 +265,9 @@ button.rc-sh:hover{filter:brightness(.95)}
 
 /* ---------- SECTION 1: SETTINGS ---------- */
 const PRODUCT_NAME = "DemandInn";
-const BRAND_LINE = "Tomorrow's covers, forecasted today.";
+// The slogan. Used in the hero, the footer, the morning email and the page title.
+// Crawlers do not run scripts, so if it changes, also update <title>, og:title and twitter:title in the <head>.
+const BRAND_LINE = "Tomorrow's covers, forecasted today";
 const CONTACT_EMAIL = "hello@[your-domain]";
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
@@ -3229,7 +3231,7 @@ function buildEmail(S, link) {
   <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;font-family:Helvetica,Arial,sans-serif">
   <tr><td style="padding:0 4px 14px 4px"><span style="display:inline-block;width:24px;height:24px;border-radius:7px;background:#E9A23B;vertical-align:middle"></span><span style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#12332A;vertical-align:middle;margin-left:8px">${PRODUCT_NAME}</span></td></tr>
   <tr><td style="background:#12332A;border-radius:20px;padding:26px 24px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E9A23B;font-weight:700">Good morning · ${esc(fmtDate(TODAY, { weekday: "long", day: "numeric", month: "long" }))}</div>
-  <div style="font-family:Georgia,serif;font-size:27px;line-height:1.2;color:#FFFFFF;margin:10px 0 6px;font-weight:700">Tomorrow's covers, forecasted today</div>
+  <div style="font-family:Georgia,serif;font-size:27px;line-height:1.2;color:#FFFFFF;margin:10px 0 6px;font-weight:700">${esc(BRAND_LINE)}</div>
   <div style="font-size:14px;color:#C5D6CC">${esc(dowName(addDays(TODAY, 1)))}, dinner likely between ${m.dinner.p10} and ${m.dinner.p90}. The ${tips.length} things that matter most today:</div>
   <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:16px"><tr>${nums}</tr></table></td></tr>
   <tr><td style="height:16px;line-height:16px">&nbsp;</td></tr>${cards}
@@ -3676,7 +3678,7 @@ function Hero() {
       <div className="max-w-[1180px] mx-auto px-4 sm:px-5 hero-grid">
         <div className="min-w-0 relative">
           <p className="kicker">Demand forecasting for hotel food and beverage</p>
-          <h1 className="hero-title">Tomorrow's covers, <em>forecasted today.</em></h1>
+          <h1 className="hero-title">${BRAND_LINE.includes(", ") ? html`${BRAND_LINE.slice(0, BRAND_LINE.indexOf(", ") + 1)} <em>${BRAND_LINE.slice(BRAND_LINE.indexOf(", ") + 2)}.</em>` : html`<em>${BRAND_LINE}.</em>`}</h1>
           <p className="hero-lede">Less food in the bin, lower food cost, calmer services for the kitchen team. ${PRODUCT_NAME} turns the bookings you already have into covers for breakfast, lunch and dinner, and into one clear order list, every evening.</p>
           <div className="flex flex-wrap gap-3 mb-7"><a href="#/app" className="btn btn-primary btn-lg">Open the live demo<${Icon} name="arrow" size=${18} /></a><a href="#day" className="btn btn-secondary btn-lg">See a day at ${HOTEL.name}</a></div>
           <p className="m-0 text-[15px] text-muted terms"><span><b className="text-head">Free</b> backtest on your data</span><span><b className="text-head">4 weeks</b> shadow mode, zero risk</span><span><b className="text-head">EUR 149</b>/month after</span></p>
@@ -3932,7 +3934,7 @@ function Footer() {
   return html`
     <footer className="dk2 border-t border-white/10">
       <div className="max-w-[1180px] mx-auto px-4 sm:px-5 py-10 grid md:grid-cols-[1.4fr_1fr] gap-8 items-start">
-        <div><${Logo} /><p className="mt-2 mb-0 muted max-w-[44ch]">${BRAND_LINE} AI recommends. Hotel teams decide.</p></div>
+        <div><${Logo} /><p className="mt-2 mb-0 muted max-w-[44ch]">${BRAND_LINE}. AI recommends. Hotel teams decide.</p></div>
         <ul className="list-none p-0 m-0 grid gap-1 text-[16px] muted"><li>Contact: ${CONTACT_EMAIL}</li><li>Privacy policy [placeholder]</li><li>Terms [placeholder]</li></ul>
       </div>
       <p className="text-center text-sm muted m-0 pb-2 px-4">${HOTEL.name} and all data in the demo are fictional and simulated.</p>

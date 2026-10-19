@@ -44,3 +44,9 @@ Notes:
 
 #### 0.10 Daily timing: no change
 - Decision: keep 18:00 (the deck's "ready by 9 pm" is not used). Nothing to commit.
+
+#### 0.3 One slogan, from `BRAND_LINE`
+- Files and functions: `index.html`: `BRAND_LINE` constant, `Hero`, `Footer`, `buildEmail`.
+- Before: the hero heading and the morning email hard-coded the slogan. `BRAND_LINE` ended with a full stop, so the browser tab read "DemandInn: Tomorrow's covers, forecasted today." and the static `<title>` read the same without the stop.
+- After: `BRAND_LINE = "Tomorrow's covers, forecasted today"` feeds the hero heading (the part after the comma stays in italics), the footer, the morning email header and the tab title, which now match the static `<title>` exactly. `og:title` and `twitter:title` are added in 2.3 with the same words. A comment next to the constant says to update the `<head>` too if the slogan changes, because crawlers do not run scripts.
+- Undo: `git revert <hash of 0.3>`
