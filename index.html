@@ -3832,25 +3832,48 @@ function SelfLearning() {
     </section>`;
 }
 
+// The deck's ROI model (7 Oct deck), so the site and the deck give the same answer.
+// Defaults: the 28-room demo hotel. Food waste share: Winnow puts it at 5 to 15% of food bought.
+const PRICE_MONTH = 149;
+const ROI_DEFAULTS = { rooms: HOTEL.rooms, occ: 75, gpr: 1.6, uptake: 85, costCover: 4, wastePct: 12, cut: 30, minutes: 30, rate: 25 };
+function roiModel(v) {
+  const coversYear = v.rooms * (v.occ / 100) * v.gpr * (v.uptake / 100) * 365;
+  const foodYear = coversYear * v.costCover;
+  const wasteYear = foodYear * (v.wastePct / 100);
+  const foodSaved = wasteYear * (v.cut / 100);
+  const timeSaved = (v.minutes / 60) * v.rate * 365;
+  const priceYear = PRICE_MONTH * 12;
+  return { coversYear, foodYear, wasteYear, foodSaved, timeSaved, total: foodSaved + timeSaved, priceYear, multiple: (foodSaved + timeSaved) / priceYear };
+}
 function RoiCalculator() {
-  const [spend, setSpend] = useState(18000);
-  const [waste, setWaste] = useState(10);
-  const [cut, setCut] = useState(20);
-  const saved = Math.round(spend * (waste / 100) * (cut / 100));
+  const [v, setV] = useState(ROI_DEFAULTS);
+  const r = roiModel(v);
+  const set = (k) => (e) => setV((x) => ({ ...x, [k]: Number(e.target.value) }));
+  const slider = (k, label, shown, min, max, step) => html`<label key=${k} className="block"><span className="flex justify-between gap-3 text-[16px] mb-1.5"><span>${label}</span><b className="tnum whitespace-nowrap">${shown}</b></span><input id=${"roi-" + k} type="range" min=${min} max=${max} step=${step} value=${v[k]} onInput=${set(k)} className="w-full accent-[#dfa550]" /></label>`;
   return html`
     <section id="roi" className="py-16 md:py-20 dk2">
       <${Wrap}>
         <${SectionHead} dark=${true} title="What could it be worth to you?" intro="A simple what-if with your own numbers. These are assumptions you set, not results we have measured." />
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-5 items-stretch">
           <div className="rounded-[16px] bg-[#1f352d] border border-white/10 p-6 grid gap-5">
-            <label className="block"><span className="flex justify-between text-[16px] mb-1.5"><span>Monthly food and drink purchases</span><b className="tnum">EUR ${NUMBER_FMT(spend)}</b></span><input id="roi-spend" type="range" min="4000" max="60000" step="500" value=${spend} onInput=${(e) => setSpend(Number(e.target.value))} className="w-full accent-[#dfa550]" /></label>
-            <label className="block"><span className="flex justify-between text-[16px] mb-1.5"><span>Share of purchases wasted today</span><b className="tnum">${waste}%</b></span><input id="roi-waste" type="range" min="2" max="25" step="1" value=${waste} onInput=${(e) => setWaste(Number(e.target.value))} className="w-full accent-[#dfa550]" /></label>
-            <label className="block"><span className="flex justify-between text-[16px] mb-1.5"><span>Assumed reduction in that waste</span><b className="tnum">${cut}%</b></span><input id="roi-cut" type="range" min="0" max="40" step="1" value=${cut} onInput=${(e) => setCut(Number(e.target.value))} className="w-full accent-[#dfa550]" /></label>
+            <p className="m-0 text-[13px] font-bold tracking-wider uppercase muted">Your hotel</p>
+            ${slider("rooms", "Rooms", v.rooms, 10, 120, 1)}
+            ${slider("occ", "Average occupancy", v.occ + "%", 30, 100, 1)}
+            ${slider("gpr", "Guests per occupied room", NUMBER_FMT(v.gpr, 1), 1, 2.5, 0.1)}
+            ${slider("uptake", "Guests who eat breakfast", v.uptake + "%", 30, 100, 1)}
+            ${slider("costCover", "Food cost per breakfast cover", "EUR " + NUMBER_FMT(v.costCover, 2), 1, 10, 0.25)}
+            <p className="m-0 mt-2 text-[13px] font-bold tracking-wider uppercase muted">Assumptions</p>
+            ${slider("wastePct", "Share of food wasted today (typical range 5 to 15%)", v.wastePct + "%", 3, 25, 1)}
+            ${slider("cut", "Assumed reduction in that waste", v.cut + "%", 0, 50, 1)}
+            ${slider("minutes", "Manager time saved per day", v.minutes + " min", 0, 90, 5)}
+            ${slider("rate", "Cost of that time per hour", "EUR " + v.rate, 10, 50, 1)}
           </div>
           <div className="rounded-[16px] bg-amber text-forest p-6 flex flex-col justify-center">
-            <p className="m-0 text-[14px] font-bold tracking-wider uppercase">Hypothetical saving</p>
-            <p className="font-serif text-[56px] leading-none my-3 tnum" aria-live="polite">EUR ${NUMBER_FMT(saved)}</p>
-            <p className="m-0 text-[16px]">per month, against EUR 149 for ${PRODUCT_NAME}. This is arithmetic on your inputs: purchases × waste share × assumed reduction. It is not a promise.</p>
+            <p className="m-0 text-[14px] font-bold tracking-wider uppercase">Hypothetical value per year</p>
+            <p className="font-serif text-[56px] leading-none my-3 tnum" aria-live="polite">EUR ${NUMBER_FMT(Math.round(r.total))}</p>
+            <p className="m-0 text-[16px] tnum">EUR ${NUMBER_FMT(Math.round(r.foodSaved))} of food no longer thrown away, plus EUR ${NUMBER_FMT(Math.round(r.timeSaved))} of manager time.</p>
+            <p className="m-0 mt-3 text-[16px] tnum">Against EUR ${NUMBER_FMT(r.priceYear)} a year for ${PRODUCT_NAME} (EUR ${PRICE_MONTH} × 12), that is about <b>${NUMBER_FMT(r.multiple, 1)}×</b> what it costs.</p>
+            <p className="m-0 mt-3 text-[14.5px]">Arithmetic on your inputs: rooms × occupancy × guests per room × breakfast uptake × 365 gives the covers; covers × food cost × waste share × reduction gives the food saved. It is not a promise.</p>
           </div>
         </div>
       <//>
