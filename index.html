@@ -44,6 +44,8 @@
 .app-main{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--cream)}
 .app-note{display:flex;align-items:center;gap:8px;margin:0;padding:9px 18px;background:var(--amber-pale);color:var(--amber-ink);font-size:13.5px;font-weight:500}
 .app-shell .app-body{max-height:none;flex:1;min-height:0}
+.week-min{min-width:1040px}
+@media (min-width:1280px){.week-min{min-width:0}.week-scroll{overflow-x:hidden}}
 @media (max-width:1023px){
   .app-shell{display:block;height:auto;min-height:0}
   .app-side{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;overflow:visible}
@@ -2100,7 +2102,7 @@ function DayPanel({ dateOff, onClose }) {
       <p className="text-muted mt-0 mb-1">${fmtDate(d, { weekday: "long", day: "numeric", month: "long" })}</p>
       <div className="flex items-center gap-3 mb-4"><${WeatherIcon} w=${f.weather} size=${28} /><span className="text-[15px]">${f.weather.label || "Past day"}${f.weather.kind !== "none" ? ", " + f.weather.hi + "° / " + f.weather.lo + "°" : ""}</span></div>
       <div className="grid grid-cols-2 gap-3 mb-5">
-        <div className="rounded-xl bg-sage p-3"><div className="text-sm text-muted">Occupancy</div><div className="font-serif text-[28px] text-head leading-tight tnum">${Math.round(f.occ * 100)}%</div><div className="text-sm">${f.rooms} of ${HOTEL.rooms} rooms, ${f.guests} guests</div></div>
+        <div className="rounded-xl bg-sage p-3"><div className="text-sm text-muted">Occupancy tonight</div><div className="font-serif text-[28px] text-head leading-tight tnum">${Math.round(f.occ * 100)}%</div><div className="text-sm">${f.rooms} of ${HOTEL.rooms} rooms, ${f.guests} guests. Breakfast follows last night (${Math.round(fcDay(addDays(d, -1)).occ * 100)}%).</div></div>
         <div className="rounded-xl bg-sage p-3"><div className="text-sm text-muted">Expected covers</div><div className="font-serif text-[28px] text-head leading-tight tnum">${f.total}</div><div className="text-sm">+ ${f.barGuests} at the bar</div></div>
       </div>
       <h4 className="font-serif text-[19px] text-head mt-0 mb-2">Forecast by service</h4>
@@ -2987,8 +2989,8 @@ function dayMarks(S, d, layers) {
 function WeekView({ days, layers, orders }) {
   const nav = useNav(), S = useStore();
   return html`
-    <div className="hidden md:block overflow-x-auto pb-2" tabIndex="0" role="region" aria-label="Week view, scrolls sideways on small screens">
-      <div style=${{ minWidth: 1200 }}>
+    <div className="hidden md:block overflow-x-auto pb-2 week-scroll" tabIndex="0" role="region" aria-label="Week view, scrolls sideways on small screens">
+      <div className="week-min">
         ${layers.orders && html`<div className="mb-3"><${BarRow} days=${days} orders=${orders} /></div>`}
         <div className="grid gap-3" style=${{ gridTemplateColumns: "repeat(7, minmax(0, 1fr))" }}>
           ${days.map((d) => {
@@ -3003,11 +3005,12 @@ function WeekView({ days, layers, orders }) {
                   ${today && html`<${Chip} tone="ok" icon="check">Today<//>`}
                 </header>
                 ${layers.weather && f.weather.kind !== "none" && html`<div className="flex items-center gap-2 text-[15px]"><${WeatherIcon} w=${f.weather} size=${22} /><span><span className="font-semibold">${f.weather.hi}°</span> <span className="text-muted">${f.weather.lo}°</span><span className="block text-[13px] text-muted leading-tight">${f.weather.typical ? "Typical for the season" : f.weather.label}</span></span></div>`}
-                ${layers.occupancy && html`<div className="text-[15px]"><div className="flex justify-between"><span className="text-muted">Occupancy</span><span className="font-semibold tnum">${Math.round(f.occ * 100)}%</span></div>
+                ${layers.occupancy && html`<div className="text-[15px]"><div className="flex justify-between items-baseline gap-2"><span className="text-muted text-[13.5px] leading-tight">Occupied tonight</span><span className="font-semibold tnum">${Math.round(f.occ * 100)}%</span></div>
                   <div className="h-2 rounded-full bg-sage mt-1" aria-hidden="true"><div className="h-2 rounded-full bg-forest" style=${{ width: Math.round(f.occ * 100) + "%" }}></div></div></div>`}
                 ${layers.demand && html`<dl className="m-0 grid grid-cols-3 gap-1 text-center text-[13px] tnum">
                   ${["breakfast", "lunch", "dinner"].map((m) => html`<div key=${m} className="rounded-lg bg-cream py-1.5"><dt className="text-muted">${MEAL_LABEL[m].slice(0, 3)}</dt><dd className="m-0 font-semibold text-[17px] text-head">${f.meals[m].covers}</dd></div>`)}
                 </dl>
+                <p className="m-0 -mt-0.5 text-[12.5px] text-muted leading-tight tnum">Breakfast after a night at ${Math.round(fcDay(addDays(d, -1)).occ * 100)}%${f.meals.breakfast.eventCovers ? `, +${f.meals.breakfast.eventCovers} for the group` : ""}</p>
                 ${!past && vsNormal(f, "dinner") >= 0.12 && html`<${Chip} tone="amber" icon="trend" cls="!whitespace-normal">Dinner +${Math.round(vsNormal(f, "dinner") * 100)}% vs normal<//>`}`}
                 ${layers.dietary && (dg.veg + dg.vegan + dg.gf) > 0 && html`<span className="chip chip-ok !whitespace-normal"><${Icon} name="leaf" size=${14} />${dg.veg} veg, ${dg.vegan} vegan, ${dg.gf} GF</span>`}
                 ${evs.map((e) => html`<${EventChip} key=${e.id} e=${e} f=${f} short />`)}

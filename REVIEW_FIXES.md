@@ -404,3 +404,10 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Checked on nine dates (every day from Mon 19 to Sun 25 Oct, Thu 31 Dec, Sat 6 Feb): no "may go unused" caused by the seeded stock or orders, and no shortage the recommended orders cannot cover. The only expiry is the deliberate box of salad. 5 or 6 purchase orders are ready every day (EUR 318–836).
 - Note: with this cleaner kitchen, the double situation in 7.2 (part of the stock passes its date and the item still runs short) no longer occurs in the starting data. The combined message is still there for when it happens, for example after the user logs or edits stock.
 - Undo: `git revert <hash of 7.4>`
+
+#### 7.7 Calendar: occupancy and breakfast line up; the week fits at 1280 px
+- Files and functions: `index.html`: `WeekView` (labels, a breakfast note, `week-min` and `week-scroll` classes), `DayPanel` (occupancy tile), new CSS for `.week-min` and `.week-scroll`.
+- What was going on: the logic was right but the display misled. The wedding guests do count in occupancy: Saturday night is 89% (25 rooms, including the 16 wedding rooms). Breakfast is eaten the morning **after** a night, so Sunday's 59 breakfasts follow Saturday's 89% (the 49 guests who stayed, plus 14 family joining the group's late breakfast, plus walk-ins), while the Sunday card showed Sunday night's 61% next to them.
+- After: the week cards say "Occupied tonight 61%" and, under the covers, "Breakfast after a night at 89%, +14 for the group". The day panel says "Occupancy tonight … Breakfast follows last night (89%)." Saturday reads "Occupied tonight 89%" and "Breakfast after a night at 82%" (41 breakfasts). No numbers changed.
+- Week view: it had a fixed minimum width of 1,200 px, so all 7 days needed sideways scrolling. From 1,280 px up, the seven days now fit with no horizontal scroll (checked at 1280×800). Below 1,280 px the week still scrolls sideways as before.
+- Undo: `git revert <hash of 7.7>`
