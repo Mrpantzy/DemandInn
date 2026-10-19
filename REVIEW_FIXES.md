@@ -233,3 +233,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (Tue 20 Oct): breakfast 24 = 21 hotel guests + 3 walk-ins + 1 room service (= 25); dinner 25 = 18 + 7 + 1 (= 26). Room service was counted inside "Hotel guests" and again on its own.
 - After: breakfast **24 = 20 + 3 + 1**, dinner **25 = 17 + 7 + 1**. Hotel guests in the restaurant + room service + walk-ins + booked event covers always equal the headline number. Checked for all four services on 60 days (20 past, 40 ahead): no mismatch. The Team screen's "Hotel / Walk-in" and the day panel's "Hotel / walk-in" still add up to the covers.
 - Undo: `git revert <hash of 4.4>`
+
+#### 4.5 One range format: "likely X–Y"
+- Files and functions: `index.html`: `Hero` (the floating "Tomorrow · Hotel Aurora" chip), `HeroCard` (the kitchen order card).
+- Before (Tue 20 Oct): "25 dinner covers, ± 7" on the landing page, "likely 18 to 31" in the timeline and the demo.
+- After: "25 dinner covers, likely 18–31" on both landing cards. No "±" is left on the site.
+- Undo: `git revert <hash of 4.5>`
