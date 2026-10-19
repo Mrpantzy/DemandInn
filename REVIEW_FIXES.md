@@ -348,3 +348,20 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before: order ranges were built from the sum of the services' P10 and P90 (as if every service missed in the same direction), with half the buffer at the low end and 1.2 × the buffer at the high end. So the range was very wide and often started at 0: "range 0–216" bottles of beer, "range 24–102" bottles of wine for an order of 60.
 - After: both ranges come from the same demand spread as the buffer: the order you would place if demand landed at a lower or higher percentile, rounded to the case size. Today, Purchasing and the Ingredients table show the **middle half (P25–P75)**, written "likely 3–4", with a tooltip. The Explain panel and the assistant keep **P10–P90**, labelled as such. When an order is recommended, the low end is at least one case, so a needed item never shows 0. Checked on Mon 19, Wed 21, Fri 23 and Sun 25 Oct: no range starts at 0 (for example chicken "likely 4–4", tomatoes "likely 3–4", mince "likely 1–2").
 - Undo: `git revert <hash of 7.3>`
+
+#### 7.5 History and accuracy
+- Files and functions: `index.html`: `forecastDay` (past days keep the spread of the forecast made the evening before; P10/P90 rounded to the nearest cover; two variance terms trimmed), `pastActual` (new error model, `ACTUAL_NOISE`), `accuracy`, `backtest`, `TodayScreen` ("Forecast accuracy" tile). The 8-week history itself was added in 5.3.
+- What was wrong: "actual" covers were the forecast ± a uniform 7%, and the backtest's DemandInn line was the forecast ± 5%, so the error was implausibly small (3.6%). Past days had a zero-width range (P10 = P90 = the forecast), so "inside the range" (62%) meant nothing. Days older than 32 days had no guests, so the "average of 4 weeks" baseline collapsed (35% error). The Today tile used yet another 14-day calculation (96%).
+- Now:
+  - **Actual covers** = the forecast made the evening before + a normally distributed error with 1.15 × that forecast's own standard deviation, fixed per day and service.
+  - **Past days** keep the P10–P90 range their forecast had the evening before.
+  - **Spread trimmed:** the forecast spread was slightly inflated. Party correlation goes from 0.6 to 0.2 and walk-in overdispersion from 1.4 to 0.8, and P10/P90 are rounded instead of floored and ceiled. This also keeps buffers and ranges modest (7.1, 7.3).
+  - **Today tile:** "Forecast accuracy" is 100% minus the same 28-day DemandInn error as the Accuracy screen, with the error spelled out ("87%, error 13.3% (WAPE), last 28 days").
+- Before → after (all services, 28 days; checked on seven dates from 19 Oct 2026 to 3 Mar 2027):
+  - DemandInn error (WAPE): 3.6% → **13.2–13.9%**
+  - "Same as last week": 21.4% → **23.1–25.3%**
+  - Average of last 4 same weekdays: 35.3% → 18.7–20.1%
+  - Inside the range: 62% → **82–86%**
+  - Today's tile: 96% (14 days) → **87%** on 19 Oct, the same figure as Accuracy
+- The chart has real history behind it from the first day, so the baselines no longer drop to single digits.
+- Undo: `git revert <hash of 7.5>`
