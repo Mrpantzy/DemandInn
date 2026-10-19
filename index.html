@@ -1127,7 +1127,7 @@ function explainOrder(pid, S) {
 }
 function explainDay(f) {
   const out = [];
-  out.push({ key: "bookings", icon: "calendar", title: "Bookings", text: `${f.rooms} of ${HOTEL.rooms} rooms (${f.booked} on the books, ${f.pickup} expected to book), about ${f.guests} guests. ${f.arrivals.rooms} arrive and ${f.departures.rooms} leave.`, effect: "Sets the starting point" });
+  out.push({ key: "bookings", icon: "calendar", title: "Bookings", text: `${f.rooms} of ${HOTEL.rooms} rooms (${f.booked} on the books, ${f.pickup} expected to book), about ${f.guests} guests. ${f.arrivals.guests} ${plural(f.arrivals.guests, "guest")} in ${f.arrivals.rooms} ${plural(f.arrivals.rooms, "room")} arrive, ${f.departures.guests} ${plural(f.departures.guests, "guest")} in ${f.departures.rooms} ${plural(f.departures.rooms, "room")} leave.`, effect: "Sets the starting point" });
   out.push({ key: "board", icon: "plate", title: "Board type", text: `${f.board.BB + f.board.HB} guests have breakfast included, ${f.board.RO} are room only. Guests with breakfast included eat it far more often.`, effect: `${f.meals.breakfast.covers} breakfast covers expected` });
   out.push({ key: "cancel", icon: "x", title: "Cancellations and no-shows", text: `We allow about ${f.cancel} ${plural(f.cancel, "room")} to cancel or not arrive, using each booking's channel and lead time.`, effect: f.cancel ? "Fewer guests than the bookings suggest" : "No change" });
   const g = f.group;
@@ -2223,9 +2223,9 @@ function TodayScreen() {
         <section className="card p-5" aria-label="Who is coming">
           <h3 className="font-serif text-[20px] text-head mt-0 mb-3">Who is coming</h3>
           <div className="grid grid-cols-3 gap-3 mb-4 tnum">
-            <div><div className="font-serif text-[32px] leading-none text-head">${f.guests}</div><div className="text-[13px] text-muted mt-1">guests in house</div></div>
-            <div><div className="font-serif text-[32px] leading-none text-head">${f.arrivals.guests}</div><div className="text-[13px] text-muted mt-1">arriving</div></div>
-            <div><div className="font-serif text-[32px] leading-none text-head">${f.departures.guests}</div><div className="text-[13px] text-muted mt-1">leaving</div></div>
+            <div><div className="font-serif text-[32px] leading-none text-head">${f.guests}</div><div className="text-[13px] text-muted mt-1">guests in house, ${f.rooms} ${plural(f.rooms, "room")}</div></div>
+            <div><div className="font-serif text-[32px] leading-none text-head">${f.arrivals.guests}</div><div className="text-[13px] text-muted mt-1">guests arriving, ${f.arrivals.rooms} ${plural(f.arrivals.rooms, "room")}</div></div>
+            <div><div className="font-serif text-[32px] leading-none text-head">${f.departures.guests}</div><div className="text-[13px] text-muted mt-1">guests leaving, ${f.departures.rooms} ${plural(f.departures.rooms, "room")}</div></div>
           </div>
           <div className="flex h-3 rounded-full overflow-hidden bg-sage mb-1.5" aria-hidden="true"><div className="bg-forest" style=${{ width: (f.board.BB + f.board.HB) / Math.max(1, f.guests) * 100 + "%" }}></div></div>
           <p className="text-[14px] text-muted mt-0 mb-3">${f.board.BB + f.board.HB} of ${f.guests} guests have breakfast or half board, ${f.board.RO} are room only. ${f.dietGuests.veg + f.dietGuests.vegan + f.dietGuests.gf > 0 ? `${f.dietGuests.veg} vegetarian, ${f.dietGuests.vegan} vegan and ${f.dietGuests.gf} gluten-free guests are planned for.` : ""}</p>

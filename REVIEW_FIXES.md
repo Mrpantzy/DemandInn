@@ -221,3 +221,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (Tue 20 Oct): the column "Rooms" showed 17 / 12 / 7, which are guests (18 rooms were booked), and the rows added up to 36. On the landing page, "Half board 12 rooms" was also a guest count.
 - After: the column is "Guests" (17 / 12 / 8) with a total row "Total 37 guests in 18 rooms", matching the pipeline strip above ("18 rooms, 37 guests"). The landing card's "Half board" now shows real rooms (6 rooms). Room counts per board type always add up to the rooms booked (checked on 50 days).
 - Undo: `git revert <hash of 4.2>`
+
+#### 4.3 Arrivals and departures name their unit
+- Files and functions: `index.html`: `TodayScreen` ("Who is coming" tiles), `explainDay` (the "Bookings" line on Demand, the day panel and the assistant).
+- Before (Tue 20 Oct): Today said "20 arriving, 15 leaving" (guests, no unit). Demand said "10 arrive and 10 leave" (rooms, no unit). They looked like a contradiction.
+- After: Today: "37 guests in house, 18 rooms · 20 guests arriving, 10 rooms · 15 guests leaving, 10 rooms". Demand: "… about 37 guests. 20 guests in 10 rooms arrive, 15 guests in 10 rooms leave." Same numbers, both units, on both screens.
+- Undo: `git revert <hash of 4.3>`
