@@ -268,7 +268,9 @@ const PRODUCT_NAME = "DemandInn";
 // The slogan. Used in the hero, the footer, the morning email and the page title.
 // Crawlers do not run scripts, so if it changes, also update <title>, og:title and twitter:title in the <head>.
 const BRAND_LINE = "Tomorrow's covers, forecasted today";
-const CONTACT_EMAIL = "hello@[your-domain]";
+// Contact address shown in the footer, the pilot form fallback and the <noscript> message.
+// Placeholder until the team has a real address: the .example domain can never receive mail.
+const CONTACT_EMAIL = "hello@demandinn.example";
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
 const MEAL_LABEL = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", bar: "Bar" };
@@ -3960,7 +3962,7 @@ function Footer() {
     <footer className="dk2 border-t border-white/10">
       <div className="max-w-[1180px] mx-auto px-4 sm:px-5 py-10 grid md:grid-cols-[1.4fr_1fr] gap-8 items-start">
         <div><${Logo} /><p className="mt-2 mb-0 muted max-w-[44ch]">${BRAND_LINE}. AI recommends. Hotel teams decide.</p></div>
-        <ul className="list-none p-0 m-0 grid gap-1 text-[16px] muted"><li>Contact: ${CONTACT_EMAIL}</li><li>Privacy policy [placeholder]</li><li>Terms [placeholder]</li></ul>
+        <ul className="list-none p-0 m-0 grid gap-1 text-[16px] muted"><li>Contact: <a href=${"mailto:" + CONTACT_EMAIL} style=${{ textDecoration: "underline" }}>${CONTACT_EMAIL}</a></li></ul>
       </div>
       <p className="text-center text-sm muted m-0 pb-2 px-4">${HOTEL.name} and all data in the demo are fictional and simulated.</p>
       <p className="credit text-center muted m-0 pb-8 px-4">Photos on <a href="https://unsplash.com">Unsplash</a> by ${[...new Set(Object.values(PHOTOS).map((x) => x.by))].join(", ")}.</p>

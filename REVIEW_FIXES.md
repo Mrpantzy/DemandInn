@@ -98,3 +98,11 @@ Group tags so far: `fixes-group-0`.
 - Before: a dashed card "In progress · Pilot results coming soon. We are starting pilots with independent hotels…".
 - After: the same card style, titled "What hotels told us", with the chip "Phone interviews, 10 Oct 2026", the line "5 of the 10 small hotels we called in the UK and Italy answered", three anonymised findings (walk-in guests make restaurant demand hard to predict from bookings alone; staffing came up as often as stock; most still plan by hand) and a small "Pilot results coming soon." line underneath. No hotel names.
 - Undo: `git revert <hash of 0.8>`
+
+### Group 1. Remove placeholders and make the pilot form work
+
+#### 1.1 Footer contact
+- Files and functions: `index.html`: `CONTACT_EMAIL` constant, `Footer`.
+- Before: "Contact: hello@[your-domain]", "Privacy policy [placeholder]", "Terms [placeholder]".
+- After: "Contact: hello@demandinn.example" as an underlined `mailto:` link. The two placeholder lines are gone. **Waiting:** the real address goes into `CONTACT_EMAIL` (top of the script).
+- Undo: `git revert <hash of 1.1>`
