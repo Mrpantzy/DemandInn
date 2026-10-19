@@ -3885,7 +3885,7 @@ function Principles() {
   return html`
     <section id="principles" className="py-16 md:py-20" style=${{ background: "var(--surface)" }}>
       <${Wrap}>
-        <${SectionHead} title="How we think about it" />
+        <${SectionHead} title="How we think about it" intro=${`One platform at EUR ${PRICE_MONTH} a month, where stacking separate tools for forecasting, inventory and staffing (such as Tenzo, MarketMan and Planday) costs a small hotel about EUR 400–550.`} />
         <div className="ruled-lp">${items.map(([ic, t, s]) => html`<article key=${t}><h3 className="font-serif text-[25px] text-head mt-0 mb-2">${t}</h3><p className="m-0 text-[17px]">${s}</p></article>`)}</div>
         <div className="grid md:grid-cols-[1.3fr_1fr] gap-5 mt-10">
           <article className="rounded-[16px] bg-forest text-on-dark p-8"><p className="font-serif text-[30px] md:text-[34px] leading-tight m-0">42 hotels in 15 countries cut kitchen waste 21% in one year.</p><p className="mt-5 mb-0 text-[15px] muted">Industry evidence: Champions 12.3. Not our own results.</p></article>

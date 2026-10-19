@@ -68,3 +68,9 @@ Notes:
 - Before: "Suggestions, never silent orders. You can accept, change or remove every line, and your reason stays with it."
 - After: the same, plus "Later, and only if you choose, orders can be drafted automatically within limits you set." This matches the deck's fourth stage without dropping the principle.
 - Undo: `git revert <hash of 0.6>`
+
+#### 0.7 Competitor line
+- Files and functions: `index.html`: `Principles` (intro under "How we think about it").
+- Before: no intro line.
+- After: "One platform at EUR 149 a month, where stacking separate tools for forecasting, inventory and staffing (such as Tenzo, MarketMan and Planday) costs a small hotel about EUR 400–550." Written with "EUR" like every other price on the site. No comparison table.
+- Undo: `git revert <hash of 0.7>`
