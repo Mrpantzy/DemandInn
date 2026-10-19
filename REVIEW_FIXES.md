@@ -445,3 +445,11 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
   - The banner reads: 'Forecast calibrated on your file "Sample hotel, 12 months (weekend-heavy).csv" (365 days). Bookings, stock and orders are still simulated for Hotel Aurora. Changes reset when you reload.' "Reset to the demo hotel" brings the original banner back.
   - The Demand "Past sales" line then reads "Calibrated on the last 52 Fridays of covers in Sample hotel…csv" (from 5.3).
 - Undo: `git revert <hash of 7.10>`
+
+### Group 8. Landing page consistency and copy
+
+#### 8.1 One day on the whole landing page, with its date
+- Files and functions: `index.html`: `HowItWorks`, `DayAtHotel` (intro line).
+- Before (19 Oct): "How it works" used the day after tomorrow ("Wednesday: 18 of 28 rooms, 36 guests … 21 dinner covers"), while the hero and "A day at Hotel Aurora" used tomorrow (37 guests, 25 dinner covers). Two different days on one page, and neither section said which.
+- After: all three use tomorrow. "How it works" starts with "Tuesday 20 October: 18 of 28 rooms, 37 guests" and "25 dinner covers, likely 19 to 30". The "A day at Hotel Aurora" intro ends with "…three services, for Tuesday 20 October." The hero chip, the timeline cards and "How it works" all show 18 rooms, 37 guests and 25 dinner covers.
+- Undo: `git revert <hash of 8.1>`
