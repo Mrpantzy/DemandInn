@@ -352,33 +352,33 @@ const SUPPLIERS = {
 };
 const CATEGORIES = ["Fish and seafood", "Meat and poultry", "Dairy and eggs", "Fruit and veg", "Bakery", "Dry goods", "Drinks"];
 
-// step = supplier case size. yield = usable share after trim. cover = days of demand one order should cover.
+// step = supplier case size. yield = usable share after trim.
 // kg = weight of one unit, for waste kg. life = shelf life in days from delivery.
 const PRODUCTS = [
-  { id: "seabass", name: "Sea bass fillet", cat: "Fish and seafood", unit: "kg", price: 22, sup: "fish", life: 3, step: 1, yield: 0.86, cover: 2, kg: 1, perish: true, idea: "Offer sea bass as the fish of the day" },
-  { id: "salmon", name: "Salmon fillet", cat: "Fish and seafood", unit: "kg", price: 24.5, sup: "fish", life: 3, step: 1, yield: 0.9, cover: 2, kg: 1, perish: true, idea: "Put salmon on tonight's menu" },
-  { id: "chicken", name: "Chicken breast", cat: "Meat and poultry", unit: "kg", price: 9.8, sup: "butcher", life: 5, step: 2, yield: 0.92, cover: 3, kg: 1, perish: true, idea: "Add chicken to the lunch special" },
-  { id: "mince", name: "Beef mince", cat: "Meat and poultry", unit: "kg", price: 11.5, sup: "butcher", life: 3, step: 1, yield: 1, cover: 2, kg: 1, perish: true, idea: "Run a burger of the day" },
-  { id: "eggs", name: "Eggs", cat: "Dairy and eggs", unit: "eggs", price: 0.28, sup: "dairy", life: 21, step: 30, yield: 1, cover: 5, kg: 0.06, perish: true, idea: "Offer eggs benedict at breakfast" },
-  { id: "milk", name: "Milk", cat: "Dairy and eggs", unit: "L", price: 1.05, sup: "dairy", life: 7, step: 6, yield: 1, cover: 3, kg: 1, perish: true, idea: "Use milk for breakfast baking" },
-  { id: "cream", name: "Cream", cat: "Dairy and eggs", unit: "L", price: 3.6, sup: "dairy", life: 8, step: 2, yield: 1, cover: 4, kg: 1, perish: true, idea: "Add a cream soup to the lunch menu" },
-  { id: "butter", name: "Butter", cat: "Dairy and eggs", unit: "kg", price: 8.9, sup: "dairy", life: 40, step: 1, yield: 1, cover: 7, kg: 1, perish: true, idea: "Use butter in tonight's sauces" },
-  { id: "cheese", name: "Cheese", cat: "Dairy and eggs", unit: "kg", price: 13.5, sup: "dairy", life: 30, step: 1, yield: 1, cover: 7, kg: 1, perish: true, idea: "Add a cheese plate to the menu" },
-  { id: "tomatoes", name: "Tomatoes", cat: "Fruit and veg", unit: "kg", price: 3.2, sup: "green", life: 6, step: 1, yield: 0.93, cover: 3, kg: 1, perish: true, idea: "Use tomatoes in a soup of the day" },
-  { id: "salad", name: "Salad leaves", cat: "Fruit and veg", unit: "kg", price: 9, sup: "green", life: 4, step: 1, yield: 0.9, cover: 2, kg: 1, perish: true, idea: "Use leaves in lunch salads" },
-  { id: "potatoes", name: "Potatoes", cat: "Fruit and veg", unit: "kg", price: 1.1, sup: "green", life: 21, step: 5, yield: 0.88, cover: 5, kg: 1, perish: true, idea: "Offer potatoes as the side of the day" },
-  { id: "veg", name: "Seasonal vegetables", cat: "Fruit and veg", unit: "kg", price: 3.4, sup: "green", life: 5, step: 2, yield: 0.85, cover: 3, kg: 1, perish: true, idea: "Build the vegetarian special around them" },
-  { id: "herbs", name: "Fresh herbs", cat: "Fruit and veg", unit: "kg", price: 18, sup: "green", life: 5, step: 0.5, yield: 0.75, cover: 3, kg: 1, perish: true, idea: "Finish tonight's specials with them" },
-  { id: "berries", name: "Berries", cat: "Fruit and veg", unit: "kg", price: 14, sup: "green", life: 4, step: 1, yield: 0.95, cover: 2, kg: 1, perish: true, idea: "Add berries to breakfast bowls and desserts" },
-  { id: "bread", name: "Bread", cat: "Bakery", unit: "loaves", price: 3.2, sup: "bakery", life: 4, step: 4, yield: 1, cover: 2, kg: 0.5, perish: true, idea: "Offer bread pudding as a dessert" },
-  { id: "dough", name: "Croissant dough", cat: "Bakery", unit: "kg", price: 6.4, sup: "bakery", life: 6, step: 1, yield: 1, cover: 2, kg: 1, perish: true, idea: "Bake an extra tray for breakfast" },
-  { id: "pasta", name: "Dried pasta", cat: "Dry goods", unit: "kg", price: 2.4, sup: "dry", life: 365, step: 5, yield: 1, cover: 10, kg: 1, perish: false },
-  { id: "rice", name: "Rice", cat: "Dry goods", unit: "kg", price: 2.6, sup: "dry", life: 365, step: 5, yield: 1, cover: 10, kg: 1, perish: false },
-  { id: "flour", name: "Flour", cat: "Dry goods", unit: "kg", price: 1.2, sup: "dry", life: 300, step: 10, yield: 1, cover: 14, kg: 1, perish: false },
-  { id: "oil", name: "Olive oil", cat: "Dry goods", unit: "L", price: 8.8, sup: "dry", life: 300, step: 5, yield: 1, cover: 14, kg: 1, perish: false },
-  { id: "beer", name: "Beer (33 cl)", cat: "Drinks", unit: "bottles", price: 1.1, sup: "drinks", life: 120, step: 24, yield: 1, cover: 7, kg: 0.5, perish: false },
-  { id: "wine", name: "House wine", cat: "Drinks", unit: "bottles", price: 7.5, sup: "drinks", life: 365, step: 6, yield: 1, cover: 10, kg: 1.2, perish: false },
-  { id: "soft", name: "Soft drinks", cat: "Drinks", unit: "bottles", price: 0.75, sup: "drinks", life: 180, step: 24, yield: 1, cover: 7, kg: 0.5, perish: false },
+  { id: "seabass", name: "Sea bass fillet", cat: "Fish and seafood", unit: "kg", price: 22, sup: "fish", life: 3, step: 1, yield: 0.86, kg: 1, perish: true, idea: "Offer sea bass as the fish of the day" },
+  { id: "salmon", name: "Salmon fillet", cat: "Fish and seafood", unit: "kg", price: 24.5, sup: "fish", life: 3, step: 1, yield: 0.9, kg: 1, perish: true, idea: "Put salmon on tonight's menu" },
+  { id: "chicken", name: "Chicken breast", cat: "Meat and poultry", unit: "kg", price: 9.8, sup: "butcher", life: 5, step: 2, yield: 0.92, kg: 1, perish: true, idea: "Add chicken to the lunch special" },
+  { id: "mince", name: "Beef mince", cat: "Meat and poultry", unit: "kg", price: 11.5, sup: "butcher", life: 3, step: 1, yield: 1, kg: 1, perish: true, idea: "Run a burger of the day" },
+  { id: "eggs", name: "Eggs", cat: "Dairy and eggs", unit: "eggs", price: 0.28, sup: "dairy", life: 21, step: 30, yield: 1, kg: 0.06, perish: true, idea: "Offer eggs benedict at breakfast" },
+  { id: "milk", name: "Milk", cat: "Dairy and eggs", unit: "L", price: 1.05, sup: "dairy", life: 7, step: 6, yield: 1, kg: 1, perish: true, idea: "Use milk for breakfast baking" },
+  { id: "cream", name: "Cream", cat: "Dairy and eggs", unit: "L", price: 3.6, sup: "dairy", life: 8, step: 2, yield: 1, kg: 1, perish: true, idea: "Add a cream soup to the lunch menu" },
+  { id: "butter", name: "Butter", cat: "Dairy and eggs", unit: "kg", price: 8.9, sup: "dairy", life: 40, step: 1, yield: 1, kg: 1, perish: true, idea: "Use butter in tonight's sauces" },
+  { id: "cheese", name: "Cheese", cat: "Dairy and eggs", unit: "kg", price: 13.5, sup: "dairy", life: 30, step: 1, yield: 1, kg: 1, perish: true, idea: "Add a cheese plate to the menu" },
+  { id: "tomatoes", name: "Tomatoes", cat: "Fruit and veg", unit: "kg", price: 3.2, sup: "green", life: 6, step: 1, yield: 0.93, kg: 1, perish: true, idea: "Use tomatoes in a soup of the day" },
+  { id: "salad", name: "Salad leaves", cat: "Fruit and veg", unit: "kg", price: 9, sup: "green", life: 4, step: 1, yield: 0.9, kg: 1, perish: true, idea: "Use leaves in lunch salads" },
+  { id: "potatoes", name: "Potatoes", cat: "Fruit and veg", unit: "kg", price: 1.1, sup: "green", life: 21, step: 5, yield: 0.88, kg: 1, perish: true, idea: "Offer potatoes as the side of the day" },
+  { id: "veg", name: "Seasonal vegetables", cat: "Fruit and veg", unit: "kg", price: 3.4, sup: "green", life: 5, step: 2, yield: 0.85, kg: 1, perish: true, idea: "Build the vegetarian special around them" },
+  { id: "herbs", name: "Fresh herbs", cat: "Fruit and veg", unit: "kg", price: 18, sup: "green", life: 5, step: 0.5, yield: 0.75, kg: 1, perish: true, idea: "Finish tonight's specials with them" },
+  { id: "berries", name: "Berries", cat: "Fruit and veg", unit: "kg", price: 14, sup: "green", life: 4, step: 1, yield: 0.95, kg: 1, perish: true, idea: "Add berries to breakfast bowls and desserts" },
+  { id: "bread", name: "Bread", cat: "Bakery", unit: "loaves", price: 3.2, sup: "bakery", life: 4, step: 4, yield: 1, kg: 0.5, perish: true, idea: "Offer bread pudding as a dessert" },
+  { id: "dough", name: "Croissant dough", cat: "Bakery", unit: "kg", price: 6.4, sup: "bakery", life: 6, step: 1, yield: 1, kg: 1, perish: true, idea: "Bake an extra tray for breakfast" },
+  { id: "pasta", name: "Dried pasta", cat: "Dry goods", unit: "kg", price: 2.4, sup: "dry", life: 365, step: 5, yield: 1, kg: 1, perish: false },
+  { id: "rice", name: "Rice", cat: "Dry goods", unit: "kg", price: 2.6, sup: "dry", life: 365, step: 5, yield: 1, kg: 1, perish: false },
+  { id: "flour", name: "Flour", cat: "Dry goods", unit: "kg", price: 1.2, sup: "dry", life: 300, step: 10, yield: 1, kg: 1, perish: false },
+  { id: "oil", name: "Olive oil", cat: "Dry goods", unit: "L", price: 8.8, sup: "dry", life: 300, step: 5, yield: 1, kg: 1, perish: false },
+  { id: "beer", name: "Beer (33 cl)", cat: "Drinks", unit: "bottles", price: 1.1, sup: "drinks", life: 120, step: 24, yield: 1, kg: 0.5, perish: false },
+  { id: "wine", name: "House wine", cat: "Drinks", unit: "bottles", price: 7.5, sup: "drinks", life: 365, step: 6, yield: 1, kg: 1.2, perish: false },
+  { id: "soft", name: "Soft drinks", cat: "Drinks", unit: "bottles", price: 0.75, sup: "drinks", life: 180, step: 24, yield: 1, kg: 0.5, perish: false },
 ];
 const PBY = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
 // Perishability class sets how much overstock we tolerate. A is the most fragile.
@@ -840,7 +840,8 @@ function ingDay(date) {
 const useOnDay = (p, d) => { const e = ingDay(d).byIng[p.id]; return e ? e.p50 : 0; };
 const useOnDayQ = (p, d, q) => { const e = ingDay(d).byIng[p.id]; return e ? e[q || "p50"] : 0; };
 const useOverDays = (p, from, n, q) => { let s = 0; for (let i = 0; i < n; i++) s += useOnDayQ(p, addDays(from, i), q); return s; };
-const sdOnDay = (p, d) => { const e = ingDay(d).byIng[p.id]; return e ? Math.max(0, (e.p90 - e.p10) / (2 * Z80)) : 0; };
+// Spread of one day's use of an ingredient: each service's covers vary on their own, so their variances add
+const sdOnDay = (p, d) => { const e = ingDay(d).byIng[p.id]; if (!e) return 0; const f = fcDay(d); return Math.sqrt(MEALS.reduce((s, m) => { const c = f.meals[m].covers; return s + (c > 0 && e.bySvc[m] ? Math.pow((e.bySvc[m] / c) * f.meals[m].sd, 2) : 0); }, 0)); };
 const costOnDay = (d) => PRODUCTS.reduce((s, p) => s + useOnDay(p, d) * p.price, 0);
 
 /* ---------- SECTION 9: STOCK, ORDERS, WASTE SEEDS ---------- */
@@ -962,8 +963,10 @@ function recommendLine(p, batches, orders, opts = {}) {
   const dd = firstDeliveryIfOrderedOn(p.sup, od);
   const dn = nextDelivery(p.sup, dd + 1);
   const cycle = Math.max(1, dn - dd);
+  // The order covers the days from its delivery until the next delivery a later order could still make,
+  // never longer than a fresh item keeps. Stock, Purchasing, the Explain panel and the landing card all use this one window.
   const shelfCap = p.life <= 10 ? Math.max(1, p.life - 1) : 30;
-  const win = Math.max(1, Math.min(Math.max(p.cover, cycle), shelfCap));
+  const win = Math.max(1, Math.min(cycle, shelfCap));
   const winDays = Array.from({ length: win }, (_, k) => dd + k);
   const sumQ = (q) => winDays.reduce((s, k) => s + useOnDayQ(p, addDays(TODAY, k), q), 0);
   const forecast = sumQ("p50"), f10 = sumQ("p10"), f90 = sumQ("p90");
@@ -977,7 +980,7 @@ function recommendLine(p, batches, orders, opts = {}) {
     return Math.max(0, full.usedFromStock - before.usedFromStock) + left;
   };
   const usable = useInWindow("p50");
-  const buffer = z * sd + (cls === "D" ? 0.5 * (forecast / win) * 2 : 0); // dry goods and wine also keep a two-day safety stock
+  const buffer = z * sd; // safety buffer: z standard deviations of demand over the window (z = 1.28 for long-life items)
   const wasteRecent = (opts.waste || []).filter((w) => w.p === p.id && w.dOff >= -14).reduce((a, w) => a + w.qty, 0);
   const wasteCut = Math.min(0.5 * buffer, 0.25 * wasteRecent);
   const bufferR = Math.round((buffer - wasteCut) * 10) / 10;
@@ -1008,6 +1011,7 @@ function recommendLine(p, batches, orders, opts = {}) {
     stock: stockNow, exp48, incoming: incomingQty, stockoutBefore, firstShort: sNow.firstShort, wasteLevel, wasteValue: after.wasteValue,
     cost: recQ * p.price, deadlineOff: Math.max(0, orderDeadlineFor(p.sup, dd)), cutoff: sup.cutoff,
     late: sNow.firstShort !== null && sNow.firstShort < dd, dishesTop: topDishes(p, winDays),
+    belowNeed: usable < forecast + bufferR - 1e-6, // stock and open orders do not cover need + buffer in the window
   };
 }
 function topDishes(p, days) {
@@ -1080,7 +1084,7 @@ function stockSummary(batches, orders, suggested) {
     const rl = line || recommendLine(p, batches, orders);
     const prWith = simulateStock(p, batches, orders, { horizon: 14, extra: rl.rec ? [{ qty: rl.rec, eta: rl.dd }] : [] });
     const riskWith = prWith.firstShort !== null && prWith.firstShort < rl.winEnd && prWith.firstShort >= 0 ? prWith.firstShort : null;
-    const riskWithout = pr.firstShort !== null && pr.firstShort < rl.winEnd ? pr.firstShort : null;
+    const riskWithout = rl.rec > 0 && rl.belowNeed ? (pr.firstShort !== null && pr.firstShort < rl.winEnd ? Math.max(pr.firstShort, 0) : rl.dd) : null;
     return { p, batches: bs, usable, expired, use7, use3, pr, prWith, riskWith, riskWithout, sug, line: rl, useFirst, exp48, expUnused: Math.max(0, exp48 - useOverDays(p, TODAY, 2) * (exp48 / Math.max(usable, 1e-9))), wasteRisk, plenty, incoming, incQty, nextEta, daysOfStock, orderSoon: !!sug, supplierNext: nextDelivery(p.sup, 0) };
   });
 }
@@ -2641,6 +2645,10 @@ function suggestionLines(r) {
     const l = r.sug.lines.find((x) => x.p === p.id);
     if (l) out.push({ tone: r.sug.late ? "amber" : "terra", text: `Order ${fmtQty(p, l.qty)} by ${r.sug.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, r.sug.deadlineOff))} ${r.sug.cutoff} (${SUPPLIERS[p.sup].name}, delivery ${dowShort(addDays(TODAY, r.sug.etaOff))}).` });
   }
+  if (r.riskWith !== null) {
+    const inc = r.incoming.filter((o) => o.etaOff > r.riskWith).sort((a, b) => a.etaOff - b.etaOff)[0];
+    out.push({ tone: "urgent", text: `Runs short ${dayWordShort(addDays(TODAY, r.riskWith))}, before any new order can arrive (next ${SUPPLIERS[p.sup].name.toLowerCase()} delivery ${dowShort(addDays(TODAY, r.line.dd))}).${inc ? ` Ask for the ${STATUS[inc.status].label.toLowerCase()} order due ${dowShort(addDays(TODAY, inc.etaOff))} to come earlier, or buy a little locally.` : " Buy a little locally to bridge the gap."}` });
+  }
   if (r.plenty) out.push({ tone: "info", text: "Reduce next order." });
   if (!out.length) out.push({ tone: "none", text: "No action needed." });
   return out;
@@ -3732,11 +3740,12 @@ function Header() {
 function HeroCard() {
   const S = useStore();
   const d = addDays(TODAY, 1), f = fcDay(d), bf = f.meals.dinner, fb = f.meals.breakfast, fl = f.meals.lunch;
-  const all = S.suggested.flatMap((o) => o.lines.map((l) => ({ o, l, L: o.details[l.p] })));
-  const rows = all.sort((a, b) => b.l.qty * PBY[b.l.p].price - a.l.qty * PBY[a.l.p].price).slice(0, 3);
-  const sups = [...new Set(all.map((r) => r.o))];
-  const approved = sups.length === 0;
-  const nxt = sups.slice().sort((a, b) => a.deadlineOff - b.deadlineOff)[0];
+  // The next order to decide (earliest deadline), with the same figures as Purchasing and the Explain panel
+  const [done, setDone] = useState(null);
+  const nxt = done || S.suggested.slice().sort((a, b) => a.deadlineOff - b.deadlineOff || a.etaOff - b.etaOff)[0];
+  const rows = nxt ? nxt.lines.map((l) => ({ l, L: nxt.details[l.p] })).sort((a, b) => b.l.qty * PBY[b.l.p].price - a.l.qty * PBY[a.l.p].price).slice(0, 3) : [];
+  const approved = !!done;
+  const dday = nxt ? addDays(TODAY, nxt.etaOff) : null;
   return html`
     <div className="docket" aria-label="Live example from the demo">
       <div className="flex items-start justify-between gap-3"><p className="mono">Kitchen order · ${HOTEL.name}</p><p className="mono">${dowShort(d)} ${fmtDate(d, { day: "numeric", month: "short" })}</p></div>
@@ -3744,15 +3753,16 @@ function HeroCard() {
         <div><div className="covers tnum">${bf.covers}</div><p className="m-0 mt-2 text-muted tnum" style=${{ fontSize: 14.5 }}>dinner covers, likely ${bf.p10}–${bf.p90}</p><p className="m-0 text-muted tnum" style=${{ fontSize: 13.5 }}>Breakfast ${fb.covers} · Lunch ${fl.covers}</p></div>
         <div className="min-w-0">
           <table className="tnum">
-            <thead><tr><th>Item</th><th>Need</th><th>Stock</th><th>Order</th></tr></thead>
+            <thead><tr><th>Item</th><th>Need</th><th>Usable on ${dday ? dowShort(dday) : "delivery"}</th><th>Order</th></tr></thead>
             <tbody>${rows.map(({ l, L }) => { const p = PBY[l.p]; return html`<tr key=${p.id}><td>${p.name}</td><td>${fq(p, L.forecast)}</td><td>${fq(p, L.usable)}</td><td className="font-bold text-forest">${fq(p, l.qty)}</td></tr>`; })}
               ${rows.length === 0 && html`<tr><td colSpan="4" className="text-muted">Stock and open orders cover the forecast.</td></tr>`}</tbody>
           </table>
         </div>
       </div>
+      ${nxt && html`<p className="m-0 mt-2 text-[12.5px] text-muted">${SUPPLIERS[nxt.sup].name}, delivery ${dowShort(dday)}. Need is the forecast until the next delivery. The order adds a safety buffer and rounds up to the case size.</p>`}
       <div className="flex flex-wrap items-center justify-between gap-3 mt-4"><${SimTag} text="Simulated demo data" />
         <div className="flex flex-wrap items-center gap-3"><span className="chip chip-neutral">${nxt ? `Order by ${nxt.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, nxt.deadlineOff))} ${nxt.cutoff}` : "Nothing to order"}</span>
-        <button type="button" className="btn btn-dark btn-sm" disabled=${approved} onClick=${() => S.placeAll(sups)} aria-live="polite">${approved ? html`<${Icon} name="check" size=${17} />Order approved` : "Approve order"}</button></div></div>
+        <button type="button" className="btn btn-dark btn-sm" disabled=${approved || !nxt} onClick=${() => { S.placeOrder(nxt); setDone(nxt); }} aria-live="polite">${approved ? html`<${Icon} name="check" size=${17} />Order approved` : "Approve order"}</button></div></div>
     </div>`;
 }
 

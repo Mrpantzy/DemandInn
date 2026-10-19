@@ -317,3 +317,21 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (19 Oct): "Butcher: Suggested. Ordered Tue 20 Oct, arrives Wed 21 Oct." for an order nobody had placed.
 - After: "Butcher: Suggested. Order by Tue 20 Oct 12:00, arrives Wed 21 Oct." Placed, delivered and cancelled orders still say "Ordered Fri 16 Oct".
 - Undo: `git revert <hash of 6.4>`
+
+### Group 7. Make the simulated data believable and consistent
+
+#### 7.1 Drinks orders agree with Stock
+- Files and functions: `index.html`: `PRODUCTS` (the fixed `cover` days are removed), `recommendLine` (window, buffer, new `belowNeed` flag), `sdOnDay`, `stockSummary` (`riskWithout`), `suggestionLines`, `HeroCard` (landing kitchen order card).
+- What was wrong: each product had a fixed `cover` (10 days for wine, 7 for beer and soft drinks) that set the order window, while Stock judged shortages over 14 days. Long-life items also got a full extra day of "safety stock" on top of 1.28 standard deviations. The day's demand spread was taken as the sum of the services' P10–P90 widths, as if breakfast, dinner and the bar always went wrong together. So the buffers were large (beer: 74 bottles on a 261 forecast) and orders were pushed for stock that wasn't needed.
+- Now:
+  - **One window** for everything: from the order's delivery day to the next delivery a later order could still make, never longer than a fresh item keeps. Stock status, Purchasing, the Explain panel and the landing card all read the same `recommendLine`.
+  - **Buffer** = z × the standard deviation of demand over that window (z = 1.28 for long-life items, as before). The extra day of stock is gone, and each service's spread is combined as independent variances.
+  - **"Order to avoid a shortage"** appears only when projected stock, including open orders, is below need + buffer inside that window, which is exactly when an order is recommended.
+  - When a shortage comes **before any new order could arrive**, the suggestion says so instead of "No action needed", for example on Fri 23 Oct for Saturday's beer: "Runs short tomorrow, before any new order can arrive (next drinks wholesaler delivery Tue). Ask for the delayed order due Mon to come earlier, or buy a little locally."
+  - **Landing card**: shows the next order to decide (earliest deadline) with Item, Need, **"Usable on <delivery day>"** and Order, taken from that same order line, plus a one-line note on how Order follows from Need. "Approve order" places that one order.
+- Before → after on Mon 19 Oct:
+  - House wine: window Fri 23 Oct to Sun 1 Nov (10 days), need 90, usable 51, buffer 19.9, order 60, status "Order to avoid a shortage" → window **Fri 23 to Mon 26 Oct (4 days), need 41, usable 51, buffer 4.3, no order, "All good"** on every screen.
+  - Beer: buffer 74 → **21.5** (need 179, usable 246 including the delayed 240). Soft drinks: "order 72" while 150 in stock + 120 incoming → need 132, usable 182, buffer 10.1, no order.
+  - Drinks order: EUR 610 of the EUR 660 headline → **EUR 0**. The headline is now EUR 12 (beef mince only). Item 7.6 rescales consumption, so the totals rise again there, but with the same logic.
+  - Landing card: "Need 90, Stock 51, Order 60" (house wine) → "Beef mince, Need 1.8, Usable on Wed 0.8, Order 1", the butcher order due Tue 12:00.
+- Undo: `git revert <hash of 7.1>`
