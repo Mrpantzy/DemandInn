@@ -3601,7 +3601,7 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
           <div className="side-hotel"><b>${HOTEL.name}</b><span>${HOTEL.rooms} rooms · restaurant and bar</span><span>${fmtDate(TODAY, { day: "numeric", month: "short" })} · demo data</span></div>
         </aside>
         <div className="app-main">
-        <p className="app-note"><${Icon} name="database" size=${15} />${SIM_NOTE}. Every number is computed live by the forecasting engine. The history is simulated.</p>
+        <p className="app-note"><${Icon} name="database" size=${15} />${SIM_NOTE}. Every number is computed live by the forecasting engine. The history is simulated. Changes reset when you reload.</p>
         <div id=${`${id}-panel`} role="tabpanel" aria-labelledby=${`${id}-tab-${screen}`} ref=${scroller} tabIndex="0" className="app-body">
           <div key=${nonce}>
             ${screen === "today" && html`<${TodayScreen} />`}

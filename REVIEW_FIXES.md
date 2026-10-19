@@ -184,3 +184,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`.
 - Before: text `#9a6416` on `#fbebc8`: 4.23:1, below the 4.5:1 WCAG AA minimum for small text.
 - After: text `#8f5c12`: 4.81:1 on `#fbebc8` and 4.63:1 on the paler `#f7e7c3`. The darkest change that passes, so the colour still reads as the same amber.
 - Undo: `git revert <hash of 2.7>`
+
+#### 2.8 Demo banner says changes reset
+- Files and functions: `index.html`: `AppWindow` (the amber banner above every demo screen).
+- Before: "Simulated demo data for Hotel Aurora. Every number is computed live by the forecasting engine. The history is simulated."
+- After: the same, plus "Changes reset when you reload." (Orders, waste entries and rota changes live only in the page's memory.) Item 7.10 later swaps the first part for the file name once a CSV is loaded.
+- Undo: `git revert <hash of 2.8>`
