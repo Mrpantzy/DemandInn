@@ -992,8 +992,11 @@ function recommendLine(p, batches, orders, opts = {}) {
   let recQ = recQ0, guard = 0;
   while (!safe(recQ) && guard++ < 80) recQ += p.step;
   const timing = recQ - recQ0;
-  const loNet = Math.max(0, f10 + 0.5 * bufferR - usable), hiNet = Math.max(0, f90 + 1.2 * bufferR - usable);
-  const lo = Math.min(recQ, roundPack(loNet, p.step, cls)), hi = Math.max(recQ, roundPack(hiNet, p.step, cls));
+  // Order ranges come from the same demand spread as the buffer: what the order would be if demand landed at a lower or higher
+  // percentile. P10 to P90 for the Explain panel, P25 to P75 (the middle half) for lists. When an order is needed, the low end is at least one case.
+  const orderAt = (zq) => roundPack(Math.max(0, forecast + zq * sd + bufferR - usable), p.step, cls);
+  const band = (zq) => [recQ > 0 ? Math.max(p.step, Math.min(recQ, orderAt(-zq))) : 0, Math.max(recQ, orderAt(zq))];
+  const [lo, hi] = band(Z80), range50 = band(0.6745);
   // risks
   const gapSim = simulateStock(p, batches, orders, { q: "p90", horizon: dd + 1 });
   const stockoutBefore = gapSim.firstShort !== null && gapSim.firstShort < dd ? gapSim.firstShort : null;
@@ -1007,7 +1010,7 @@ function recommendLine(p, batches, orders, opts = {}) {
   return {
     timing, winEnd,
     wasteRecent, wasteCut: Math.round(wasteCut * 10) / 10,
-    p, sup: p.sup, cls, z, od, dd, dn, win, winDays, byDay, forecast, f10, f90, sd, usable, buffer: bufferR, net, rec: recQ, range: [lo, hi],
+    p, sup: p.sup, cls, z, od, dd, dn, win, winDays, byDay, forecast, f10, f90, sd, usable, buffer: bufferR, net, rec: recQ, range: [lo, hi], range50,
     stock: stockNow, exp48, incoming: incomingQty, stockoutBefore, firstShort: sNow.firstShort, wasteLevel, wasteValue: after.wasteValue,
     cost: recQ * p.price, deadlineOff: Math.max(0, orderDeadlineFor(p.sup, dd)), cutoff: sup.cutoff,
     late: sNow.firstShort !== null && sNow.firstShort < dd, dishesTop: topDishes(p, winDays),
@@ -2326,7 +2329,7 @@ function TodayScreen() {
 
         <section className="card p-5" aria-label="What to order">
           <h3 className="font-serif text-[20px] text-head mt-0 mb-3">What to order</h3>
-          ${topLines.length ? html`<ul className="list-none p-0 m-0 divide-y divide-line">${topLines.map(({ o, l, L }) => html`<li key=${o.sup + l.p} className="flex items-center justify-between gap-3 py-2.5 text-[15px]"><button type="button" className="text-left min-h-[40px] bg-transparent border-0 p-0 cursor-pointer font-semibold text-ink hover:underline" onClick=${() => nav.openPanel("explain", { pid: l.p })}>${PBY[l.p].name}<span className="block text-[12.5px] text-muted font-normal">${SUPPLIERS[o.sup].name}, order by ${dowShort(addDays(TODAY, o.deadlineOff))} ${o.cutoff}</span></button><span className="text-right tnum"><span className="font-semibold">${fmtQty(PBY[l.p], l.qty)}</span><span className="block text-[12.5px] text-muted">range ${fq(PBY[l.p], L.range[0])}–${fq(PBY[l.p], L.range[1])}</span></span></li>`)}</ul>` : html`<p className="m-0 text-muted">Your stock and open orders cover the forecast.</p>`}
+          ${topLines.length ? html`<ul className="list-none p-0 m-0 divide-y divide-line">${topLines.map(({ o, l, L }) => html`<li key=${o.sup + l.p} className="flex items-center justify-between gap-3 py-2.5 text-[15px]"><button type="button" className="text-left min-h-[40px] bg-transparent border-0 p-0 cursor-pointer font-semibold text-ink hover:underline" onClick=${() => nav.openPanel("explain", { pid: l.p })}>${PBY[l.p].name}<span className="block text-[12.5px] text-muted font-normal">${SUPPLIERS[o.sup].name}, order by ${dowShort(addDays(TODAY, o.deadlineOff))} ${o.cutoff}</span></button><span className="text-right tnum"><span className="font-semibold">${fmtQty(PBY[l.p], l.qty)}</span><span className="block text-[12.5px] text-muted" title="Middle half of likely outcomes (P25 to P75)">likely ${fq(PBY[l.p], L.range50[0])}–${fq(PBY[l.p], L.range50[1])}</span></span></li>`)}</ul>` : html`<p className="m-0 text-muted">Your stock and open orders cover the forecast.</p>`}
           <button type="button" className="btn btn-quiet btn-sm !px-0 mt-3" onClick=${() => nav.go("purchasing")}>All purchase orders<${Icon} name="arrow" size=${16} /></button>
         </section>
       </div>
@@ -2457,11 +2460,11 @@ function IngredientsTab({ d }) {
     </div>
     <div className="card overflow-x-auto" tabIndex="0" role="region" aria-label="Ingredient demand, scrolls sideways on small screens">
       <table className="tbl w-full min-w-[720px]">
-        <thead><tr><th>Ingredient</th>${MEALS.map((m) => html`<th key=${m} className="num">${MEAL_SHORT[m]}</th>`)}<th className="num">Total</th><th className="num">Likely range</th><th>In stock</th><th></th></tr></thead>
+        <thead><tr><th>Ingredient</th>${MEALS.map((m) => html`<th key=${m} className="num">${MEAL_SHORT[m]}</th>`)}<th className="num">Total</th><th className="num" title="Middle half of likely outcomes (P25 to P75)">Likely range</th><th>In stock</th><th></th></tr></thead>
         <tbody>${rows.map(({ p, e }) => { const r = S.summary.find((x) => x.p.id === p.id); return html`<tr key=${p.id}>
           <th scope="row" className="text-left font-semibold">${p.name}<span className="block text-[12.5px] text-muted font-normal">${p.cat}${p.yield < 1 ? `, ${Math.round(p.yield * 100)}% usable after trim` : ""}</span></th>
           ${MEALS.map((m) => html`<td key=${m} className="num">${e.bySvc[m] ? fq(p, e.bySvc[m]) : "-"}</td>`)}
-          <td className="num font-semibold">${fq(p, e.p50)} ${p.unit}</td><td className="num text-muted">${fq(p, e.p10)}–${fq(p, e.p90)}</td>
+          <td className="num font-semibold">${fq(p, e.p50)} ${p.unit}</td><td className="num text-muted">${(() => { const s = 0.6745 * sdOnDay(p, d); return `${fq(p, Math.max(0, e.p50 - s))}–${fq(p, e.p50 + s)}`; })()}</td>
           <td className=${cls("tnum", r && r.usable < e.p50 && "text-terra font-semibold")}>${r ? fmtQty(p, r.usable) : "-"}</td>
           <td><button type="button" className="btn btn-quiet btn-sm" onClick=${() => nav.openPanel("explain", { pid: p.id })}>Why</button></td></tr>`; })}</tbody>
       </table>
@@ -2779,7 +2782,7 @@ function POLine({ o, l }) {
             ${l.manual && html`<${Chip} tone="neutral" icon="plus">Added by you<//>`}
           </div>
         </div>
-        <div className="tnum"><div className="text-[12.5px] text-muted">Recommended</div><div className="font-semibold text-[16.5px]">${fmtQty(p, l.rec)}</div><div className="text-[12.5px] text-muted">range ${fq(p, L.range[0])}–${fq(p, L.range[1])}</div></div>
+        <div className="tnum"><div className="text-[12.5px] text-muted">Recommended</div><div className="font-semibold text-[16.5px]">${fmtQty(p, l.rec)}</div><div className="text-[12.5px] text-muted" title="Middle half of likely outcomes (P25 to P75). The Explain panel shows P10 to P90.">likely ${fq(p, L.range50[0])}–${fq(p, L.range50[1])}</div></div>
         <div className="tnum"><div className="text-[12.5px] text-muted">Your order</div><div className=${cls("font-semibold text-[16.5px]", changed && "text-terra")}>${fmtQty(p, l.qty)}</div><div className="text-[12.5px] text-muted">${eur1(l.qty * p.price)}</div></div>
         <div className="text-[14px] text-muted">${fmtQty(p, L.forecast)} forecast ${L.win > 1 ? "from " : "on "}${winText(L)}, ${fmtQty(p, L.usable)} usable stock, ${fmtQty(p, L.buffer)} buffer, case ${p.step} ${p.unit}.</div>
       </div>
@@ -3146,7 +3149,7 @@ function answerFor(raw, S, nav) {
     const lines = [
       `Lunch and dinner plus the other services use ${fmtQty(prod, L.forecast)} ${L.win > 1 ? "from " : "on "}${winText(L)}.`,
       `Usable stock is ${fmtQty(prod, L.usable)}${L.exp48 > 0 ? `, and ${fmtQty(prod, L.exp48)} of the stock expires within 48 hours` : ""}.`,
-      `Add a safety buffer of ${fmtQty(prod, L.buffer)}, net need ${fmtQty(prod, L.net)}, rounded to ${prod.step} ${prod.unit} cases: order ${fmtQty(prod, line.rec)}, likely range ${fq(prod, L.range[0])}–${fq(prod, L.range[1])}.`,
+      `Add a safety buffer of ${fmtQty(prod, L.buffer)}, net need ${fmtQty(prod, L.net)}, rounded to ${prod.step} ${prod.unit} cases: order ${fmtQty(prod, line.rec)}, likely range ${fq(prod, L.range[0])}–${fq(prod, L.range[1])} (P10 to P90).`,
       `Peak day is ${dowName(ex.peak.date)} with ${ex.peak.f.meals.dinner.covers} dinner covers${ex.peak.f.events[0] ? " (" + ex.peak.f.events[0].name.split(" at ")[0].toLowerCase() + ")" : ""}.`,
     ];
     const acts = [{ label: "View full explanation", run: () => nav.openPanel("explain", { pid: prod.id }) }];
