@@ -2917,10 +2917,19 @@ function PurchasingScreen() {
 }
 
 /* ---------- Waste ---------- */
+// The ingredient the learning loop opens on: one where the waste feedback visibly changes the order today
+// (first the rounded order, then the need before rounding), else the one with the most recent waste
+function loopDefault(st) {
+  const lines = PRODUCTS.map((p) => { const a = recommendLine(p, st.batches, st.orders, { waste: st.waste }), b = recommendLine(p, st.batches, st.orders, { waste: [] }); return { p, a, b, w: st.waste.filter((x) => x.p === p.id && x.dOff >= -14).reduce((s, x) => s + wasteEur(x), 0) }; });
+  const seen = lines.filter((x) => x.a.wasteCut > 0); // the trimmed buffer shows as at least 0.1 of the unit
+  const byRec = seen.filter((x) => x.a.rec !== x.b.rec).sort((x, y) => y.w - x.w)[0];
+  const byNet = seen.filter((x) => Math.abs(x.a.net - x.b.net) > 0.05).sort((x, y) => Math.abs(y.a.net - y.b.net) * y.p.price - Math.abs(x.a.net - x.b.net) * x.p.price)[0];
+  return (byRec || byNet || lines.sort((x, y) => y.w - x.w)[0]).p.id;
+}
 function WasteScreen() {
   const S = useStore(), nav = useNav();
   const [cat, setCat] = useState("all");
-  const [lp, setLp] = useState("tomatoes");
+  const [lp, setLp] = useState(() => loopDefault(S.state));
   const list = S.state.waste.filter((w) => cat === "all" || w.cat === cat).sort((a, b) => b.dOff - a.dOff);
   const m = S.metrics;
   const byCat = WASTE_CATS.map((c) => ({ c, e: S.state.waste.filter((w) => w.cat === c && w.dOff >= -30).reduce((s, w) => s + wasteEur(w), 0) }));
@@ -2932,7 +2941,7 @@ function WasteScreen() {
   const lost = S.state.waste.filter((w) => w.p === lp && w.dOff >= -14).reduce((s, w) => s + w.qty, 0);
   const loop = [
     ["trend", "Forecast", `${fmtQty(p, withW.forecast)} needed over the next ${withW.win} ${plural(withW.win, "day")}`],
-    ["clipboard", "Purchase", `${fmtQty(p, withW.rec)} recommended today (${fmtQty(p, noW.rec)} without waste feedback)`],
+    ["clipboard", "Purchase", `${fmtQty(p, withW.rec)} recommended today (${fmtQty(p, noW.rec)} without waste feedback). Before rounding to the case: ${fmtQty(p, withW.net)} (${fmtQty(p, noW.net)} without).`],
     ["plate", "Consumption", `about ${fmtQty(p, useAvg)} used in the last 14 days`],
     ["trash", "Waste", `${fmtQty(p, lost)} logged in the last 14 days (${eur1(lost * p.price)})`],
     ["bulb", "Better decision", withW.wasteCut > 0 ? `Safety buffer trimmed by ${fmtQty(p, withW.wasteCut)}` : "No change to the buffer yet"],

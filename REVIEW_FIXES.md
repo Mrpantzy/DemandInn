@@ -417,3 +417,10 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (planning Tue 20 Oct): "Dinner: 7 sea bass, 5 seasonal pasta, 5 roast chicken" for 25 covers (17 portions shown, 8 missing). The heading always said "Good morning".
 - After: "Dinner: 7 sea bass, 5 seasonal pasta, 5 roast chicken, +8 more (2 other dishes) · 25 covers". Lunch shows the same "+N more" and every line names its covers, so the portions visibly add up. The heading says "Good morning" before 12:00, "Good afternoon" until 18:00 and "Good evening" after, on the viewer's own clock, also when the date is fixed with `?date=`. The morning email still says "Good morning", since it is a morning email.
 - Undo: `git revert <hash of 7.8>`
+
+#### 7.9 Waste screen opens on an ingredient the feedback changes
+- Files and functions: `index.html`: new `loopDefault()`, `WasteScreen` (default ingredient and the "Purchase" step).
+- Before: the learning loop always opened on tomatoes and showed "0 kg recommended today (0 kg without waste feedback)", so the loop visibly changed nothing.
+- After: it opens on the ingredient where the waste feedback changes today's order (the one with the most waste among those whose rounded order changes). If rounding to the case absorbs the change everywhere that day, it opens on the ingredient whose need before rounding changes most. The "Purchase" step now shows both: "4 kg recommended today (4 kg without waste feedback). Before rounding to the case: 2.8 kg (3 kg without)." (chicken breast, Mon 19 Oct). On Tue 20 and Wed 21 Oct it opens on tomatoes with "0 kg (1 kg without)", on Thu 22 Oct tomatoes "2 kg (3 kg without)".
+- Not changed on purpose: waste may still trim at most half of an item's safety buffer. With the modest buffers from 7.1, the trim is often smaller than one case (chicken comes in 2 kg cases), so on some days the rounded order is the same with or without feedback. Allowing a bigger trim was tested (three-quarters of the buffer) and did not change that, so the cap stays where it protects against shortages.
+- Undo: `git revert <hash of 7.9>`
