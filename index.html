@@ -1089,19 +1089,38 @@ const SHIFTS = {
 const PERIODS = ["morning", "dinner"];
 const PERIOD_LABEL = { morning: "Morning (breakfast and lunch)", dinner: "Evening (dinner and bar)" };
 const PERIOD_SHORT = { morning: "morning", dinner: "dinner" };
+// rota: one character per weekday, indexed by Date.getDay(), so position 0 is Sunday: "SMTWTFS".
+// days and shifts spell out the availability label, so the rota can be checked against it.
+const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
 const EMPLOYEES = [
-  { id: "e1", name: "Elena Marchetti", title: "F&B manager", role: "floor", contract: 40, rate: 28, avail: "Any day", off: [], rota: "P--AAPP" },
-  { id: "e2", name: "Tomás Rivera", title: "Head chef", role: "kitchen", contract: 40, rate: 26, avail: "Tue to Sun", off: [], rota: "-PPPPPP" },
-  { id: "e3", name: "Priya Nair", title: "Sous chef", role: "kitchen", contract: 40, rate: 21, avail: "Any day", off: [], rota: "P--PPPP" },
-  { id: "e4", name: "Jonas Weber", title: "Cook", role: "kitchen", contract: 40, rate: 17, avail: "Mon to Fri", off: [], rota: "-AAAAA-" },
-  { id: "e5", name: "Amara Okoye", title: "Cook, part time", role: "kitchen", contract: 28, rate: 17, avail: "Any day", off: [], rota: "APP---A" },
-  { id: "e6", name: "Luc Moreau", title: "Kitchen porter", role: "kitchen", contract: 24, rate: 14.5, avail: "Fri to Sun", off: [], rota: "P----PP" },
-  { id: "e7", name: "Sofia Lindgren", title: "Server", role: "floor", contract: 40, rate: 15, avail: "Any day", off: [], rota: "APPPP--" },
-  { id: "e8", name: "Mateo Alves", title: "Server", role: "floor", contract: 28, rate: 15, avail: "Thu to Sun", off: [{ dow: 0, note: "Family event" }], rota: "P---PPP" },
-  { id: "e9", name: "Hana Kobayashi", title: "Evening server", role: "floor", contract: 24, rate: 15, avail: "Evenings", off: [], rota: "-P---PP" },
-  { id: "e10", name: "Ben Carter", title: "Bartender", role: "bar", contract: 40, rate: 16.5, avail: "Any day", off: [], rota: "P--PPPP" },
-  { id: "e11", name: "Inês Duarte", title: "Breakfast host", role: "breakfast", contract: 35, rate: 15, avail: "Mornings", off: [], rota: "AAA--AA" },
+  { id: "e1", name: "Elena Marchetti", title: "F&B manager", role: "floor", contract: 40, rate: 28, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--AAPP" },
+  { id: "e2", name: "Tomás Rivera", title: "Head chef", role: "kitchen", contract: 40, rate: 26, avail: "Tue to Sun", days: [0, 2, 3, 4, 5, 6], shifts: "AP", off: [], rota: "--PPPPP" },
+  { id: "e3", name: "Priya Nair", title: "Sous chef", role: "kitchen", contract: 40, rate: 21, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "PP-PPP-" },
+  { id: "e4", name: "Jonas Weber", title: "Cook", role: "kitchen", contract: 40, rate: 17, avail: "Mon to Fri", days: [1, 2, 3, 4, 5], shifts: "AP", off: [], rota: "-AAAAA-" },
+  { id: "e5", name: "Amara Okoye", title: "Cook, part time", role: "kitchen", contract: 28, rate: 17, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "APP---A" },
+  { id: "e6", name: "Luc Moreau", title: "Kitchen porter", role: "kitchen", contract: 24, rate: 14.5, avail: "Fri to Sun", days: [0, 5, 6], shifts: "AP", off: [], rota: "P----PP" },
+  { id: "e7", name: "Sofia Lindgren", title: "Server", role: "floor", contract: 40, rate: 15, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "APPPP--" },
+  { id: "e8", name: "Mateo Alves", title: "Server", role: "floor", contract: 28, rate: 15, avail: "Thu to Sun", days: [0, 4, 5, 6], shifts: "AP", off: [{ dow: 0, note: "Family event" }], rota: "P---PPP" },
+  { id: "e9", name: "Hana Kobayashi", title: "Evening server", role: "floor", contract: 24, rate: 15, avail: "Evenings", days: ALL_DAYS, shifts: "P", off: [], rota: "-P---PP" },
+  { id: "e10", name: "Ben Carter", title: "Bartender", role: "bar", contract: 40, rate: 16.5, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--PPPP" },
+  { id: "e11", name: "Inês Duarte", title: "Breakfast host", role: "breakfast", contract: 35, rate: 15, avail: "Mornings", days: ALL_DAYS, shifts: "A", off: [], rota: "AAA--AA" },
 ];
+const outsideAvail = (e, dow, code) => code !== "-" && (!e.days.includes(dow) || !e.shifts.includes(code));
+// Rota check: shifts outside someone's availability, and weekly hours over their contract
+function rotaProblems(rota) {
+  const day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const out = [];
+  EMPLOYEES.forEach((e) => {
+    let hours = 0;
+    ALL_DAYS.forEach((dow) => {
+      const c = rota[e.id][dow];
+      hours += SHIFTS[c].hours;
+      if (outsideAvail(e, dow, c)) out.push({ e, dow, kind: "avail", text: `${e.name}: ${SHIFTS[c].label.toLowerCase()} shift on ${day[dow]} is outside their availability (${e.avail})` });
+    });
+    if (hours > e.contract) out.push({ e, kind: "hours", text: `${e.name}: ${hours} h a week on the rota, over the ${e.contract} h contract` });
+  });
+  return out;
+}
 function staffNeeds(f) {
   const b = f.meals.breakfast.covers, l = f.meals.lunch.covers, d = f.meals.dinner.covers, bar = f.meals.bar.covers;
   return {
@@ -2542,7 +2561,7 @@ function RotaCalendar({ rota, onShift, gaps }) {
         ${k !== 0 && html`<button type="button" className="btn btn-quiet btn-sm" onClick=${() => setK(0)}>Today</button>`}
         <b className="font-serif text-[20px] text-head ml-1" aria-live="polite">${title}</b>
       </div>
-      <div className="rc-legend"><span><i className="rc-A"></i>Morning 06:30–14:30</span><span><i className="rc-P"></i>Evening 15:00–23:00</span><span><i className="lg-free"></i>Off</span><span><i className="lg-req"></i>Time off requested</span><span><i className="lg-gap"></i>Short-staffed</span></div>
+      <div className="rc-legend"><span><i className="rc-A"></i>Morning 06:30–14:30</span><span><i className="rc-P"></i>Evening 15:00–23:00</span><span><i className="lg-free"></i>Off</span><span><i className="lg-req"></i>Time off requested, or outside availability</span><span><i className="lg-gap"></i>Short-staffed</span></div>
     </div>
     <div className="card rc-wrap" tabIndex="0" role="region" aria-label="Staff calendar, scrolls sideways on small screens">
       <table className=${cls("rc", week ? "week" : "month")}>
@@ -2554,13 +2573,13 @@ function RotaCalendar({ rota, onShift, gaps }) {
             <tr key=${pid} className="rc-group"><th className="rc-name" scope="rowgroup">${plabel} <span>${team.length}</span></th><td colSpan=${days.length + 1}></td></tr>
             ${team.map((e) => { const hrs = hoursIn(e); const cap = Math.round((e.contract * days.length) / 7); return html`<tr key=${e.id}>
               <th scope="row" className="rc-name"><b>${e.name}</b><span>${e.title}</span></th>
-              ${days.map((d) => { const c = rota[e.id][d.getDay()]; const sh = SHIFTS[c]; const req = reqOn(e, d); const past = off(d) < 0;
-                const label = `${e.name}, ${dowName(d)} ${d.getDate()}: ${sh.label}${req ? ", time off requested (" + req.note + ")" : ""}`;
+              ${days.map((d) => { const c = rota[e.id][d.getDay()]; const sh = SHIFTS[c]; const req = reqOn(e, d); const past = off(d) < 0; const outside = outsideAvail(e, d.getDay(), c);
+                const label = `${e.name}, ${dowName(d)} ${d.getDate()}: ${sh.label}${req ? ", time off requested (" + req.note + ")" : ""}${outside ? ", outside availability (" + e.avail + ")" : ""}`;
                 const body = html`${c === "-" ? (week ? "Off" : "") : html`<span>${week ? sh.label : c === "A" ? "M" : "E"}</span>`}${week && c !== "-" && html`<small>${sh.time.replace(" to ", "–")}</small>`}`;
                 const k2 = c === "-" ? "off" : c;
                 return html`<td key=${dayKey(d)} className=${cls("rc-cell", isToday(d) && "today", (d.getDay() === 0 || d.getDay() === 6) && "wknd", past && "past")}>
-                  ${week && !past ? html`<button type="button" className=${cls("rc-sh", "rc-" + k2, req && "rc-req")} aria-label=${label + ". Change shift"} title=${label} onClick=${() => onShift(e.id, d.getDay(), NEXT_SHIFT[c])}>${body}</button>`
-                    : html`<span className=${cls("rc-sh", "rc-" + k2, req && "rc-req")} title=${label} aria-label=${label}>${body}</span>`}</td>`; })}
+                  ${week && !past ? html`<button type="button" className=${cls("rc-sh", "rc-" + k2, (req || outside) && "rc-req")} aria-label=${label + ". Change shift"} title=${label} onClick=${() => onShift(e.id, d.getDay(), NEXT_SHIFT[c])}>${body}</button>`
+                    : html`<span className=${cls("rc-sh", "rc-" + k2, (req || outside) && "rc-req")} title=${label} aria-label=${label}>${body}</span>`}</td>`; })}
               <td className="rc-hrs"><b className="tnum">${hrs}</b> <span className="text-muted">of ${cap} h</span>${week && hrs > cap ? html`<div className="mt-1"><${Chip} tone="amber" icon="info">Check hours<//></div>` : null}</td>
             </tr>`; })}`; })}
         </tbody>
@@ -4075,6 +4094,7 @@ function App() {
         </div>`}
     <//>`;
 }
+rotaProblems(initialRota()).forEach((x) => console.warn("DemandInn rota check: " + x.text));
 ReactDOM.createRoot(document.getElementById("root")).render(html`<${App} />`);
 
 </script>
