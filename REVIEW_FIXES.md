@@ -8,7 +8,7 @@ This log records every change made on the branch `fix/review-oct-2026` to fix th
 | --- | --- |
 | See the site exactly as it was before any of these fixes | `git checkout pre-review-fixes` |
 | See the site as it was at the end of group N | `git checkout fixes-group-N` (for example `git checkout fixes-group-4`) |
-| Undo one item and keep everything else | `git revert <hash>` with the hash from the commit index at the bottom of this file |
+| Undo one item and keep everything else | `git revert <hash>` with the hash from the commit index below |
 | Return to the latest work after looking at an older state | `git checkout fix/review-oct-2026` |
 
 Notes:
@@ -28,6 +28,24 @@ Notes:
 | Contact email | A placeholder for now: `hello@demandinn.example` | **Waiting:** replace `CONTACT_EMAIL` with the real address before launch. The `.example` domain can never receive mail, so nothing is sent to a stranger by mistake. |
 | Pilot form endpoint | No endpoint yet, use the `mailto:` fallback | `PILOT_FORM_ENDPOINT` is empty. The form opens the visitor's mail app addressed to `CONTACT_EMAIL`. **Until the real email is set, pilot requests go nowhere.** |
 | "Who we are" sentence | Drafted by Claude, to confirm | **Waiting:** check the wording of `TEAM_LINE` (see 8.4). |
+
+<!-- commit-index:start -->
+## Commit index
+
+Every commit on the branch, oldest first. Filled in at the end of each group, so the newest items may still be missing here until their group is tagged.
+
+| Item | Commit | What | Undo |
+| --- | --- | --- | --- |
+| 0 | `320043f` | Start REVIEW_FIXES.md with how to go back and the team's decisions | `git revert 320043f` |
+| 0.3 | `64c78c5` | Use BRAND_LINE for the slogan everywhere | `git revert 64c78c5` |
+| 0.4 | `326f583` | Meta description uses the team's value proposition | `git revert 326f583` |
+| 0.5 | `f2ae644` | ROI calculator uses the deck's model (EUR 6,064 a year, 3.4x at defaults) | `git revert f2ae644` |
+| 0.6 | `f4bd0eb` | Principles: add the opt-in automation line | `git revert f4bd0eb` |
+| 0.7 | `ae44869` | Add the competitor line under How we think about it | `git revert ae44869` |
+| 0.8 | `21f757c` | Replace the pilot placeholder card with What hotels told us | `git revert 21f757c` |
+
+Group tags so far: `fixes-group-0`.
+<!-- commit-index:end -->
 
 ## Items
 
