@@ -118,3 +118,14 @@ Group tags so far: `fixes-group-0`.
 - Before: "Real pilots: data stored in the EU, never sold, deletable on request [placeholder: confirm with a legal adviser]."
 - After: "For pilots, we collect only what the forecast needs. It is stored in the EU, never sold, and deleted when you ask." Matches the FAQ answer in 1.2.
 - Undo: `git revert <hash of 1.3>`
+
+#### 1.4 Pilot form sends the email
+- Files and functions: `index.html`: new `PILOT_FORM_ENDPOINT` constant (top of the script), `Pilot` (`submit` and the form markup).
+- Before: the form only checked the email format and then said "Thank you. This is a demo, so nothing was sent." The intro read "This demo does not send the form anywhere."
+- After:
+  - With an endpoint in `PILOT_FORM_ENDPOINT` (for example Formspree), the form POSTs `{"email": …, "source": "demandinn-site"}` as JSON with `fetch`. The button shows "Sending…" and is disabled while it waits. On success: "Thanks, we'll email you within two working days to set up the backtest." On failure: "Sorry, that didn't go through. Please try again, or email us at hello@demandinn.example."
+  - With no endpoint (the current setting), it opens the visitor's mail app with a message to `CONTACT_EMAIL`, subject "Pilot hotel request", and says so, with the address as a fallback link.
+  - The intro now reads "We will write back within two working days to set up the free backtest." Both "demo" sentences are gone. A hidden `source=demandinn-site` field is in the form too.
+- Tested locally: wrong format → error message; POST to a local address that does not exist → error message with the contact email; a stubbed successful POST → "Sending…" then the success message, with the right JSON body. The `mailto:` path was not clicked, so as not to open the mail app on the test machine.
+- **Waiting:** while `CONTACT_EMAIL` is the `.example` placeholder, pilot requests go nowhere. Add the real address, or a Formspree URL, before sharing the site.
+- Undo: `git revert <hash of 1.4>`

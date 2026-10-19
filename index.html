@@ -271,6 +271,9 @@ const BRAND_LINE = "Tomorrow's covers, forecasted today";
 // Contact address shown in the footer, the pilot form fallback and the <noscript> message.
 // Placeholder until the team has a real address: the .example domain can never receive mail.
 const CONTACT_EMAIL = "hello@demandinn.example";
+// Where the pilot form posts the email, for example a Formspree URL ("https://formspree.io/f/xxxxxxx").
+// Empty: the form opens the visitor's mail app with a message to CONTACT_EMAIL instead.
+const PILOT_FORM_ENDPOINT = "";
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
 const MEAL_LABEL = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", bar: "Bar" };
@@ -3901,11 +3904,21 @@ function Principles() {
 
 function Pilot() {
   const [email, setEmail] = useState("");
-  const [st, setSt] = useState({ err: "", done: false });
+  const [st, setSt] = useState({ err: "", done: "" }); // done: "" | "sending" | "sent" | "mailto"
   const submit = (e) => {
     e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) return setSt({ err: "That email doesn't look quite right. Please check it and try again.", done: false });
-    setSt({ err: "", done: true });
+    const addr = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(addr)) return setSt({ err: "That email doesn't look quite right. Please check it and try again.", done: "" });
+    if (!PILOT_FORM_ENDPOINT) {
+      const subject = "Pilot hotel request";
+      const body = `Hello,\n\nWe would like to become a ${PRODUCT_NAME} pilot hotel. Please contact us at ${addr} to set up the free backtest.\n\nHotel name:\nRooms:\n`;
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return setSt({ err: "", done: "mailto" });
+    }
+    setSt({ err: "", done: "sending" });
+    fetch(PILOT_FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ email: addr, source: "demandinn-site" }) })
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); setSt({ err: "", done: "sent" }); })
+      .catch(() => setSt({ err: `Sorry, that didn't go through. Please try again, or email us at ${CONTACT_EMAIL}.`, done: "" }));
   };
   const steps = [["Free backtest", "Send us last year's bookings and sales. We show how the forecast would have done."], ["4 weeks in shadow mode", "It runs next to your normal ordering. You compare, nothing changes."], ["EUR 149 a month after", "Keep it if it helps. One plan for the whole kitchen."]];
   return html`
@@ -3917,11 +3930,14 @@ function Pilot() {
             <${Photo} k="dining" w=${800} sizes="(min-width: 1024px) 540px, 92vw" cls="pilot-photo" /></div>
           <div className="rounded-[20px] bg-surface text-ink p-6 sm:p-8">
             <h3 className="font-serif text-[26px] text-head mt-0 mb-2">Leave your email</h3>
-            <p className="mt-0 mb-5 text-muted">We will write back to set up the backtest. This demo does not send the form anywhere.</p>
-            ${st.done ? html`<div role="status" className="rounded-xl bg-ok-tint text-ok-ink p-4 flex gap-3 items-center"><${Icon} name="checkcircle" size=${24} />Thank you. This is a demo, so nothing was sent.</div>` : html`<form onSubmit=${submit} noValidate className="grid gap-3">
+            <p className="mt-0 mb-5 text-muted">We will write back within two working days to set up the free backtest.</p>
+            ${st.done === "sent" ? html`<div role="status" className="rounded-xl bg-ok-tint text-ok-ink p-4 flex gap-3 items-center"><${Icon} name="checkcircle" size=${24} />Thanks, we'll email you within two working days to set up the backtest.</div>`
+              : st.done === "mailto" ? html`<div role="status" className="rounded-xl bg-ok-tint text-ok-ink p-4 grid gap-2"><span className="flex gap-3 items-center"><${Icon} name="checkcircle" size=${24} />Your mail app should open with a message to ${CONTACT_EMAIL}. Send it, and we'll email you within two working days to set up the backtest.</span><span className="text-[14.5px]">Nothing opened? Write to <a href=${"mailto:" + CONTACT_EMAIL} style=${{ textDecoration: "underline" }}>${CONTACT_EMAIL}</a>.</span></div>`
+              : html`<form onSubmit=${submit} noValidate className="grid gap-3">
               <label className="sr-only" for="cta-email">Work email</label>
-              <input id="cta-email" type="email" autoComplete="email" placeholder="you@yourhotel.com" value=${email} onInput=${(e) => setEmail(e.target.value)} aria-invalid=${!!st.err} className="field !min-h-[52px]" />
-              <button type="submit" className="btn btn-dark btn-lg">Become a pilot hotel</button></form>`}
+              <input id="cta-email" name="email" type="email" autoComplete="email" placeholder="you@yourhotel.com" value=${email} onInput=${(e) => setEmail(e.target.value)} aria-invalid=${!!st.err} className="field !min-h-[52px]" disabled=${st.done === "sending"} />
+              <input type="hidden" name="source" value="demandinn-site" />
+              <button type="submit" className="btn btn-dark btn-lg" disabled=${st.done === "sending"} aria-busy=${st.done === "sending"}>${st.done === "sending" ? "Sending…" : "Become a pilot hotel"}</button></form>`}
             <p role="alert" className="min-h-[24px] mt-3 mb-0 text-[15px] text-urgent font-medium">${st.err}</p>
           </div>
         </div>
