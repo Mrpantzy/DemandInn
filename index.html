@@ -1941,7 +1941,7 @@ const SUP_SHORT = (id) => SUPPLIERS[id].name;
 function SimTag({ text }) {
   return html`<span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-terra bg-[#fbebc8] rounded-full px-2.5 py-0.5"><${Icon} name="database" size=${13} />${text || SIM_NOTE}</span>`;
 }
-function rangeText(a, b) { return `${a}–${b}`; }
+function rangeText(a, b) { return a === b ? `${a}` : `${a}–${b}`; }
 // A P10–P90 band with the P50 marked
 function RangeBar({ lo, mid, hi, max }) {
   const m = Math.max(max || hi * 1.15, 1);
@@ -2347,7 +2347,7 @@ function TodayScreen() {
 
         <section className="card p-5" aria-label="What to order">
           <h3 className="font-serif text-[20px] text-head mt-0 mb-3">What to order</h3>
-          ${topLines.length ? html`<ul className="list-none p-0 m-0 divide-y divide-line">${topLines.map(({ o, l, L }) => html`<li key=${o.sup + l.p} className="flex items-center justify-between gap-3 py-2.5 text-[15px]"><button type="button" className="text-left min-h-[40px] bg-transparent border-0 p-0 cursor-pointer font-semibold text-ink hover:underline" onClick=${() => nav.openPanel("explain", { pid: l.p })}>${PBY[l.p].name}<span className="block text-[12.5px] text-muted font-normal">${SUPPLIERS[o.sup].name}, order by ${dowShort(addDays(TODAY, o.deadlineOff))} ${o.cutoff}</span></button><span className="text-right tnum"><span className="font-semibold">${fmtQty(PBY[l.p], l.qty)}</span><span className="block text-[12.5px] text-muted" title="Middle half of likely outcomes (P25 to P75)">likely ${fq(PBY[l.p], L.range50[0])}–${fq(PBY[l.p], L.range50[1])}</span></span></li>`)}</ul>` : html`<p className="m-0 text-muted">Your stock and open orders cover the forecast.</p>`}
+          ${topLines.length ? html`<ul className="list-none p-0 m-0 divide-y divide-line">${topLines.map(({ o, l, L }) => html`<li key=${o.sup + l.p} className="flex items-center justify-between gap-3 py-2.5 text-[15px]"><button type="button" className="text-left min-h-[40px] bg-transparent border-0 p-0 cursor-pointer font-semibold text-ink hover:underline" onClick=${() => nav.openPanel("explain", { pid: l.p })}>${PBY[l.p].name}<span className="block text-[12.5px] text-muted font-normal">${SUPPLIERS[o.sup].name}, order by ${dowShort(addDays(TODAY, o.deadlineOff))} ${o.cutoff}</span></button><span className="text-right tnum"><span className="font-semibold">${fmtQty(PBY[l.p], l.qty)}</span><span className="block text-[12.5px] text-muted" title="Middle half of likely outcomes (P25 to P75)">likely ${rangeText(fq(PBY[l.p], L.range50[0]), fq(PBY[l.p], L.range50[1]))}</span></span></li>`)}</ul>` : html`<p className="m-0 text-muted">Your stock and open orders cover the forecast.</p>`}
           <button type="button" className="btn btn-quiet btn-sm !px-0 mt-3" onClick=${() => nav.go("purchasing")}>All purchase orders<${Icon} name="arrow" size=${16} /></button>
         </section>
       </div>
@@ -2800,7 +2800,7 @@ function POLine({ o, l }) {
             ${l.manual && html`<${Chip} tone="neutral" icon="plus">Added by you<//>`}
           </div>
         </div>
-        <div className="tnum"><div className="text-[12.5px] text-muted">Recommended</div><div className="font-semibold text-[16.5px]">${fmtQty(p, l.rec)}</div><div className="text-[12.5px] text-muted" title="Middle half of likely outcomes (P25 to P75). The Explain panel shows P10 to P90.">likely ${fq(p, L.range50[0])}–${fq(p, L.range50[1])}</div></div>
+        <div className="tnum"><div className="text-[12.5px] text-muted">Recommended</div><div className="font-semibold text-[16.5px]">${fmtQty(p, l.rec)}</div><div className="text-[12.5px] text-muted" title="Middle half of likely outcomes (P25 to P75). The Explain panel shows P10 to P90.">likely ${rangeText(fq(p, L.range50[0]), fq(p, L.range50[1]))}</div></div>
         <div className="tnum"><div className="text-[12.5px] text-muted">Your order</div><div className=${cls("font-semibold text-[16.5px]", changed && "text-terra")}>${fmtQty(p, l.qty)}</div><div className="text-[12.5px] text-muted">${eur1(l.qty * p.price)}</div></div>
         <div className="text-[14px] text-muted">${fmtQty(p, L.forecast)} forecast ${L.win > 1 ? "from " : "on "}${winText(L)}, ${fmtQty(p, L.usable)} usable stock, ${fmtQty(p, L.buffer)} buffer, case ${p.step} ${p.unit}.</div>
       </div>

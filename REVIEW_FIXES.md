@@ -385,3 +385,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
   - Orders ready on 19 Oct: 5 purchase orders, **EUR 589**
 - The waste trend line on the Waste screen reads: "In this simulated history, waste was 12.1% of the food bought four weeks ago and 8.5% last week, the kind of 30% cut the ROI calculator on the website assumes."
 - Undo: `git revert <hash of 7.6>`
+
+#### 7.3 (follow-up) One number when the range is one case
+- Files and functions: `index.html`: `rangeText`, `TodayScreen`, `POLine`.
+- Before: with case sizes, the middle half often collapsed to one case and showed as "likely 24–24".
+- After: "likely 24". Ranges with two different ends are unchanged ("likely 48–72").
+- Undo: `git revert <hash of this commit>`
