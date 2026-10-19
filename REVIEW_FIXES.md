@@ -43,8 +43,13 @@ Every commit on the branch, oldest first. Filled in at the end of each group, so
 | 0.6 | `f4bd0eb` | Principles: add the opt-in automation line | `git revert f4bd0eb` |
 | 0.7 | `ae44869` | Add the competitor line under How we think about it | `git revert ae44869` |
 | 0.8 | `21f757c` | Replace the pilot placeholder card with What hotels told us | `git revert 21f757c` |
+| 1.1 | `f07c77a` | Footer: mailto contact link, remove placeholder lines | `git revert f07c77a` |
+| 1.2 | `a7996e7` | FAQ GDPR answer: remove placeholder, phrase as the pilot plan | `git revert a7996e7` |
+| 1.3 | `fe23320` | Demo privacy card: remove placeholder, phrase as the pilot plan | `git revert fe23320` |
+| 1.4 | `63cbdf1` | Pilot form posts to PILOT_FORM_ENDPOINT or falls back to mailto | `git revert 63cbdf1` |
+| 1.5 | `36becc3` | Header and hero link to Become a pilot | `git revert 36becc3` |
 
-Group tags so far: `fixes-group-0`.
+Group tags so far: `fixes-group-0`, `fixes-group-1`.
 <!-- commit-index:end -->
 
 ## Items
@@ -135,3 +140,6 @@ Group tags so far: `fixes-group-0`.
 - Before: the header nav ended with "Pilot". The hero's secondary button read "See a day at Hotel Aurora" (`#day`).
 - After: the nav item reads "Become a pilot" (`#pilot`), on desktop and in the mobile menu. It replaces "Pilot" rather than sitting next to it, so there aren't two links to the same place. The hero's secondary button reads "Become a pilot hotel" and links to `#pilot`. "A day at Aurora" is still in the nav.
 - Undo: `git revert <hash of 1.5>`
+
+#### 1.6 Grep for leftovers
+- Searched `index.html` for `[placeholder`, `[your-`, `TODO` and `lorem` after 1.1 to 1.5. Nothing visible to visitors is left. The only match is the code comment above `CONTACT_EMAIL` explaining the placeholder address. No commit needed.
