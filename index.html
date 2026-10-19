@@ -1771,7 +1771,7 @@ function TeamScreen({ intent }) {
   let cost = 0, rev = 0;
   days.forEach((d) => { const l = labourPct(rota, d); cost += l.cost; rev += l.rev; });
   const sug = S.orders.filter((o) => o.status === "suggested").sort((a, b) => a.needOff - b.needOff)[0];
-  const gl = { kitchen: "Kitchen", front: "Floor and breakfast", bar: "Bar" };
+  const gl = (per) => ({ kitchen: "Kitchen", front: per === "morning" ? "Floor and breakfast" : "Floor", bar: "Bar" });
   const msgs = [
     ...tg.gaps.map((g) => ({ k: "gap", t: `${g.n} extra ${plural(g.n, "pair")} of hands needed ${dowName(g.date)} ${PERIOD_SHORT[g.period]} (${g.roleLabel}).`, d: g })),
     ...tg.spares.map((s) => { const m = tg.gaps.find((g) => g.group === s.group); return { k: "spare", t: `${s.n} spare ${plural(s.n, "person", "people")} ${dowName(s.date)} ${PERIOD_SHORT[s.period]} (${s.roleLabel}): could they cover ${m ? dowName(m.date) + " " + PERIOD_SHORT[m.period] : "a busier shift"}?`, d: s }; }),
@@ -1805,7 +1805,7 @@ function TeamScreen({ intent }) {
               <ul className="list-none p-0 m-0 grid gap-3">
                 ${["kitchen", "front", "bar"].filter((g) => need[per][g] > 0 || have[per][g].length > 0).map((g) => { const n = need[per][g], h = have[per][g], diff = h.length - n; return html`
                   <li key=${g} className="grid gap-1">
-                    <div className="flex items-center justify-between gap-2"><span className="font-semibold">${gl[g]}</span>
+                    <div className="flex items-center justify-between gap-2"><span className="font-semibold">${gl(per)[g]}</span>
                       ${diff < 0 ? html`<${Chip} tone="amber" icon="plus">${-diff} more would help<//>` : diff > 0 ? html`<${Chip} tone="info" icon="users">${diff} spare<//>` : html`<${Chip} tone="ok" icon="check">Covered<//>`}</div>
                     <div className="text-[15px] text-muted">Suggested ${n}, scheduled ${h.length}${h.length ? ": " + h.map((e) => e.name.split(" ")[0]).join(", ") : ""}</div>
                   </li>`; })}

@@ -239,3 +239,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (Tue 20 Oct): "25 dinner covers, ± 7" on the landing page, "likely 18 to 31" in the timeline and the demo.
 - After: "25 dinner covers, likely 18–31" on both landing cards. No "±" is left on the site.
 - Undo: `git revert <hash of 4.5>`
+
+#### 4.6 Team → evening card: "Floor"
+- Files and functions: `index.html`: `TeamScreen` (the `gl` labels now depend on the period).
+- Before: both the morning and the evening card called the serving team "Floor and breakfast".
+- After: the morning card still says "Floor and breakfast" (the breakfast host is in that group). The evening card says **"Floor"**. The review suggested "Floor and bar", but the evening card already has its own "Bar" row (the bartender), so "Floor and bar" would name the bar twice. **Waiting:** if you prefer the exact wording "Floor and bar", it is a one-word change in `gl`.
+- Undo: `git revert <hash of 4.6>`
