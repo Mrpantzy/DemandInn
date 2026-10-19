@@ -411,3 +411,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - After: the week cards say "Occupied tonight 61%" and, under the covers, "Breakfast after a night at 89%, +14 for the group". The day panel says "Occupancy tonight … Breakfast follows last night (89%)." Saturday reads "Occupied tonight 89%" and "Breakfast after a night at 82%" (41 breakfasts). No numbers changed.
 - Week view: it had a fixed minimum width of 1,200 px, so all 7 days needed sideways scrolling. From 1,280 px up, the seven days now fit with no horizontal scroll (checked at 1280×800). Below 1,280 px the week still scrolls sideways as before.
 - Undo: `git revert <hash of 7.7>`
+
+#### 7.8 Today: what to prepare adds up, and the greeting follows the clock
+- Files and functions: `index.html`: new `greeting()`, `TodayScreen` (heading and "What to prepare").
+- Before (planning Tue 20 Oct): "Dinner: 7 sea bass, 5 seasonal pasta, 5 roast chicken" for 25 covers (17 portions shown, 8 missing). The heading always said "Good morning".
+- After: "Dinner: 7 sea bass, 5 seasonal pasta, 5 roast chicken, +8 more (2 other dishes) · 25 covers". Lunch shows the same "+N more" and every line names its covers, so the portions visibly add up. The heading says "Good morning" before 12:00, "Good afternoon" until 18:00 and "Good evening" after, on the viewer's own clock, also when the date is fixed with `?date=`. The morning email still says "Good morning", since it is a morning email.
+- Undo: `git revert <hash of 7.8>`

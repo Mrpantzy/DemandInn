@@ -2280,6 +2280,8 @@ function DataSources() {
   </div>`;
 }
 
+// The greeting follows the real time of day on the viewer's clock
+const greeting = () => { const h = new Date().getHours(); return h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening"; };
 function TodayScreen() {
   const S = useStore(), nav = useNav();
   const [focus, setFocus] = useState(1);
@@ -2299,7 +2301,7 @@ function TodayScreen() {
   return html`
     <div className="grid gap-6">
       <div>
-        <h2 className="font-serif text-head m-0 leading-tight text-[28px] md:text-[34px]">Good morning, ${HOTEL.manager}. ${S.suggested.length ? `${S.suggested.length} ${plural(S.suggested.length, "order")} ${S.suggested.length === 1 ? "is" : "are"} ready for your decision.` : "Nothing to order today."}</h2>
+        <h2 className="font-serif text-head m-0 leading-tight text-[28px] md:text-[34px]">${greeting()}, ${HOTEL.manager}. ${S.suggested.length ? `${S.suggested.length} ${plural(S.suggested.length, "order")} ${S.suggested.length === 1 ? "is" : "are"} ready for your decision.` : "Nothing to order today."}</h2>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3 text-[15px] text-muted">
           <span>${fmtDate(TODAY, { weekday: "long", day: "numeric", month: "long" })}, ${HOTEL.name}</span>
           <span className="inline-flex items-center gap-2 text-ink"><${WeatherIcon} w=${fcDay(TODAY).weather} /> ${fcDay(TODAY).weather.label}, ${fcDay(TODAY).weather.hi}°</span>
@@ -2356,7 +2358,7 @@ function TodayScreen() {
         <section className="card p-5" aria-label="What to prepare">
           <h3 className="font-serif text-[20px] text-head mt-0 mb-3">What to prepare</h3>
           <ul className="list-none p-0 m-0 grid gap-2.5 text-[15px]">
-            ${[["Breakfast", bfMenu], ["Lunch", lunchMenu], ["Dinner", dinnerMenu]].map(([t, mn]) => html`<li key=${t} className="flex gap-3"><span className="w-[84px] shrink-0 text-muted">${t}</span><span className="tnum">${topDish(mn).map(([id, n]) => `${n} ${DISHES[id].name.toLowerCase()}`).join(", ")}</span></li>`)}
+            ${[["Breakfast", bfMenu], ["Lunch", lunchMenu], ["Dinner", dinnerMenu]].map(([t, mn]) => { const all = Object.entries(mn.dishes).filter(([, n]) => n > 0), top = topDish(mn), rest = all.filter(([id]) => !top.some(([x]) => x === id)), restN = rest.reduce((s, [, n]) => s + n, 0); return html`<li key=${t} className="flex gap-3"><span className="w-[84px] shrink-0 text-muted">${t}</span><span className="tnum">${top.map(([id, n]) => `${n} ${DISHES[id].name.toLowerCase()}`).join(", ")}${restN > 0 ? `, +${restN} more (${rest.length} other ${plural(rest.length, "dish", "dishes")})` : ""}<span className="text-muted"> · ${mn.covers} covers</span></span></li>`; })}
           </ul>
           ${dinnerMenu.constraints && html`<p className="text-[14px] text-muted mt-3 mb-0">Dinner includes ${dinnerMenu.constraints.veg + dinnerMenu.constraints.vegan} vegetarian or vegan${dinnerMenu.constraints.gf ? ` and ${dinnerMenu.constraints.gf} gluten-free` : ""} portions, set before the other dishes are shared out.</p>`}
           ${S.state.specials.length > 0 && html`<div className="mt-3 flex flex-wrap gap-2">${S.state.specials.map((sp, i) => html`<${Chip} key=${i} tone="ok" icon="plate">Special ${sp.when}: ${sp.text}<//>`)}</div>`}
