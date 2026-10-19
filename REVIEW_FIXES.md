@@ -50,3 +50,9 @@ Notes:
 - Before: the hero heading and the morning email hard-coded the slogan. `BRAND_LINE` ended with a full stop, so the browser tab read "DemandInn: Tomorrow's covers, forecasted today." and the static `<title>` read the same without the stop.
 - After: `BRAND_LINE = "Tomorrow's covers, forecasted today"` feeds the hero heading (the part after the comma stays in italics), the footer, the morning email header and the tab title, which now match the static `<title>` exactly. `og:title` and `twitter:title` are added in 2.3 with the same words. A comment next to the constant says to update the `<head>` too if the slogan changes, because crawlers do not run scripts.
 - Undo: `git revert <hash of 0.3>`
+
+#### 0.4 Value proposition as the meta description
+- Files: `index.html`, `<meta name="description">` in the head.
+- Before: "DemandInn forecasts hotel food and beverage demand from bookings, weather, events and past sales, then recommends what to buy and prepare."
+- After (157 characters, the team's sentence shortened): "For small hotel restaurants: F&B forecasting that combines siloed operational data to recommend what to buy and prepare, reducing waste, shortages and costs." The same text is reused for `og:description` and `twitter:description` in 2.3.
+- Undo: `git revert <hash of 0.4>`
