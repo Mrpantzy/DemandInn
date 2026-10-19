@@ -658,10 +658,13 @@ function forecastDay(date, opts = {}) {
     const sdModel = sigmaRel(n) * total * (n > 6 ? 1.35 : 1) + (weather.typical ? 0.04 * walkBase : 0);
     const sd = n < 0 ? 0 : Math.sqrt(sdCount * sdCount + sdModel * sdModel);
     const covers = Math.round(total);
-    const hotel = Math.min(covers, Math.round(inHouse * (1 + evPct) + grp));
+    // Split the covers into whole parts that always add up: hotel guests in the restaurant, room service, walk-ins, plus booked event covers
+    const rsRaw = (rsm[m] || 0) * hist * (1 + evPct);
+    const split = allocate([["dining", Math.max(0, inHouse * (1 + evPct) - rsRaw)], ["rs", rsRaw], ["walk", walkBase * (1 + evPct)]], Math.max(0, covers - grp));
+    const hotel = split.dining + split.rs + grp;
     meals[m] = {
       covers, p10: Math.max(0, Math.floor(total - Z80 * sd)), p90: Math.ceil(total + Z80 * sd), sd,
-      hotel, walkIn: Math.max(0, covers - hotel), eventCovers: grp, evPct, roomService: Math.round((rsm[m] || 0) * hist),
+      hotel, dining: split.dining, walkIn: split.walk, eventCovers: grp, evPct, roomService: split.rs,
       inHouseRaw: inHouse, walkRaw: walkBase,
       diet: {
         veg: Math.round(dietM[m].veg * hist * (1 + evPct) + walkBase * (1 + evPct) * 0.09 + exs.reduce((s, x) => s + x.diet.veg, 0)),
@@ -2312,7 +2315,7 @@ function CoversTab({ f, d, dateOff }) {
           <div className="cov-num tnum">${x.covers}</div>
           <p className="cov-range tnum">likely ${x.p10} to ${x.p90}</p>
           <dl className="cov-split tnum">
-            <div><dt>Hotel guests</dt><dd>${Math.max(0, x.hotel - x.eventCovers)}</dd></div>
+            <div><dt>Hotel guests</dt><dd>${x.dining}</dd></div>
             ${x.eventCovers > 0 && html`<div><dt>Event</dt><dd>${x.eventCovers}</dd></div>`}
             <div><dt>Walk-ins</dt><dd>${x.walkIn}</dd></div>
             ${x.roomService > 0 && html`<div><dt>Room service</dt><dd>${x.roomService}</dd></div>`}

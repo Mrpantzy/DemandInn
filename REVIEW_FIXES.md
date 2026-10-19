@@ -227,3 +227,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (Tue 20 Oct): Today said "20 arriving, 15 leaving" (guests, no unit). Demand said "10 arrive and 10 leave" (rooms, no unit). They looked like a contradiction.
 - After: Today: "37 guests in house, 18 rooms · 20 guests arriving, 10 rooms · 15 guests leaving, 10 rooms". Demand: "… about 37 guests. 20 guests in 10 rooms arrive, 15 guests in 10 rooms leave." Same numbers, both units, on both screens.
 - Undo: `git revert <hash of 4.3>`
+
+#### 4.4 Cover parts add up to the total
+- Files and functions: `index.html`: `forecastDay` (new `dining` field; `hotel`, `walkIn` and `roomService` come from one largest-remainder split), `CoversTab`.
+- Before (Tue 20 Oct): breakfast 24 = 21 hotel guests + 3 walk-ins + 1 room service (= 25); dinner 25 = 18 + 7 + 1 (= 26). Room service was counted inside "Hotel guests" and again on its own.
+- After: breakfast **24 = 20 + 3 + 1**, dinner **25 = 17 + 7 + 1**. Hotel guests in the restaurant + room service + walk-ins + booked event covers always equal the headline number. Checked for all four services on 60 days (20 past, 40 ahead): no mismatch. The Team screen's "Hotel / Walk-in" and the day panel's "Hotel / walk-in" still add up to the covers.
+- Undo: `git revert <hash of 4.4>`
