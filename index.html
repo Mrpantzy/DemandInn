@@ -3559,24 +3559,37 @@ function parseCsv(text) {
   rows.sort((a, b) => a.date - b.date);
   return { rows, bad, svc };
 }
-// Compares your actuals with the model run with a neutral weekday factor, then learns one factor per weekday
+// Learns one factor per weekday: your average covers on that weekday (any dates in the file) against what the model,
+// run with a neutral weekday factor, gives for the same weekday over its simulated history
 function calibrate(rows) {
   const keep = { ...HISTORY_FACTOR };
   Object.keys(HISTORY_FACTOR).forEach((k) => (HISTORY_FACTOR[k] = 1));
-  const acc = {};
+  const out = {};
   try {
     const svc3 = ["breakfast", "lunch", "dinner"].filter((m) => rows[0].covers[m] != null);
-    if (svc3.length) rows.forEach((r) => {
-      const mf = forecastDay(r.date, {}).meals;
-      const model = svc3.reduce((s, m) => s + mf[m].covers, 0), act = svc3.reduce((s, m) => s + r.covers[m], 0);
-      if (model > 0) (acc[r.dow] = acc[r.dow] || []).push(act / model);
-    });
+    if (!svc3.length) return out;
+    const sum = (meals) => svc3.reduce((s, m) => s + meals[m], 0);
+    const model = {};
+    for (let k = 1; k <= HISTORY_DAYS; k++) { const d = addDays(TODAY, -k), f = forecastDay(d, {}).meals; (model[d.getDay()] = model[d.getDay()] || []).push(svc3.reduce((s, m) => s + f[m].covers, 0)); }
+    const yours = {};
+    rows.forEach((r) => (yours[r.dow] = yours[r.dow] || []).push(sum(r.covers)));
+    const avg = (v) => v.reduce((a, b) => a + b, 0) / v.length;
+    Object.entries(yours).forEach(([dow, v]) => { if (v.length >= 2 && model[dow] && avg(model[dow]) > 0) out[dow] = clamp(Math.round((avg(v) / avg(model[dow])) * 1000) / 1000, 0.8, 1.25); });
   } finally { Object.assign(HISTORY_FACTOR, keep); }
-  const out = {};
-  Object.entries(acc).forEach(([dow, v]) => { if (v.length >= 2) out[dow] = clamp(Math.round((v.reduce((a, b) => a + b, 0) / v.length) * 1000) / 1000, 0.8, 1.25); });
   return out;
 }
-const templateCsv = () => "date,breakfast,lunch,dinner,bar\n" + Array.from({ length: 28 }, (_, k) => { const d = addDays(TODAY, k - 28); const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; return [iso, ...MEALS.map((m) => pastActual(d, m))].join(","); }).join("\n");
+// Covers for any past day: the simulated history for the last HISTORY_DAYS, and before that the same weekday's average
+// from that history with a gentle seasonal swing (busiest in July) and day-to-day noise
+const seasonOf = (d) => 1 + 0.12 * Math.cos((2 * Math.PI * (Math.round((d - new Date(d.getFullYear(), 0, 1)) / MS) - 196)) / 365);
+const _dowAvg = {};
+function pastCovers(d, m) {
+  if (off(d) >= -HISTORY_DAYS) return pastActual(d, m);
+  const key = d.getDay() + m;
+  if (_dowAvg[key] == null) { const v = []; for (let k = 1; k <= HISTORY_DAYS; k++) { const x = addDays(TODAY, -k); if (x.getDay() === d.getDay()) v.push(pastActual(x, m) / seasonOf(x)); } _dowAvg[key] = v.reduce((a, b) => a + b, 0) / v.length; }
+  const r = mulberry32((off(d) + 9000) * 7919 + MEALS.indexOf(m))();
+  return Math.max(0, Math.round(_dowAvg[key] * seasonOf(d) * (0.85 + 0.3 * r)));
+}
+const templateCsv = (days = 365) => "date,breakfast,lunch,dinner,bar\n" + Array.from({ length: days }, (_, k) => { const d = addDays(TODAY, k - days); return [toISO(d), ...MEALS.map((m) => pastCovers(d, m))].join(","); }).join("\n");
 const sampleCsv = () => { // a hotel whose weekends are busier than the demo assumes
   const lines = templateCsv().split("\n");
   return [lines[0], ...lines.slice(1).map((l) => { const c = l.split(","); const dow = parseDate(c[0]).getDay(); const k = dow === 5 || dow === 6 ? 1.12 : dow === 2 ? 0.93 : 1; return [c[0], ...c.slice(1).map((v) => Math.round(Number(v) * k))].join(","); })].join("\n");
@@ -3636,7 +3649,7 @@ function DataScreen() {
           <div><h3 className="font-serif text-[21px] text-head m-0">Upload your history</h3><p className="mt-1 mb-0 text-[14.5px] text-muted">At least 30 days, ideally 6 to 12 months. Columns: <code>date</code> plus any of <code>breakfast</code>, <code>lunch</code>, <code>dinner</code>, <code>bar</code> (covers served). Your file stays in this browser. Nothing is uploaded to a server.</p></div>
           <div className="rounded-[14px] border-2 border-dashed border-line bg-cream p-6 text-center" onDragOver=${(e) => e.preventDefault()} onDrop=${(e) => { e.preventDefault(); onFile(e.dataTransfer.files[0]); }}>
             <p className="m-0 mb-3">Drop a CSV file here, or</p>
-            <div className="flex flex-wrap gap-2 justify-center"><button type="button" className="btn btn-primary" onClick=${() => fileRef.current && fileRef.current.click()}>Choose a file</button><button type="button" className="btn btn-secondary" onClick=${() => loadText(sampleCsv(), "Sample hotel (weekend-heavy).csv")}>Try a sample file</button></div>
+            <div className="flex flex-wrap gap-2 justify-center"><button type="button" className="btn btn-primary" onClick=${() => fileRef.current && fileRef.current.click()}>Choose a file</button><button type="button" className="btn btn-secondary" onClick=${() => loadText(sampleCsv(), "Sample hotel, 12 months (weekend-heavy).csv")}>Try a sample file</button></div>
             <input ref=${fileRef} type="file" accept=".csv,text/csv,text/plain" style=${{ display: "none" }} onChange=${(e) => { onFile(e.target.files[0]); e.target.value = ""; }} />
           </div>
           <div className="flex flex-wrap gap-2"><button type="button" className="btn btn-secondary btn-sm" onClick=${download}>Download the template</button><button type="button" className="btn btn-secondary btn-sm" onClick=${reset} disabled=${DATA_SOURCE.kind === "demo" && !parsed}><${Icon} name="undo" size=${15} />Reset to the demo hotel</button></div>
@@ -3735,7 +3748,7 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
           <div className="side-hotel"><b>${HOTEL.name}</b><span>${HOTEL.rooms} rooms · restaurant and bar</span><span>${fmtDate(TODAY, { day: "numeric", month: "short" })} · demo data</span></div>
         </aside>
         <div className="app-main">
-        <p className="app-note"><${Icon} name="database" size=${15} />${SIM_NOTE}. Every number is computed live by the forecasting engine. The history is simulated. Changes reset when you reload.${DATE_FROM_LINK ? ` Demo date fixed to ${fmtDate(TODAY, { weekday: "short", day: "numeric", month: "short", year: "numeric" })} by the link.` : ""}</p>
+        <p className="app-note"><${Icon} name="database" size=${15} />${DATA_SOURCE.kind === "csv" ? `Forecast calibrated on your file "${DATA_SOURCE.name}" (${DATA_SOURCE.rows} days). Bookings, stock and orders are still simulated for ${HOTEL.name}.` : `${SIM_NOTE}. Every number is computed live by the forecasting engine. The history is simulated.`} Changes reset when you reload.${DATE_FROM_LINK ? ` Demo date fixed to ${fmtDate(TODAY, { weekday: "short", day: "numeric", month: "short", year: "numeric" })} by the link.` : ""}</p>
         <div id=${`${id}-panel`} role="tabpanel" aria-labelledby=${`${id}-tab-${screen}`} ref=${scroller} tabIndex="0" className="app-body">
           <div key=${nonce}>
             ${screen === "today" && html`<${TodayScreen} />`}
