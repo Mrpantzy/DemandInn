@@ -62,3 +62,9 @@ Notes:
 - Before: three sliders (monthly purchases EUR 18,000, 10% wasted, 20% reduction) showing "EUR 360 per month" against EUR 149.
 - After: the deck's inputs, each a slider: rooms (28, the demo hotel), occupancy 75%, 1.6 guests per room, 85% breakfast uptake, EUR 4 food cost per cover, 12% of food wasted (typical range 5 to 15%), 30% waste reduction, 30 minutes of manager time a day at EUR 25 an hour. At the defaults it shows **EUR 6,064 a year: EUR 1,501 of food plus EUR 4,563 of time, against EUR 1,788 (EUR 149 × 12), about 3.4×**. The "assumptions you set, not results we have measured" wording is kept, with the formula spelled out.
 - Undo: `git revert <hash of 0.5>`
+
+#### 0.6 Rollout: automation only if the hotel chooses
+- Files and functions: `index.html`: `Principles` ("AI recommends. Hotel teams decide.").
+- Before: "Suggestions, never silent orders. You can accept, change or remove every line, and your reason stays with it."
+- After: the same, plus "Later, and only if you choose, orders can be drafted automatically within limits you set." This matches the deck's fourth stage without dropping the principle.
+- Undo: `git revert <hash of 0.6>`
