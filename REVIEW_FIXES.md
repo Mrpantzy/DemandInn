@@ -70,8 +70,19 @@ Every commit on the branch, oldest first. Filled in at the end of each group, so
 | 6.2 | `3499609` | Explain panel shows weekdays only within 6 days, dates further out | `git revert 3499609` |
 | 6.3 | `87beec6` | Forecast windows print real dates matching the window and the table | `git revert 87beec6` |
 | 6.4 | `916a754` | Calendar: suggested orders show Order by with the cut-off | `git revert 916a754` |
+| 7.1 | `4d8ed92` | One order window for Stock, Purchasing, Explain and the landing card; modest buffers | `git revert 4d8ed92` |
+| 7.2 | `8ba2240` | Combine order and expiry messages; explain the waste chip in Purchasing | `git revert 8ba2240` |
+| 7.3 | `8c44767` | P25-P75 ranges in lists, P10-P90 in Explain, from one demand spread | `git revert 8c44767` |
+| 7.5 | `841a58a` | Realistic simulated actuals: WAPE about 13% vs 24%, about 84% inside the range | `git revert 841a58a` |
+| 7.6 | `0fc12d9` | Economics: food cost ~29%, labour ~35%, waste 12% falling to 8.5%, breakfast ~EUR 4 | `git revert 0fc12d9` |
+| 7.3 | `5bb03ee` | Show a single value when the likely range is one case | `git revert 5bb03ee` |
+| 7.4 | `711e507` | Seeded stock and placed orders follow the supplier calendar; fish order no longer causes waste | `git revert 711e507` |
+| 7.7 | `6c5fe27` | Calendar: occupancy tonight vs breakfast after last night; week fits at 1280 px | `git revert 6c5fe27` |
+| 7.8 | `5907de0` | Today: +N more dishes so portions add up; greeting follows the time of day | `git revert 5907de0` |
+| 7.9 | `64d383a` | Waste screen defaults to an ingredient the waste feedback changes | `git revert 64d383a` |
+| 7.10 | `7e3b444` | CSV: 12-month sample, weekday calibration, banner names the loaded file | `git revert 7e3b444` |
 
-Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`, `fixes-group-4`, `fixes-group-5`, `fixes-group-6`.
+Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-group-3`, `fixes-group-4`, `fixes-group-5`, `fixes-group-6`, `fixes-group-7`.
 <!-- commit-index:end -->
 
 ## Items
