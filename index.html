@@ -328,6 +328,8 @@ const dowName = (d) => d.toLocaleDateString("en-GB", { weekday: "long" });
 const dowShort = (d) => d.toLocaleDateString("en-GB", { weekday: "short" });
 const dayWord = (d) => (off(d) === 0 ? "today" : off(d) === 1 ? "tomorrow" : dowName(d));
 // A weekday is only clear within the coming week; further out, show the date
+// An order window with real dates: "Fri 23 Oct to Sun 1 Nov", or one date when it is a single day
+const winText = (L) => { const a = addDays(TODAY, L.winDays[0]), b = addDays(TODAY, L.winDays[L.winDays.length - 1]); return sameDay(a, b) ? fmtDate(a) : `${fmtDate(a)} to ${fmtDate(b)}`; };
 const dayOrDate = (d) => (off(d) >= 0 && off(d) <= 6 ? dowShort(d) : fmtDate(d, { day: "numeric", month: "short" }));
 const dayWordShort = (d) => (off(d) === 0 ? "today" : off(d) === 1 ? "tomorrow" : dowShort(d));
 const eur = (n) => "EUR " + Math.round(n).toLocaleString("en-GB");
@@ -1043,7 +1045,7 @@ function suggestOrders(batches, orders, dismissed, mods = {}) {
     const top = lines.slice().sort((a, b) => b.qty * PBY[b.p].price - a.qty * PBY[a.p].price)[0];
     const drv = top.L.byDay.slice().sort((a, b) => b.p50 - a.p50)[0];
     const ev = drv && (drv.f.events[0] || (drv.f.group && drv.f.group.name && groupExtras(drv.date, "dinner")[0]));
-    let reason = `${top.L.p.name}: ${fmtQ(top.L.p, top.L.forecast)} expected from ${dowShort(addDays(TODAY, top.L.winDays[0]))} to ${dowShort(addDays(TODAY, top.L.winDays[top.L.winDays.length - 1]))}, ${fmtQ(top.L.p, top.L.usable)} usable in stock.`;
+    let reason = `${top.L.p.name}: ${fmtQ(top.L.p, top.L.forecast)} expected ${top.L.win > 1 ? "from " : "on "}${winText(top.L)}, ${fmtQ(top.L.p, top.L.usable)} usable in stock.`;
     if (drv && groupExtras(drv.date, "dinner").length) reason += ` ${dowName(drv.date)}'s ${groupExtras(drv.date, "dinner")[0].group.name.toLowerCase()} dinner adds ${groupExtras(drv.date, "dinner")[0].covers} covers.`;
     else if (drv && drv.f.events[0]) reason += ` ${dowName(drv.date)}'s ${drv.f.events[0].name.split(" at ")[0].toLowerCase()} lifts demand.`;
     const late = lines.some((l) => l.L.late);
@@ -2129,9 +2131,8 @@ function ExplainPanel({ pid, sup, onClose }) {
   const sugLine = S.suggested.find((o) => o.sup === p.sup);
   const batches = S.state.batches.filter((b) => b.p === p.id).sort((a, b) => a.eOff - b.eOff);
   const inc = S.state.orders.filter((o) => ACTIVE.includes(o.status) && o.lines.some((l) => l.p === p.id));
-  const win0 = L.winDays[0], win1 = L.winDays[L.winDays.length - 1];
   const rows = [
-    ["Forecast use", fmtQty(p, L.forecast), `${dowShort(addDays(TODAY, win0))} to ${dowShort(addDays(TODAY, win1))}, all services`],
+    ["Forecast use", fmtQty(p, L.forecast), `${winText(L)} (${L.win} ${plural(L.win, "day")}), all services`],
     ["Usable stock", `- ${fmtQty(p, L.usable)}`, `FEFO: oldest first. Stock that would pass its date before it is used does not count`],
     ["Safety buffer", `+ ${fmtQty(p, L.buffer)}`, `${cap(L.cls === "A" ? "very fresh" : L.cls === "B" ? "fresh" : L.cls === "C" ? "short-life" : "long-life")} item, ${Math.round(L.z * 100) / 100} standard deviations of demand risk${L.wasteCut > 0 ? `, trimmed ${fmtQty(p, L.wasteCut)} because of recent waste` : ""}`],
     ["Net need", fmtQty(p, L.net), "Forecast, minus usable stock, plus buffer"],
@@ -2151,7 +2152,7 @@ function ExplainPanel({ pid, sup, onClose }) {
 
       <h4 className="font-serif text-[19px] text-head mt-0 mb-2">Demand by day</h4>
       <div className="overflow-x-auto mb-5"><table className="w-full text-[14.5px] tnum min-w-[360px]"><thead><tr className="text-left text-muted"><th className="py-1 font-medium">Day</th>${MEALS.filter((m) => L.byDay.some((d) => d.bySvc[m])).map((m) => html`<th key=${m} className="font-medium">${MEAL_SHORT[m]}</th>`)}<th className="font-medium">Total</th></tr></thead>
-        <tbody>${L.byDay.map((d) => html`<tr key=${d.k} className="border-t border-line"><td className="py-1.5">${dowShort(d.date)}</td>${MEALS.filter((m) => L.byDay.some((x) => x.bySvc[m])).map((m) => html`<td key=${m}>${d.bySvc[m] ? fq(p, d.bySvc[m]) : "-"}</td>`)}<td className="font-semibold">${fq(p, d.p50)}</td></tr>`)}
+        <tbody>${L.byDay.map((d) => html`<tr key=${d.k} className="border-t border-line"><td className="py-1.5 whitespace-nowrap">${fmtDate(d.date)}</td>${MEALS.filter((m) => L.byDay.some((x) => x.bySvc[m])).map((m) => html`<td key=${m}>${d.bySvc[m] ? fq(p, d.bySvc[m]) : "-"}</td>`)}<td className="font-semibold">${fq(p, d.p50)}</td></tr>`)}
         <tr className="border-t border-line font-semibold"><td className="py-1.5">Sum</td>${MEALS.filter((m) => L.byDay.some((x) => x.bySvc[m])).map((m) => html`<td key=${m}>${fq(p, L.byDay.reduce((s, d) => s + (d.bySvc[m] || 0), 0))}</td>`)}<td>${fq(p, L.byDay.reduce((s, d) => s + d.p50, 0))}</td></tr></tbody></table></div>
 
       <h4 className="font-serif text-[19px] text-head mt-0 mb-2">Traced back from the order</h4>
@@ -2765,7 +2766,7 @@ function POLine({ o, l }) {
         </div>
         <div className="tnum"><div className="text-[12.5px] text-muted">Recommended</div><div className="font-semibold text-[16.5px]">${fmtQty(p, l.rec)}</div><div className="text-[12.5px] text-muted">range ${fq(p, L.range[0])}–${fq(p, L.range[1])}</div></div>
         <div className="tnum"><div className="text-[12.5px] text-muted">Your order</div><div className=${cls("font-semibold text-[16.5px]", changed && "text-terra")}>${fmtQty(p, l.qty)}</div><div className="text-[12.5px] text-muted">${eur1(l.qty * p.price)}</div></div>
-        <div className="text-[14px] text-muted">${fmtQty(p, L.forecast)} forecast from ${dowShort(addDays(TODAY, L.winDays[0]))} to ${dowShort(addDays(TODAY, L.winDays[L.winDays.length - 1]))}, ${fmtQty(p, L.usable)} usable stock, ${fmtQty(p, L.buffer)} buffer, case ${p.step} ${p.unit}.</div>
+        <div className="text-[14px] text-muted">${fmtQty(p, L.forecast)} forecast ${L.win > 1 ? "from " : "on "}${winText(L)}, ${fmtQty(p, L.usable)} usable stock, ${fmtQty(p, L.buffer)} buffer, case ${p.step} ${p.unit}.</div>
       </div>
       <div className="flex flex-wrap gap-2">
         <button type="button" className="btn btn-secondary btn-sm" onClick=${() => nav.openPanel("explain", { pid: l.p })}><${Icon} name="info" size=${15} />Explain</button>
@@ -3128,7 +3129,7 @@ function answerFor(raw, S, nav) {
       return { title: `${prod.name}: no order needed`, lines: [`Forecast ${fmtQty(prod, L.forecast)} over the next ${L.win} ${plural(L.win, "day")}, and ${fmtQty(prod, L.usable)} is usable in stock or already ordered.`, r && r.incQty ? `${fmtQty(prod, r.incQty)} arrives ${dayWord(addDays(TODAY, r.nextEta))}.` : "No open order for it."], actions: [{ label: "See the full trace", run: () => nav.openPanel("explain", { pid: prod.id }) }, { label: "Add it to the order anyway", run: () => S.addLine(prod.sup, prod.id, prod.step) }] };
     }
     const lines = [
-      `Lunch and dinner plus the other services use ${fmtQty(prod, L.forecast)} from ${dowShort(addDays(TODAY, L.winDays[0]))} to ${dowShort(addDays(TODAY, L.winDays[L.winDays.length - 1]))}.`,
+      `Lunch and dinner plus the other services use ${fmtQty(prod, L.forecast)} ${L.win > 1 ? "from " : "on "}${winText(L)}.`,
       `Usable stock is ${fmtQty(prod, L.usable)}${L.exp48 > 0 ? `, and ${fmtQty(prod, L.exp48)} of the stock expires within 48 hours` : ""}.`,
       `Add a safety buffer of ${fmtQty(prod, L.buffer)}, net need ${fmtQty(prod, L.net)}, rounded to ${prod.step} ${prod.unit} cases: order ${fmtQty(prod, line.rec)}, likely range ${fq(prod, L.range[0])}–${fq(prod, L.range[1])}.`,
       `Peak day is ${dowName(ex.peak.date)} with ${ex.peak.f.meals.dinner.covers} dinner covers${ex.peak.f.events[0] ? " (" + ex.peak.f.events[0].name.split(" at ")[0].toLowerCase() + ")" : ""}.`,

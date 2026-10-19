@@ -301,3 +301,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before: `"use by " + dowShort(...)` printed a weekday even for dates months away: the house wine showed "use by Sun" while Stock said 15 Aug.
 - After: within the next 6 days, the weekday ("use by Thu"). Further out, the date ("best before 15 Aug 2027"). Long-life items say "best before" and fresh items "use by", as on the Stock screen. Open-order arrival days follow the same rule.
 - Undo: `git revert <hash of 6.2>`
+
+#### 6.3 Order windows print real dates
+- Files and functions: `index.html`: new `winText()`; `ExplainPanel` ("Forecast use" row and the "Demand by day" table), `POLine` (Purchasing), `suggestOrders` (the order reason), `answerFor` (assistant).
+- Before (19 Oct): "Forecast use: Fri to Sun, all services" for the house wine, while the window and the table under it covered 10 days (Fri 23 Oct to Sun 1 Nov), with weekday-only rows that repeated Fri, Sat and Sun.
+- After: "Fri 23 Oct to Sun 1 Nov (10 days), all services". The table rows show full dates (Fri 23 Oct … Sun 1 Nov) and sum to the same 90 bottles. Purchasing ("90 bottles forecast from Fri 23 Oct to Sun 1 Nov"), the order reason ("expected from Wed 21 Oct to Fri 23 Oct") and the assistant use the same wording. A one-day window says "on Thu 22 Oct". (The window itself changes in 7.1; the labels follow it automatically.)
+- Undo: `git revert <hash of 6.3>`
