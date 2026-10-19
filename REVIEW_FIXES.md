@@ -251,3 +251,11 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before: both the morning and the evening card called the serving team "Floor and breakfast".
 - After: the morning card still says "Floor and breakfast" (the breakfast host is in that group). The evening card says **"Floor"**. The review suggested "Floor and bar", but the evening card already has its own "Bar" row (the bartender), so "Floor and bar" would name the bar twice. **Waiting:** if you prefer the exact wording "Floor and bar", it is a one-word change in `gl`.
 - Undo: `git revert <hash of 4.6>`
+
+### Group 5. Calculation bugs
+
+#### 5.1 Waste per cover uses kg
+- Files and functions: `index.html`: `computeMetrics`. Shown in `TodayScreen` ("Waste per cover") and `WasteScreen` ("Per cover"); both multiply by 1,000 and print grams, unchanged.
+- Before: `wastePerCover = wasteE / covers30`, euros divided by covers, printed as grams: **64 g** (EUR 146.94 / 2,284 covers).
+- After: `wastePerCover = wasteKg / covers30`: **10 g** (22.6 kg / 2,284 covers) on both screens. (The 30-day waste itself is rescaled in 7.6, so these numbers change again there.)
+- Undo: `git revert <hash of 5.1>`

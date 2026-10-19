@@ -1217,7 +1217,7 @@ function computeMetrics(S) {
   }
   const stockValue = S.state.batches.filter((b) => b.eOff >= 0).reduce((s, b) => s + b.qty * PBY[b.p].price, 0);
   const next7 = Array.from({ length: 7 }, (_, i) => costOnDay(addDays(TODAY, i))).reduce((a, b) => a + b, 0) / 7;
-  return { wasteKg, wasteE, wastePerCover: covers30 ? wasteE / covers30 : 0, stockouts: STOCKOUTS.length, foodCostPct: rev30 ? cost30 / rev30 : 0, daysOnHand: next7 ? stockValue / next7 : 0, stockValue, accuracy: accuracy(), covers30 };
+  return { wasteKg, wasteE, wastePerCover: covers30 ? wasteKg / covers30 : 0 /* kg per cover, shown in grams */, stockouts: STOCKOUTS.length, foodCostPct: rev30 ? cost30 / rev30 : 0, daysOnHand: next7 ? stockValue / next7 : 0, stockValue, accuracy: accuracy(), covers30 };
 }
 
 /* ---------- SECTION 16: HOURLY PROFILE (kept from the original skeleton) ---------- */
