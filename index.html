@@ -299,6 +299,7 @@ const PILOT_FORM_ENDPOINT = "";
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
 const MEAL_LABEL = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", bar: "Bar" };
+const HISTORY_DAYS = 56; // simulated history the demo has "read": 8 weeks, so 8 of each weekday
 const NOW_HOUR = 9; // the demo always plans at 09:00, so supplier cut-offs behave the same every time
 const Z80 = 1.2816; // P10 / P90
 
@@ -498,7 +499,7 @@ const BOARD_LABEL = { RO: "Room only", BB: "Bed and breakfast", HB: "Half board"
 const CHANNEL_LABEL = { direct: "Direct", ota: "Online agency", corporate: "Corporate", group: "Group" };
 const PICKUP_P = 0.8; // chance that a stay not yet on the books will still arrive
 function buildReservations() {
-  const rnd = mulberry32(20261007);
+  let rnd = mulberry32(20261007);
   const pick = (arr) => arr[Math.floor(rnd() * arr.length)];
   const wpick = (pairs) => { let r = rnd(), s = 0; for (const [v, w] of pairs) { s += w; if (r <= s) return v; } return pairs[pairs.length - 1][0]; };
   const res = [];
@@ -561,6 +562,21 @@ function buildReservations() {
       rooms = res.filter((r) => r.a <= n && n < r.dep);
     }
   }
+  // Older history, so the demo has HISTORY_DAYS of past sales. It uses its own random stream and every stay
+  // checks out by day -32, so the bookings generated above (and every forecast from day -31 on) are unchanged.
+  rnd = mulberry32(20261008);
+  const histActive = [];
+  for (let n = -HISTORY_DAYS - 14; n < -32; n++) {
+    for (let i = histActive.length - 1; i >= 0; i--) if (histActive[i] <= n) histActive.splice(i, 1);
+    const need = Math.max(0, Math.round(HOTEL.rooms * occTarget(n)) - histActive.length);
+    const dow = addDays(TODAY, n).getDay();
+    for (let i = 0; i < need; i++) {
+      const nights = Math.min(-32 - n, wpick(dow === 5 ? [[1, 0.5], [2, 0.4], [3, 0.1]] : [[1, 0.55], [2, 0.3], [3, 0.12], [4, 0.03]]));
+      const r = mk(n, nights, {});
+      res.push(r);
+      histActive.push(r.dep);
+    }
+  }
   const out = res.filter((r) => r.nights >= 1);
   // The story of the last 24 hours: a few late bookings and a cancellation, so "what changed" has real content
   const recent = (arrOff, k, who) => out.filter((r) => r.a === arrOff && !r.group && r.bookedOff > -0.5 && r.lead > 2).slice(0, 0).concat(out.filter((r) => r.a === arrOff && !r.group && r.nights >= 1).slice(0, k)).forEach((r) => { r.bookedOff = -0.3 - 0.1 * (r.id.charCodeAt(4) % 4); r.lead = Math.max(1, r.a - r.bookedOff); r.recentNote = who; });
@@ -571,7 +587,7 @@ function buildReservations() {
   return out;
 }
 const RES = buildReservations();
-const RES_ACTIVE = (() => { const m = {}; for (let n = -33; n <= 63; n++) m[n] = RES.filter((r) => r.a <= n && n <= r.dep); return m; })();
+const RES_ACTIVE = (() => { const m = {}; for (let n = -HISTORY_DAYS - 15; n <= 63; n++) m[n] = RES.filter((r) => r.a <= n && n <= r.dep); return m; })();
 const RES_ARRIVING = (() => { const m = {}; RES.forEach((r) => { (m[r.a] = m[r.a] || []).push(r); }); return m; })();
 
 /* ---------- SECTION 6: STAGE 1 — PREDICT COVERS ---------- */
@@ -1144,6 +1160,8 @@ function explainOrder(pid, S) {
   const peak = line.byDay.slice().sort((a, b) => b.f.meals.dinner.covers - a.f.meals.dinner.covers)[0];
   return { p, line, sug, overridden: sl && sl.override, chosen: sl ? sl.qty : line.rec, peak };
 }
+// How many days of a weekday the simulated history holds (8 with 56 days)
+const sameDowInHistory = (dow) => Array.from({ length: HISTORY_DAYS }, (_, k) => addDays(TODAY, -k - 1)).filter((d) => d.getDay() === dow).length;
 function explainDay(f) {
   const out = [];
   out.push({ key: "bookings", icon: "calendar", title: "Bookings", text: `${f.rooms} of ${HOTEL.rooms} rooms (${f.booked} on the books, ${f.pickup} expected to book), about ${f.guests} guests. ${f.arrivals.guests} ${plural(f.arrivals.guests, "guest")} in ${f.arrivals.rooms} ${plural(f.arrivals.rooms, "room")} arrive, ${f.departures.guests} ${plural(f.departures.guests, "guest")} in ${f.departures.rooms} ${plural(f.departures.rooms, "room")} leave.`, effect: "Sets the starting point" });
@@ -1165,7 +1183,7 @@ function explainDay(f) {
   else out.push({ key: "event", icon: "music", title: "Events", text: "Nothing nearby that we know of.", effect: "No change" });
   if (f.holiday) out.push({ key: "holiday", icon: "flag", title: "Holiday", text: f.holiday.name + ". " + f.holiday.note, effect: Object.entries(f.holiday.effect).map(([m, v]) => `+${Math.round(v * 100)}% ${m}`).join(", ") });
   const hf = HISTORY_FACTOR[f.dow];
-  out.push({ key: "history", icon: "clock", title: "Past sales", text: `Calibrated on the last 8 ${dowName(f.date)}s of point-of-sale data at ${HOTEL.name}.`, effect: hf === 1 ? "In line with your usual" : `${hf > 1 ? "+" : "−"}${Math.round(Math.abs(hf - 1) * 100)}% against the base estimate` });
+  out.push({ key: "history", icon: "clock", title: "Past sales", text: (() => { const fromCsv = DATA_SOURCE.kind === "csv" && (DATA_SOURCE.dowCounts || {})[f.dow] >= 2; const k = fromCsv ? DATA_SOURCE.dowCounts[f.dow] : sameDowInHistory(f.dow); return `Calibrated on the last ${k} ${dowName(f.date)}s of ${fromCsv ? "covers in " + DATA_SOURCE.name : "point-of-sale data at " + HOTEL.name}.`; })(), effect: hf === 1 ? "In line with your usual" : `${hf > 1 ? "+" : "−"}${Math.round(Math.abs(hf - 1) * 100)}% against the base estimate` });
   return out;
 }
 // What the forecast looked like yesterday versus now, for the next 7 days
@@ -3501,14 +3519,14 @@ function DataScreen() {
     const was = { ...HISTORY_FACTOR };
     Object.assign(HISTORY_FACTOR, f);
     clearForecastCaches();
-    Object.assign(DATA_SOURCE, { kind: "csv", name: fname || "Your CSV", rows: parsed.rows.length, from: parsed.rows[0].date, to: parsed.rows[parsed.rows.length - 1].date });
+    Object.assign(DATA_SOURCE, { kind: "csv", name: fname || "Your CSV", rows: parsed.rows.length, from: parsed.rows[0].date, to: parsed.rows[parsed.rows.length - 1].date, dowCounts: parsed.rows.reduce((c, r) => ({ ...c, [r.dow]: (c[r.dow] || 0) + 1 }), {}) });
     S.refreshData();
     const after = Array.from({ length: 7 }, (_, i) => fcDay(addDays(TODAY, i)).meals.dinner.covers);
     let big = 0; after.forEach((a, i) => { if (Math.abs(a - before[i]) > Math.abs(after[big] - before[big])) big = i; });
     setResult({ was, now: { ...HISTORY_FACTOR }, learned: Object.keys(f).length, big, before: before[big], after: after[big] });
     S.say("Your data is in. The forecast now uses it.");
   };
-  const reset = () => { Object.assign(HISTORY_FACTOR, HISTORY_DEFAULT); clearForecastCaches(); Object.assign(DATA_SOURCE, { kind: "demo", name: "Demo hotel (simulated)", rows: 0, from: null, to: null }); setParsed(null); setResult(null); setFname(""); S.refreshData(); S.say("Back to the simulated demo hotel."); };
+  const reset = () => { Object.assign(HISTORY_FACTOR, HISTORY_DEFAULT); clearForecastCaches(); Object.assign(DATA_SOURCE, { kind: "demo", name: "Demo hotel (simulated)", rows: 0, from: null, to: null, dowCounts: null }); setParsed(null); setResult(null); setFname(""); S.refreshData(); S.say("Back to the simulated demo hotel."); };
   const routes = [
     ["file", "Upload an export", "Available in this demo", "ok", "Export covers served from your till and the booking list from your PMS as CSV (Excel can save as CSV). Upload it here. This is how every pilot starts."],
     ["link", "Connect with an API key", "Planned after the pilot", "neutral", "Your PMS, channel manager or till supplier gives you a read-only API key. You paste it into DemandInn and data arrives nightly. You can revoke it at any time."],
@@ -3559,7 +3577,7 @@ function DataScreen() {
             <h3 className="font-serif text-[21px] text-head m-0 mb-3">Live dataset</h3>
             <table className="w-full text-[15px]"><tbody>
               <tr className="border-t border-line"><td className="py-2 text-muted">Source</td><td className="text-right font-semibold">${DATA_SOURCE.kind === "csv" ? "Your CSV" : "Simulated demo"}</td></tr>
-              <tr className="border-t border-line"><td className="py-2 text-muted">History read</td><td className="text-right tnum">${DATA_SOURCE.kind === "csv" ? `${DATA_SOURCE.rows} days` : "28 days (simulated)"}</td></tr>
+              <tr className="border-t border-line"><td className="py-2 text-muted">History read</td><td className="text-right tnum">${DATA_SOURCE.kind === "csv" ? `${DATA_SOURCE.rows} days` : `${HISTORY_DAYS} days (simulated)`}</td></tr>
               <tr className="border-t border-line"><td className="py-2 text-muted">Services</td><td className="text-right">Breakfast, lunch, dinner, bar</td></tr>
               <tr className="border-t border-line"><td className="py-2 text-muted">Ingredients tracked</td><td className="text-right tnum">${PRODUCTS.length}</td></tr>
               <tr className="border-t border-line"><td className="py-2 text-muted">Batches in stock</td><td className="text-right tnum">${S.state.batches.length}</td></tr>

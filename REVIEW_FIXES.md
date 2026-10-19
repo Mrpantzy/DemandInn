@@ -269,3 +269,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
   - `checkDishTags()` warns in the console ("DemandInn recipe check: …") if a dish tagged vegan contains dairy, eggs, meat or fish, a dish tagged vegetarian contains meat or fish, or a dish tagged gluten-free contains bread, pasta, flour or croissant dough. On load it now finds nothing. Tested by adding cheese back to the vegan dish and tagging pasta gluten-free: it reported both.
 - Effect on numbers: a little less cheese, butter and bread and a little more vegetables, oil and potatoes are forecast and ordered.
 - Undo: `git revert <hash of 5.2>`
+
+#### 5.3 History: 8 weeks, and the weekday count is computed
+- Files and functions: `index.html`: new `HISTORY_DAYS = 56`, `buildReservations` (older history), `RES_ACTIVE`, new `sameDowInHistory()`, `explainDay` (the "Past sales" line), `DataScreen` ("History read" and the per-weekday row counts of a loaded CSV).
+- Before: Demand said "Calibrated on the last 8 Tuesdays of point-of-sale data", but the simulated bookings only started 32 days back and "Use your own data" said "History read: 28 days (simulated)". Days before −32 had no guests at all, which is why the baselines dropped to a handful of covers.
+- After: the simulated history covers 8 weeks. The older stays come from their own random stream, and every one of them checks out by day −32, so all bookings and forecasts from day −31 onwards are **identical** to before (checked: rooms, guests, covers and ranges for days −31 to +62, no difference). "History read" shows "56 days (simulated)". The "Past sales" line counts the matching weekdays in the history ("the last 8 Tuesdays"). When a CSV has been loaded, it counts that weekday's rows in the file instead ("the last 52 Tuesdays of covers in Sample hotel….csv").
+- Undo: `git revert <hash of 5.3>`
