@@ -459,3 +459,10 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before: after 4.5 the landing cards said "likely 19–30", but six other places still said "likely 19 to 30" or "likely between 19 and 30".
 - After: every cover range reads "likely 19–30". Only the wording changed, not the numbers.
 - Undo: `git revert <hash of this commit>`
+
+#### 8.2 Sources with links
+- Files and functions: `index.html`: new `SOURCES = { wrap, otelier, champions }` at the top of the script; `Problem` (fact cards), `Principles` (Champions card).
+- Before: "Source: WRAP", "Source: Otelier Hotel Ops Index 2026", "Industry evidence: Champions 12.3", with no links.
+- After: "Source: WRAP, via Business Wales" and "Source: Otelier, The 2026 Hotel Operations Index (Jan 2026)" as links; "42 hotels in 15 countries cut kitchen waste 21% in one year (2018)" with "Champions 12.3" linked. All open in a new tab.
+- **Waiting:** the Business Wales URL given in the prompt (`/news-and-blog/webinar-serving-action-plate-waste`) returned **404** when checked on 19 Oct 2026. Please send the working link; it is one line in `SOURCES.wrap`. Hospital­ity Net returned 403 to a script (probably bot blocking, not a dead page) and was not checked in a browser. Champions 12.3 returned 200.
+- Undo: `git revert <hash of 8.2>`

@@ -298,6 +298,12 @@ const CONTACT_EMAIL = "hello@demandinn.example";
 // Where the pilot form posts the email, for example a Formspree URL ("https://formspree.io/f/xxxxxxx").
 // Empty: the form opens the visitor's mail app with a message to CONTACT_EMAIL instead.
 const PILOT_FORM_ENDPOINT = "";
+// Sources quoted on the landing page
+const SOURCES = {
+  wrap: { label: "WRAP, via Business Wales", url: "https://businesswales.gov.wales/news-and-blog/webinar-serving-action-plate-waste" },
+  otelier: { label: "Otelier, The 2026 Hotel Operations Index (Jan 2026)", url: "https://www.hospitalitynet.org/news/4130590.html" },
+  champions: { label: "Champions 12.3, The Business Case for Reducing Food Loss and Waste: Hotels (2018)", url: "https://champions123.org/the-business-case-for-reducing-food-loss-and-waste-hotels/" },
+};
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
 const MEAL_LABEL = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", bar: "Bar" };
@@ -3919,8 +3925,8 @@ const Wrap = ({ children }) => html`<div className="max-w-[1180px] mx-auto px-4 
 
 function Problem() {
   const cards = [
-    { stat: "18%", text: "of the food bought in UK hospitality is thrown away.", source: "WRAP" },
-    { stat: "11%", text: "of hotels have a fully integrated tech stack, so bookings, sales and stock rarely meet.", source: "Otelier Hotel Ops Index 2026" },
+    { stat: "18%", text: "of the food bought in UK hospitality is thrown away.", src: SOURCES.wrap },
+    { stat: "11%", text: "of hotels have a fully integrated tech stack, so bookings, sales and stock rarely meet.", src: SOURCES.otelier },
     { icon: "plate", title: "Guests notice when an item runs out.", text: "A dish missing from the menu on a full Friday costs more than the food. It costs the evening.", source: "Not a statistic" },
   ];
   return html`
@@ -3930,7 +3936,7 @@ function Problem() {
         <div className="facts">
           ${cards.map((c, i) => html`<article key=${i}>
             ${c.stat ? html`<div className="fact-num tnum">${c.stat}</div>` : html`<h3 className="fact-quote">${c.title}</h3>`}
-            <p className="text-[17px] mt-4 mb-0">${c.text}</p><p className="fact-src">${c.stat ? `Source: ${c.source}` : c.source}</p></article>`)}
+            <p className="text-[17px] mt-4 mb-0">${c.text}</p><p className="fact-src">${c.src ? html`Source: <a href=${c.src.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>${c.src.label}</a>` : c.source}</p></article>`)}
         </div>
       <//>
     </section>`;
@@ -4064,7 +4070,7 @@ function Principles() {
         <${SectionHead} title="How we think about it" intro=${`One platform at EUR ${PRICE_MONTH} a month, where stacking separate tools for forecasting, inventory and staffing (such as Tenzo, MarketMan and Planday) costs a small hotel about EUR 400–550.`} />
         <div className="ruled-lp">${items.map(([ic, t, s]) => html`<article key=${t}><h3 className="font-serif text-[25px] text-head mt-0 mb-2">${t}</h3><p className="m-0 text-[17px]">${s}</p></article>`)}</div>
         <div className="grid md:grid-cols-[1.3fr_1fr] gap-5 mt-10">
-          <article className="rounded-[16px] bg-forest text-on-dark p-8"><p className="font-serif text-[30px] md:text-[34px] leading-tight m-0">42 hotels in 15 countries cut kitchen waste 21% in one year.</p><p className="mt-5 mb-0 text-[15px] muted">Industry evidence: Champions 12.3. Not our own results.</p></article>
+          <article className="rounded-[16px] bg-forest text-on-dark p-8"><p className="font-serif text-[30px] md:text-[34px] leading-tight m-0">42 hotels in 15 countries cut kitchen waste 21% in one year (2018).</p><p className="mt-5 mb-0 text-[15px] muted">Industry evidence: <a href=${SOURCES.champions.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>Champions 12.3</a>. Not our own results.</p></article>
           <article className="card p-8 border-dashed flex flex-col justify-center"><${Chip} tone="info" icon="chat" cls="self-start">Phone interviews, 10 Oct 2026<//><h3 className="font-serif text-[24px] text-head mt-4 mb-2">What hotels told us</h3><p className="m-0 mb-3 text-[15px] text-muted">5 of the 10 small hotels we called in the UK and Italy answered.</p>
             <ul className="m-0 pl-5 grid gap-1.5 text-[16.5px]">${["Walk-in guests make restaurant demand hard to predict from bookings alone.", "Staffing came up as often as stock.", "Most still plan by hand."].map((x) => html`<li key=${x}>${x}</li>`)}</ul>
             <p className="m-0 mt-4 text-[14.5px] text-muted"><${Icon} name="clock" size=${15} cls="inline mr-1 -mt-0.5" />Pilot results coming soon.</p></article>
