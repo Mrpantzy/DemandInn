@@ -1654,13 +1654,15 @@ function layoutBars(days, orders, maxLanes = 3) {
   return { shown, hidden, laneCount: lanes.length };
 }
 
+// A suggested order has not been placed yet: show its deadline, not an order date
+const orderedText = (o, short) => (o.status === "suggested" ? `Order by ${short ? dowShort(o.orderDate) : fmtDate(o.orderDate)} ${o.cutoff}` : `Ordered ${short ? dowShort(o.orderDate) : fmtDate(o.orderDate)}`);
 function OrderBar({ it, days, compact }) {
   const nav = useNav();
   const o = it.o, st = STATUS[o.status];
   const span = it.ei - it.si + 1;
   const g = o.status === "delayed" && o.origEta ? diffDays(o.origEta, days[0]) : null;
   const ghostPct = g !== null && g >= it.si && g <= it.ei ? ((g - it.si + 0.5) / span) * 100 : null;
-  const label = `${o.supplier.name}, ${st.label}. Ordered ${fmtDate(o.orderDate)}, arrives ${fmtDate(o.eta)}.${o.origEta ? " Originally " + fmtDate(o.origEta) + "." : ""}${o.late ? " Arrives after it is needed." : ""}`;
+  const label = `${o.supplier.name}, ${st.label}. ${orderedText(o)}, arrives ${fmtDate(o.eta)}.${o.origEta ? " Originally " + fmtDate(o.origEta) + "." : ""}${o.late ? " Arrives after it is needed." : ""}`;
   return html`
     <button type="button" onClick=${() => nav.openPanel("order", o.id)} aria-label=${label} title=${label}
       className=${cls("obar", "st-" + o.status, compact && "obar-sm", !it.startsHere && "cap-l", !it.endsHere && "cap-r")}
@@ -1810,7 +1812,7 @@ function Agenda({ days, layers, orders }) {
             </div>
             <p className="mt-1 mb-2 text-sm text-muted">${f.meals.breakfast.covers} breakfast, ${f.meals.lunch.covers} lunch, ${f.meals.dinner.covers} dinner</p>
             ${(evs.length > 0 || (layers.holidays && f.holiday)) && html`<div className="grid gap-1.5 mb-2">${evs.map((e) => html`<${EventChip} key=${e.id} e=${e} f=${f} />`)}${layers.holidays && f.holiday && html`<${EventChip} e=${f.holiday} f=${f} />`}</div>`}
-            ${os.length > 0 && html`<ul className="list-none p-0 m-0 grid gap-1.5">${os.map((o) => html`<li key=${o.id}><button type="button" onClick=${() => nav.openPanel("order", o.id)} className=${cls("w-full text-left rounded-xl px-3 py-2 min-h-[44px] flex items-center justify-between gap-2 st-" + o.status)}><span><span className="font-semibold block">${o.supplier.name}</span><span className="text-[14px]">Ordered ${dowShort(o.orderDate)}, arrives ${dowShort(o.eta)}${o.late ? ", needed " + dowShort(o.needed) : ""}</span></span><span className="inline-flex items-center gap-1 text-[13px] font-semibold"><${Icon} name=${STATUS[o.status].icon} size=${15} />${STATUS[o.status].label}</span></button></li>`)}</ul>`}
+            ${os.length > 0 && html`<ul className="list-none p-0 m-0 grid gap-1.5">${os.map((o) => html`<li key=${o.id}><button type="button" onClick=${() => nav.openPanel("order", o.id)} className=${cls("w-full text-left rounded-xl px-3 py-2 min-h-[44px] flex items-center justify-between gap-2 st-" + o.status)}><span><span className="font-semibold block">${o.supplier.name}</span><span className="text-[14px]">${orderedText(o, true)}, arrives ${dowShort(o.eta)}${o.late ? ", needed " + dowShort(o.needed) : ""}</span></span><span className="inline-flex items-center gap-1 text-[13px] font-semibold"><${Icon} name=${STATUS[o.status].icon} size=${15} />${STATUS[o.status].label}</span></button></li>`)}</ul>`}
             <button type="button" className="btn btn-quiet btn-sm !px-0 mt-1" onClick=${() => nav.openPanel("day", off(d))}>Why this number?</button>
           </section>`;
       })}
@@ -2825,7 +2827,7 @@ function OrderRow({ o }) {
       <button type="button" onClick=${() => nav.openPanel("order", o.id)} className="w-full text-left card p-4 grid gap-2 md:grid-cols-[1.1fr_1.6fr_1.2fr_auto] md:items-center hover:border-forest transition-colors min-h-[64px]">
         <span><span className="block font-semibold text-[17px]">${o.supplier.name}</span><span className="block text-sm text-muted">${eur(o.cost)}</span></span>
         <span className="text-[15px] text-ink">${items.slice(0, 3).join(", ")}${items.length > 3 ? ` and ${items.length - 3} more` : ""}</span>
-        <span className="text-[15px]">Ordered ${dowShort(o.orderDate)}, arrives ${dowShort(o.eta)} ${fmtDate(o.eta, { day: "numeric", month: "short" })}${o.late ? html`<span className="block text-terra font-semibold inline-flex items-center gap-1.5 mt-0.5"><${Icon} name="alert" size=${15} />Arrives ${dowShort(o.eta)}, needed ${dowShort(o.needed)}</span>` : ""}</span>
+        <span className="text-[15px]">${orderedText(o, true)}, arrives ${dowShort(o.eta)} ${fmtDate(o.eta, { day: "numeric", month: "short" })}${o.late ? html`<span className="block text-terra font-semibold inline-flex items-center gap-1.5 mt-0.5"><${Icon} name="alert" size=${15} />Arrives ${dowShort(o.eta)}, needed ${dowShort(o.needed)}</span>` : ""}</span>
         <span className="flex items-center gap-2"><${StatusChip} status=${o.status} /><${Icon} name="right" size=${18} cls="text-muted hidden md:block" /></span>
       </button>
     </li>`;
@@ -3007,7 +3009,7 @@ function CalendarScreen({ intent }) {
       ${view === "day" && html`<${DayView} date=${anchor} layers=${layers} orders=${orders} />`}
       ${view === "week" && html`<${Agenda} days=${week} layers=${layers} orders=${orders} />`}
       ${view === "month" && html`<${Agenda} days=${monthDays.filter((d) => off(d) >= 0)} layers=${layers} orders=${orders} />`}
-      <ul className="sr-only" aria-label="Orders in the calendar">${orders.map((o) => html`<li key=${o.id}>${o.supplier.name}: ${STATUS[o.status].label}. Ordered ${fmtDate(o.orderDate)}, arrives ${fmtDate(o.eta)}.${o.late ? " Arrives after it is needed." : ""}</li>`)}</ul>
+      <ul className="sr-only" aria-label="Orders in the calendar">${orders.map((o) => html`<li key=${o.id}>${o.supplier.name}: ${STATUS[o.status].label}. ${orderedText(o)}, arrives ${fmtDate(o.eta)}.${o.late ? " Arrives after it is needed." : ""}</li>`)}</ul>
     </div>`;
 }
 

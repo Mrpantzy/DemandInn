@@ -307,3 +307,9 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
 - Before (19 Oct): "Forecast use: Fri to Sun, all services" for the house wine, while the window and the table under it covered 10 days (Fri 23 Oct to Sun 1 Nov), with weekday-only rows that repeated Fri, Sat and Sun.
 - After: "Fri 23 Oct to Sun 1 Nov (10 days), all services". The table rows show full dates (Fri 23 Oct … Sun 1 Nov) and sum to the same 90 bottles. Purchasing ("90 bottles forecast from Fri 23 Oct to Sun 1 Nov"), the order reason ("expected from Wed 21 Oct to Fri 23 Oct") and the assistant use the same wording. A one-day window says "on Thu 22 Oct". (The window itself changes in 7.1; the labels follow it automatically.)
 - Undo: `git revert <hash of 6.3>`
+
+#### 6.4 Suggested orders say "Order by"
+- Files and functions: `index.html`: new `orderedText()`; `OrderBar` (calendar bars' label and tooltip), `DayView` (order list), `OrderRow` (Purchasing lists), `CalendarScreen` (the screen-reader list of orders). The order panel already said "Order by".
+- Before (19 Oct): "Butcher: Suggested. Ordered Tue 20 Oct, arrives Wed 21 Oct." for an order nobody had placed.
+- After: "Butcher: Suggested. Order by Tue 20 Oct 12:00, arrives Wed 21 Oct." Placed, delivered and cancelled orders still say "Ordered Fri 16 Oct".
+- Undo: `git revert <hash of 6.4>`
