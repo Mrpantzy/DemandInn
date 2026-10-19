@@ -268,10 +268,14 @@ button.rc-sh:hover{filter:brightness(.95)}
 .lp .credit a{color:var(--on-dark)}
 </style>
 </head><body>
+<!-- If CONTACT_EMAIL changes, update the address in these two messages too. -->
+<noscript><p style="max-width:640px;margin:48px auto;padding:0 16px;font:17px/1.55 system-ui,sans-serif;color:#f5f2eb">DemandInn needs JavaScript to show this page. Please try another browser, or write to us at <a href="mailto:hello@demandinn.example" style="color:#dfa550">hello@demandinn.example</a>.</p></noscript>
 <div id="root"></div>
+<p id="boot-fail" hidden style="max-width:640px;margin:48px auto;padding:0 16px;font:17px/1.55 system-ui,sans-serif;color:#f5f2eb">The page could not load its scripts. Please check your connection and reload, or write to us at <a href="mailto:hello@demandinn.example" style="color:#dfa550">hello@demandinn.example</a>.</p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js"></script>
+<script>if (!window.React || !window.ReactDOM || !window.htm) document.getElementById("boot-fail").hidden = false;</script>
 <script>
 /* =====================================================================
    DEMANDINN ENGINE — one source of truth, all mocked and deterministic.
@@ -286,6 +290,7 @@ const PRODUCT_NAME = "DemandInn";
 const BRAND_LINE = "Tomorrow's covers, forecasted today";
 // Contact address shown in the footer, the pilot form fallback and the <noscript> message.
 // Placeholder until the team has a real address: the .example domain can never receive mail.
+// The same address is written in the <noscript> and #boot-fail messages at the top of <body>.
 const CONTACT_EMAIL = "hello@demandinn.example";
 // Where the pilot form posts the email, for example a Formspree URL ("https://formspree.io/f/xxxxxxx").
 // Empty: the form opens the visitor's mail app with a message to CONTACT_EMAIL instead.
