@@ -365,3 +365,23 @@ Group tags so far: `fixes-group-0`, `fixes-group-1`, `fixes-group-2`, `fixes-gro
   - Today's tile: 96% (14 days) → **87%** on 19 Oct, the same figure as Accuracy
 - The chart has real history behind it from the first day, so the baselines no longer drop to single digits.
 - Undo: `git revert <hash of 7.5>`
+
+#### 7.6 Economics: the demo tells the ROI calculator's story
+- Files and functions: `index.html`: `PRODUCTS` (5 new items, 7 price updates), `DISHES`, `EXTRAS`, `MENU`, `SPEND`, `EMPLOYEES` (cost per hour), `SEED_BATCHES` and `SEED_ORDERS` (now sized from the forecast, with new helpers `dUse`, `seedQ` and `packQ`), `SEED_WASTE` (now generated, with `WASTE_SHARE_BY_WEEK` and `WASTE_PATTERNS`), `computeMetrics` (food cost includes waste; new `wasteShare`, `wasteShareLastWeek`, `wasteShareFourWeeksAgo`), Today and Waste metric tiles, a trend line on the Waste screen, the assistant's word list.
+- What was wrong: the kitchen model only bought the main dish ingredients, so a breakfast cost EUR 1.37 (the ROI model assumes EUR 4), food cost was 15.9% of sales, the 30-day waste log was 12 entries worth EUR 147 (so even a big cut saved less than the EUR 149 price), and labour was 45–47% of revenue.
+- Now:
+  - **Kitchen**: new stock items bacon, cooked ham, yoghurt, orange juice and coffee beans. Breakfast adds coffee, juice, and bacon or ham for the guests who take them; the bacon and ham are extras, so the breakfast dishes stay vegetarian and pass the recipe check. Lunch and dinner add bread and butter, a starter, coffee and a few more desserts. Modest price updates: chicken 9.8 → 11, mince 11.5 → 12.5, cheese 13.5 → 16, croissant dough 6.4 → 7.5, beer 1.1 → 1.3, house wine 7.5 → 8.5, soft drinks 0.75 → 0.9 EUR.
+  - **Average spend per guest**: breakfast 11 → 13, lunch 19, dinner 36 → 34, bar 12 EUR.
+  - **Staff cost per hour**: the F&B manager is EUR 25, the same hour as the ROI calculator; the others are realistic employer costs (head chef 17.5, sous chef 15, cooks 12.5, porter 11, floor 11.5, bar 12).
+  - **Starting stock and open orders** are now days of forecast use (for example sea bass 1.1 days, wine 6 days, pasta 45 days), so the kitchen looks the same on any date. The story pieces are kept: tomatoes to use first, one forgotten box of salad past its date, plenty of dry goods, a delayed drinks delivery, rice and oil on order.
+  - **Waste log**: about 60 varied entries over 30 days (26 kinds of entry across 21 ingredients and all six categories). Each week adds up to a set share of the food bought: 12% four weeks ago, then 11%, 9.5%, and 8.5% last week. That is the ROI model's "12% wasted, cut by 30%".
+  - **Food cost** now means food and drink bought (used + thrown away) as a share of sales.
+- Before → after (Mon 19 Oct; the shares hold on every date checked, from Oct 2026 to Feb 2027):
+  - 30-day waste: EUR 147 → **EUR 1,721, 10.4% of food bought** (12.1% four weeks ago → 8.5% last week)
+  - Waste per cover: 10 g → **138 g**
+  - Food cost: 15.9% → **29.3%** (29.1–29.4% on the other dates)
+  - Labour: 45.5% (shown as 47%) → **34.3%** (34.0–37.2%; the team's source says 36.6%)
+  - Breakfast ingredients per cover: EUR 1.37 → **EUR 3.59** used, about EUR 4 bought once waste is added
+  - Orders ready on 19 Oct: 5 purchase orders, **EUR 589**
+- The waste trend line on the Waste screen reads: "In this simulated history, waste was 12.1% of the food bought four weeks ago and 8.5% last week, the kind of 30% cut the ROI calculator on the website assumes."
+- Undo: `git revert <hash of 7.6>`

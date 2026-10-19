@@ -357,13 +357,16 @@ const CATEGORIES = ["Fish and seafood", "Meat and poultry", "Dairy and eggs", "F
 const PRODUCTS = [
   { id: "seabass", name: "Sea bass fillet", cat: "Fish and seafood", unit: "kg", price: 22, sup: "fish", life: 3, step: 1, yield: 0.86, kg: 1, perish: true, idea: "Offer sea bass as the fish of the day" },
   { id: "salmon", name: "Salmon fillet", cat: "Fish and seafood", unit: "kg", price: 24.5, sup: "fish", life: 3, step: 1, yield: 0.9, kg: 1, perish: true, idea: "Put salmon on tonight's menu" },
-  { id: "chicken", name: "Chicken breast", cat: "Meat and poultry", unit: "kg", price: 9.8, sup: "butcher", life: 5, step: 2, yield: 0.92, kg: 1, perish: true, idea: "Add chicken to the lunch special" },
-  { id: "mince", name: "Beef mince", cat: "Meat and poultry", unit: "kg", price: 11.5, sup: "butcher", life: 3, step: 1, yield: 1, kg: 1, perish: true, idea: "Run a burger of the day" },
+  { id: "chicken", name: "Chicken breast", cat: "Meat and poultry", unit: "kg", price: 11, sup: "butcher", life: 5, step: 2, yield: 0.92, kg: 1, perish: true, idea: "Add chicken to the lunch special" },
+  { id: "mince", name: "Beef mince", cat: "Meat and poultry", unit: "kg", price: 12.5, sup: "butcher", life: 3, step: 1, yield: 1, kg: 1, perish: true, idea: "Run a burger of the day" },
+  { id: "bacon", name: "Bacon", cat: "Meat and poultry", unit: "kg", price: 12.5, sup: "butcher", life: 7, step: 1, yield: 1, kg: 1, perish: true, idea: "Run a bacon and pea pasta at lunch" },
+  { id: "ham", name: "Cooked ham", cat: "Meat and poultry", unit: "kg", price: 16, sup: "butcher", life: 8, step: 1, yield: 1, kg: 1, perish: true, idea: "Put a ham and cheese plate on the bar menu" },
   { id: "eggs", name: "Eggs", cat: "Dairy and eggs", unit: "eggs", price: 0.28, sup: "dairy", life: 21, step: 30, yield: 1, kg: 0.06, perish: true, idea: "Offer eggs benedict at breakfast" },
   { id: "milk", name: "Milk", cat: "Dairy and eggs", unit: "L", price: 1.05, sup: "dairy", life: 7, step: 6, yield: 1, kg: 1, perish: true, idea: "Use milk for breakfast baking" },
   { id: "cream", name: "Cream", cat: "Dairy and eggs", unit: "L", price: 3.6, sup: "dairy", life: 8, step: 2, yield: 1, kg: 1, perish: true, idea: "Add a cream soup to the lunch menu" },
   { id: "butter", name: "Butter", cat: "Dairy and eggs", unit: "kg", price: 8.9, sup: "dairy", life: 40, step: 1, yield: 1, kg: 1, perish: true, idea: "Use butter in tonight's sauces" },
-  { id: "cheese", name: "Cheese", cat: "Dairy and eggs", unit: "kg", price: 13.5, sup: "dairy", life: 30, step: 1, yield: 1, kg: 1, perish: true, idea: "Add a cheese plate to the menu" },
+  { id: "cheese", name: "Cheese", cat: "Dairy and eggs", unit: "kg", price: 16, sup: "dairy", life: 30, step: 1, yield: 1, kg: 1, perish: true, idea: "Add a cheese plate to the menu" },
+  { id: "yoghurt", name: "Yoghurt", cat: "Dairy and eggs", unit: "kg", price: 3.2, sup: "dairy", life: 14, step: 2, yield: 1, kg: 1, perish: true, idea: "Use yoghurt in breakfast bowls and desserts" },
   { id: "tomatoes", name: "Tomatoes", cat: "Fruit and veg", unit: "kg", price: 3.2, sup: "green", life: 6, step: 1, yield: 0.93, kg: 1, perish: true, idea: "Use tomatoes in a soup of the day" },
   { id: "salad", name: "Salad leaves", cat: "Fruit and veg", unit: "kg", price: 9, sup: "green", life: 4, step: 1, yield: 0.9, kg: 1, perish: true, idea: "Use leaves in lunch salads" },
   { id: "potatoes", name: "Potatoes", cat: "Fruit and veg", unit: "kg", price: 1.1, sup: "green", life: 21, step: 5, yield: 0.88, kg: 1, perish: true, idea: "Offer potatoes as the side of the day" },
@@ -371,14 +374,16 @@ const PRODUCTS = [
   { id: "herbs", name: "Fresh herbs", cat: "Fruit and veg", unit: "kg", price: 18, sup: "green", life: 5, step: 0.5, yield: 0.75, kg: 1, perish: true, idea: "Finish tonight's specials with them" },
   { id: "berries", name: "Berries", cat: "Fruit and veg", unit: "kg", price: 14, sup: "green", life: 4, step: 1, yield: 0.95, kg: 1, perish: true, idea: "Add berries to breakfast bowls and desserts" },
   { id: "bread", name: "Bread", cat: "Bakery", unit: "loaves", price: 3.2, sup: "bakery", life: 4, step: 4, yield: 1, kg: 0.5, perish: true, idea: "Offer bread pudding as a dessert" },
-  { id: "dough", name: "Croissant dough", cat: "Bakery", unit: "kg", price: 6.4, sup: "bakery", life: 6, step: 1, yield: 1, kg: 1, perish: true, idea: "Bake an extra tray for breakfast" },
+  { id: "dough", name: "Croissant dough", cat: "Bakery", unit: "kg", price: 7.5, sup: "bakery", life: 6, step: 1, yield: 1, kg: 1, perish: true, idea: "Bake an extra tray for breakfast" },
   { id: "pasta", name: "Dried pasta", cat: "Dry goods", unit: "kg", price: 2.4, sup: "dry", life: 365, step: 5, yield: 1, kg: 1, perish: false },
   { id: "rice", name: "Rice", cat: "Dry goods", unit: "kg", price: 2.6, sup: "dry", life: 365, step: 5, yield: 1, kg: 1, perish: false },
   { id: "flour", name: "Flour", cat: "Dry goods", unit: "kg", price: 1.2, sup: "dry", life: 300, step: 10, yield: 1, kg: 1, perish: false },
   { id: "oil", name: "Olive oil", cat: "Dry goods", unit: "L", price: 8.8, sup: "dry", life: 300, step: 5, yield: 1, kg: 1, perish: false },
-  { id: "beer", name: "Beer (33 cl)", cat: "Drinks", unit: "bottles", price: 1.1, sup: "drinks", life: 120, step: 24, yield: 1, kg: 0.5, perish: false },
-  { id: "wine", name: "House wine", cat: "Drinks", unit: "bottles", price: 7.5, sup: "drinks", life: 365, step: 6, yield: 1, kg: 1.2, perish: false },
-  { id: "soft", name: "Soft drinks", cat: "Drinks", unit: "bottles", price: 0.75, sup: "drinks", life: 180, step: 24, yield: 1, kg: 0.5, perish: false },
+  { id: "coffee", name: "Coffee beans", cat: "Dry goods", unit: "kg", price: 21, sup: "dry", life: 180, step: 1, yield: 1, kg: 1, perish: false },
+  { id: "beer", name: "Beer (33 cl)", cat: "Drinks", unit: "bottles", price: 1.3, sup: "drinks", life: 120, step: 24, yield: 1, kg: 0.5, perish: false },
+  { id: "wine", name: "House wine", cat: "Drinks", unit: "bottles", price: 8.5, sup: "drinks", life: 365, step: 6, yield: 1, kg: 1.2, perish: false },
+  { id: "soft", name: "Soft drinks", cat: "Drinks", unit: "bottles", price: 0.9, sup: "drinks", life: 180, step: 24, yield: 1, kg: 0.5, perish: false },
+  { id: "juice", name: "Orange juice", cat: "Drinks", unit: "L", price: 2.4, sup: "dairy", life: 10, step: 6, yield: 1, kg: 1, perish: true, idea: "Offer fresh juice with the lunch menu" },
 ];
 const PBY = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
 // Perishability class sets how much overstock we tolerate. A is the most fragile.
@@ -388,9 +393,9 @@ const CLASS_LABEL = { A: "Very fresh", B: "Fresh", C: "Chilled", D: "Long life" 
 
 // Dish recipes. bom = [ingredient, net quantity per portion]. Gross purchase quantity = net / yield.
 const DISHES = {
-  bf_buffet: { name: "Continental buffet", veg: true, vegan: false, gf: false, bom: [["dough", 0.09], ["bread", 0.05], ["butter", 0.01], ["cheese", 0.025], ["milk", 0.08], ["berries", 0.012]] },
-  bf_cooked: { name: "Cooked breakfast", veg: true, vegan: false, gf: true, bom: [["eggs", 2], ["potatoes", 0.08], ["butter", 0.008], ["tomatoes", 0.05], ["milk", 0.03]] },
-  bf_fruit: { name: "Fresh fruit plate", veg: true, vegan: true, gf: true, bom: [["berries", 0.09]] },
+  bf_buffet: { name: "Continental buffet", veg: true, vegan: false, gf: false, bom: [["dough", 0.1], ["bread", 0.05], ["butter", 0.012], ["cheese", 0.035], ["milk", 0.08], ["berries", 0.04], ["yoghurt", 0.12]] },
+  bf_cooked: { name: "Cooked breakfast", veg: true, vegan: false, gf: true, bom: [["eggs", 2], ["potatoes", 0.08], ["butter", 0.01], ["tomatoes", 0.06], ["veg", 0.05], ["milk", 0.03]] },
+  bf_fruit: { name: "Fresh fruit plate", veg: true, vegan: true, gf: true, bom: [["berries", 0.12]] },
   soup: { name: "Tomato soup", veg: true, vegan: false, gf: false, bom: [["tomatoes", 0.22], ["cream", 0.03], ["bread", 0.06], ["butter", 0.01], ["herbs", 0.003]] },
   caesar: { name: "Chicken Caesar salad", veg: false, vegan: false, gf: false, bom: [["chicken", 0.14], ["salad", 0.09], ["cheese", 0.02], ["bread", 0.04], ["oil", 0.01]] },
   pasta: { name: "Seasonal pasta", veg: true, vegan: false, gf: false, bom: [["pasta", 0.11], ["tomatoes", 0.12], ["cream", 0.05], ["cheese", 0.025], ["herbs", 0.004], ["oil", 0.01]] },
@@ -422,19 +427,27 @@ const EXTRAS = {
   wine_bottle: { name: "House wine (bottle)", bom: [["wine", 1]] },
   beer: { name: "Beer (33 cl)", bom: [["beer", 1]] },
   soft: { name: "Soft drink", bom: [["soft", 1]] },
-  dessert: { name: "Dessert (berries and cream)", bom: [["berries", 0.05], ["cream", 0.04], ["flour", 0.02]] },
+  dessert: { name: "Dessert (berries and cream)", bom: [["berries", 0.06], ["cream", 0.05], ["flour", 0.03], ["butter", 0.015], ["eggs", 0.5]] },
+  bread_basket: { name: "Bread and butter", bom: [["bread", 0.08], ["butter", 0.012]] },
+  starter: { name: "Starter (salad or soup)", bom: [["salad", 0.04], ["tomatoes", 0.1], ["cheese", 0.03], ["cream", 0.02], ["herbs", 0.003], ["oil", 0.01]] },
+  coffee: { name: "Coffee", bom: [["coffee", 0.016], ["milk", 0.03]] },
+  juice: { name: "Orange juice (glass)", bom: [["juice", 0.2]] },
+  bacon: { name: "Bacon (breakfast)", bom: [["bacon", 0.1]] },
+  cold_cuts: { name: "Ham (breakfast buffet)", bom: [["ham", 0.05]] },
 };
 // Menu: base choice shares among guests without a dietary requirement, and extras per cover
 const MENU = {
-  breakfast: { dishes: [["bf_buffet", 0.5], ["bf_cooked", 0.34], ["bf_fruit", 0.16]], extras: [["soft", 0.2]] },
-  lunch: { dishes: [["soup", 0.17], ["caesar", 0.22], ["pasta", 0.17], ["burger", 0.23], ["salmon_salad", 0.15], ["veg_main", 0.06]], extras: [["beer", 0.16], ["wine_glass", 0.1], ["soft", 0.3], ["dessert", 0.1]] },
-  dinner: { dishes: [["sea_bass", 0.3], ["roast_chicken", 0.26], ["pasta", 0.2], ["veg_main", 0.06], ["burger", 0.18]], extras: [["wine_bottle", 0.16], ["wine_glass", 0.45], ["beer", 0.3], ["soft", 0.26], ["dessert", 0.24]] },
-  bar: { dishes: [], extras: [["beer", 1.2], ["wine_glass", 0.6], ["soft", 0.45]] },
+  // Meat at breakfast is an extra (taken by the guests who want it), so the breakfast dishes stay vegetarian
+  breakfast: { dishes: [["bf_buffet", 0.5], ["bf_cooked", 0.34], ["bf_fruit", 0.16]], extras: [["coffee", 0.95], ["juice", 0.8], ["soft", 0.1], ["bacon", 0.35], ["cold_cuts", 0.45]] },
+  lunch: { dishes: [["soup", 0.17], ["caesar", 0.22], ["pasta", 0.17], ["burger", 0.23], ["salmon_salad", 0.15], ["veg_main", 0.06]], extras: [["beer", 0.2], ["wine_glass", 0.2], ["soft", 0.35], ["dessert", 0.3], ["bread_basket", 0.7], ["starter", 0.35], ["coffee", 0.45]] },
+  dinner: { dishes: [["sea_bass", 0.3], ["roast_chicken", 0.26], ["pasta", 0.2], ["veg_main", 0.06], ["burger", 0.18]], extras: [["wine_bottle", 0.2], ["wine_glass", 0.5], ["beer", 0.3], ["soft", 0.26], ["dessert", 0.5], ["bread_basket", 1], ["starter", 0.6], ["coffee", 0.6]] },
+  bar: { dishes: [], extras: [["beer", 1.3], ["wine_glass", 0.8], ["soft", 0.45]] },
 };
 // Where vegetarians go when they choose from the menu
 const VEG_SPLIT = { breakfast: [["bf_cooked", 0.6], ["bf_buffet", 0.4]], lunch: [["veg_main", 0.5], ["pasta", 0.3], ["soup", 0.2]], dinner: [["veg_main", 0.6], ["pasta", 0.4]] };
 const VEGAN_DISH = { breakfast: "bf_fruit", lunch: "veg_main", dinner: "veg_main" };
-const SPEND = { breakfast: 11, lunch: 19, dinner: 36, bar: 12 }; // average spend per guest, EUR
+// Average spend per guest, EUR, food and drink. Set so ingredients bought are about 30% of sales and labour about 35%.
+const SPEND = { breakfast: 13, lunch: 19, dinner: 34, bar: 12 };
 
 /* ---------- SECTION 4: WEATHER, EVENTS, HOLIDAYS, GROUPS ---------- */
 const WEATHER_BY_DOW = {
@@ -848,61 +861,69 @@ const costOnDay = (d) => PRODUCTS.reduce((s, p) => s + useOnDay(p, d) * p.price,
 /* ---------- SECTION 9: STOCK, ORDERS, WASTE SEEDS ---------- */
 const batchView = (b) => ({ ...b, purchased: addDays(TODAY, b.pOff), expiry: addDays(TODAY, b.eOff), daysLeft: b.eOff });
 const ACTIVE = ["placed", "confirmed", "ontheway", "delayed"];
-// pOff = days since purchase (negative), eOff = days until use-by / best-before
+// Starting stock and open orders are sized in days of forecast use, so the kitchen looks the same on any date.
+// dUse(id, days, from) = forecast use over that many days (fractions allowed) starting at day offset "from".
+const dUse = (pid, days, from = 0) => { const p = PBY[pid], w = Math.floor(days); return useOverDays(p, addDays(TODAY, from), w) + (days - w) * useOnDay(p, addDays(TODAY, from + w)); };
+const seedQ = (pid, q) => (PBY[pid].unit === "eggs" || PBY[pid].unit === "bottles" ? Math.max(1, Math.round(q)) : Math.max(0.1, Math.round(q * 10) / 10));
+const packQ = (pid, q) => { const s = PBY[pid].step; return Math.max(s, Math.round(q / s) * s); }; // orders come in whole cases
+// [product, days of use, pOff = days since purchase (negative), eOff = days until use-by / best-before]
 const SEED_BATCHES = [
-  { p: "seabass", qty: 5, pOff: -1, eOff: 2 },
-  { p: "salmon", qty: 3, pOff: -1, eOff: 2 },
-  { p: "chicken", qty: 10, pOff: -2, eOff: 3 },
-  { p: "mince", qty: 6, pOff: -1, eOff: 2 },
-  { p: "eggs", qty: 240, pOff: -5, eOff: 16 },
-  { p: "milk", qty: 12, pOff: -4, eOff: 3 },
-  { p: "cream", qty: 5, pOff: -3, eOff: 5 },
-  { p: "butter", qty: 6, pOff: -10, eOff: 30 },
-  { p: "cheese", qty: 10, pOff: -6, eOff: 24 },
-  { p: "tomatoes", qty: 3.2, pOff: -5, eOff: 2 },
-  { p: "tomatoes", qty: 5, pOff: -1, eOff: 5 },
-  { p: "salad", qty: 0.8, pOff: -6, eOff: -1 },
-  { p: "salad", qty: 4, pOff: -1, eOff: 3 },
-  { p: "potatoes", qty: 40, pOff: -4, eOff: 17 },
-  { p: "veg", qty: 8, pOff: -2, eOff: 3 },
-  { p: "herbs", qty: 1, pOff: -2, eOff: 3 },
-  { p: "berries", qty: 5, pOff: -2, eOff: 2 },
-  { p: "bread", qty: 20, pOff: -1, eOff: 3 },
-  { p: "dough", qty: 8, pOff: -1, eOff: 5 },
-  { p: "pasta", qty: 20, pOff: -20, eOff: 340 },
-  { p: "rice", qty: 18, pOff: -20, eOff: 330 },
-  { p: "flour", qty: 40, pOff: -30, eOff: 270 },
-  { p: "oil", qty: 12, pOff: -30, eOff: 270 },
-  { p: "beer", qty: 120, pOff: -12, eOff: 108 },
-  { p: "wine", qty: 80, pOff: -20, eOff: 300 },
-  { p: "soft", qty: 150, pOff: -9, eOff: 170 },
-];
-// Orders. orderOff / etaOff are days from today
+  ["seabass", 1.1, -1, 2], ["salmon", 1.1, -1, 2], ["chicken", 2.4, -2, 3], ["mince", 2.8, -1, 2], ["bacon", 2.5, -2, 5], ["ham", 3, -3, 5],
+  ["eggs", 4, -5, 16], ["milk", 1.6, -4, 3], ["cream", 3, -3, 5], ["butter", 12, -10, 30], ["cheese", 9, -6, 24], ["yoghurt", 3, -2, 9],
+  ["tomatoes", 0.6, -5, 2], ["tomatoes", 1.4, -1, 5], ["salad", 1.3, -1, 3], ["potatoes", 6, -4, 17], ["veg", 1.6, -2, 3], ["herbs", 2, -2, 3], ["berries", 1.3, -2, 2],
+  ["bread", 1.2, -1, 3], ["dough", 2.5, -1, 5],
+  ["pasta", 45, -20, 340], ["rice", 4, -20, 330], ["flour", 70, -30, 270], ["oil", 6, -30, 270], ["coffee", 25, -15, 160],
+  ["beer", 3, -12, 108], ["wine", 6, -20, 300], ["soft", 3.5, -9, 170], ["juice", 1.5, -2, 6],
+].map(([p, days, pOff, eOff]) => ({ p, qty: seedQ(p, dUse(p, days)), pOff, eOff }))
+  .concat([{ p: "salad", qty: 0.8, pOff: -6, eOff: -1 }]); // one forgotten box past its date, so the expiry story shows
+// Orders. orderOff / etaOff are days from today; quantities are days of use from the delivery day
 const SEED_ORDERS = [
-  { id: "o1", sup: "drinks", lines: [{ p: "beer", qty: 240 }, { p: "soft", qty: 120 }], orderOff: -3, etaOff: 3, origEtaOff: 2, status: "delayed", reason: "The supplier moved this delivery back by 1 day." },
-  { id: "o2", sup: "fish", lines: [{ p: "seabass", qty: 8 }, { p: "salmon", qty: 3 }], orderOff: -1, etaOff: 1, status: "confirmed", reason: "Regular fish order for the busy end of the week." },
-  { id: "o3", sup: "green", lines: [{ p: "tomatoes", qty: 6 }, { p: "salad", qty: 4 }, { p: "potatoes", qty: 20 }, { p: "herbs", qty: 1 }], orderOff: -1, etaOff: 0, status: "ontheway", reason: "Regular greengrocer order." },
-  { id: "o4", sup: "dairy", lines: [{ p: "milk", qty: 18 }, { p: "cream", qty: 4 }, { p: "eggs", qty: 240 }], orderOff: -1, etaOff: 0, status: "confirmed", reason: "Regular dairy order." },
-  { id: "o5", sup: "bakery", lines: [{ p: "bread", qty: 20 }, { p: "dough", qty: 6 }], orderOff: -2, etaOff: -1, status: "delivered", reason: "Regular bakery order." },
-  { id: "o6", sup: "dry", lines: [{ p: "rice", qty: 10 }, { p: "oil", qty: 5 }], orderOff: -4, etaOff: 2, status: "placed", reason: "Rice and oil were running low." },
-  { id: "o7", sup: "butcher", lines: [{ p: "chicken", qty: 8 }], orderOff: -3, etaOff: -1, status: "cancelled", reason: "Cancelled. A larger order is suggested for the weekend." },
+  { id: "o1", sup: "drinks", lines: [{ p: "beer", qty: packQ("beer", dUse("beer", 4, 3)) }, { p: "soft", qty: packQ("soft", dUse("soft", 4, 3)) }], orderOff: -3, etaOff: 3, origEtaOff: 2, status: "delayed", reason: "The supplier moved this delivery back by 1 day." },
+  { id: "o2", sup: "fish", lines: [{ p: "seabass", qty: packQ("seabass", dUse("seabass", 2, 1)) }, { p: "salmon", qty: packQ("salmon", dUse("salmon", 2, 1)) }], orderOff: -1, etaOff: 1, status: "confirmed", reason: "Regular fish order for the busy end of the week." },
+  { id: "o3", sup: "green", lines: [{ p: "tomatoes", qty: packQ("tomatoes", dUse("tomatoes", 1.5)) }, { p: "salad", qty: packQ("salad", dUse("salad", 1.5)) }, { p: "potatoes", qty: packQ("potatoes", dUse("potatoes", 3)) }, { p: "herbs", qty: packQ("herbs", dUse("herbs", 1)) }], orderOff: -1, etaOff: 0, status: "ontheway", reason: "Regular greengrocer order." },
+  { id: "o4", sup: "dairy", lines: [{ p: "milk", qty: packQ("milk", dUse("milk", 2)) }, { p: "cream", qty: packQ("cream", dUse("cream", 2)) }, { p: "eggs", qty: packQ("eggs", dUse("eggs", 4)) }, { p: "juice", qty: packQ("juice", dUse("juice", 2)) }], orderOff: -1, etaOff: 0, status: "confirmed", reason: "Regular dairy order." },
+  { id: "o5", sup: "bakery", lines: [{ p: "bread", qty: packQ("bread", dUse("bread", 1, -1)) }, { p: "dough", qty: packQ("dough", dUse("dough", 1, -1)) }], orderOff: -2, etaOff: -1, status: "delivered", reason: "Regular bakery order." },
+  { id: "o6", sup: "dry", lines: [{ p: "rice", qty: packQ("rice", dUse("rice", 21, 2)) }, { p: "oil", qty: packQ("oil", dUse("oil", 21, 2)) }], orderOff: -4, etaOff: 2, status: "placed", reason: "Rice and oil were running low." },
+  { id: "o7", sup: "butcher", lines: [{ p: "chicken", qty: packQ("chicken", dUse("chicken", 2, -1)) }], orderOff: -3, etaOff: -1, status: "cancelled", reason: "Cancelled. A larger order is suggested for the weekend." },
 ];
 // Waste ledger. cat = Spoilage, Expired, Over-preparation, Plate waste, Damaged stock, Other
 const WASTE_CATS = ["Spoilage", "Expired", "Over-preparation", "Plate waste", "Damaged stock", "Other"];
-const SEED_WASTE = [
-  { id: "w1", reason: "Missed the date after a quiet weekend", p: "milk", qty: 3, cat: "Expired", dOff: -2 },
-  { id: "w2", reason: "Wilted in the cold room", p: "salad", qty: 1.2, cat: "Spoilage", dOff: -1 },
-  { id: "w3", reason: "Baked for a full house that stayed home", p: "bread", qty: 3, cat: "Over-preparation", dOff: -3 },
-  { id: "w4", reason: "Soft on delivery", p: "tomatoes", qty: 2.4, cat: "Spoilage", dOff: -5 },
-  { id: "w5", reason: "Left on plates, portion too large", p: "seabass", qty: 0.9, cat: "Plate waste", dOff: -6 },
-  { id: "w6", reason: "Peeled for a service that did not fill", p: "potatoes", qty: 4, cat: "Over-preparation", dOff: -8 },
-  { id: "w7", reason: "Opened, not used by the date", p: "cream", qty: 1.5, cat: "Expired", dOff: -11 },
-  { id: "w8", reason: "Left on plates", p: "chicken", qty: 1.2, cat: "Plate waste", dOff: -13 },
-  { id: "w9", reason: "Mould found before service", p: "berries", qty: 1.4, cat: "Spoilage", dOff: -16 },
-  { id: "w10", reason: "Bottles broken in a delivery", p: "wine", qty: 2, cat: "Damaged stock", dOff: -19 },
-  { id: "w11", reason: "Missed the date, no fish special", p: "salmon", qty: 1.1, cat: "Expired", dOff: -22 },
-  { id: "w12", reason: "Over-baked on a rainy Sunday", p: "bread", qty: 4, cat: "Over-preparation", dOff: -27 },
+// Simulated waste log for the last 30 days, the same story as the ROI calculator: about 12% of the food bought
+// four weeks ago, falling to about 8.5% last week (a 30% cut). Each day's entries add up to that week's share of
+// the food bought that day (food used + food wasted).
+const WASTE_SHARE_BY_WEEK = [0.085, 0.095, 0.11, 0.12]; // last week first
+const WASTE_PATTERNS = [
+  ["salad", "Spoilage", "Wilted in the cold room"], ["bread", "Over-preparation", "Baked for a full house that stayed home"],
+  ["tomatoes", "Spoilage", "Soft on delivery"], ["seabass", "Plate waste", "Left on plates, portion too large"],
+  ["potatoes", "Over-preparation", "Peeled for a service that did not fill"], ["cream", "Expired", "Opened, not used by the date"],
+  ["chicken", "Plate waste", "Left on plates"], ["berries", "Spoilage", "Mould found before service"],
+  ["salmon", "Expired", "Missed the date, no fish special"], ["milk", "Expired", "Missed the date after a quiet weekend"],
+  ["dough", "Over-preparation", "Croissants left at the end of breakfast"], ["yoghurt", "Expired", "Opened tubs left after breakfast"],
+  ["ham", "Over-preparation", "Buffet platter not finished"], ["bacon", "Over-preparation", "Cooked ahead for breakfast, not served"],
+  ["juice", "Expired", "Jug opened, not finished by the date"], ["veg", "Spoilage", "Went soft before the weekend"],
+  ["herbs", "Spoilage", "Wilted before use"], ["mince", "Expired", "Burger special did not sell"],
+  ["eggs", "Damaged stock", "Cracked in the delivery"], ["cheese", "Other", "Dried out on the buffet"],
+  ["berries", "Over-preparation", "Fruit plates made too early"], ["bread", "Plate waste", "Bread baskets came back full"],
+  ["seabass", "Expired", "Quiet evening, fish passed its date"], ["wine", "Damaged stock", "Bottles broken in a delivery"],
+  ["chicken", "Over-preparation", "Roast chicken left after Sunday lunch"], ["dough", "Spoilage", "Proved too long, could not be baked"],
 ];
+const SEED_WASTE = (() => {
+  const rnd = mulberry32(20261009), out = [];
+  for (let k = 1; k <= 30; k++) {
+    const share = WASTE_SHARE_BY_WEEK[Math.min(3, Math.floor((k - 1) / 7))];
+    const used = costOnDay(addDays(TODAY, -k));
+    let left = (used / (1 - share)) * share; // EUR wasted that day
+    const n = 1 + Math.floor(rnd() * 3);
+    for (let i = 0; i < n && left > 0.5; i++) {
+      const [pid, cat, reason] = WASTE_PATTERNS[Math.floor(rnd() * WASTE_PATTERNS.length)];
+      const pr = PBY[pid], eurPart = i === n - 1 ? left : left * (0.35 + rnd() * 0.4);
+      const qty = pr.unit === "eggs" || pr.unit === "bottles" || pr.unit === "loaves" ? Math.max(1, Math.round(eurPart / pr.price)) : Math.max(0.1, Math.round((eurPart / pr.price) * 10) / 10);
+      left -= qty * pr.price;
+      out.push({ id: "w" + (out.length + 1), reason, p: pid, qty, cat, dOff: -k });
+    }
+  }
+  return out;
+})();
 const STOCKOUTS = [{ p: "seabass", dOff: -9, note: "Ran out at 20:40 on a busy Saturday" }, { p: "cream", dOff: -17, note: "Short at breakfast, bought at the shop" }];
 const wasteEur = (w) => w.qty * PBY[w.p].price;
 
@@ -1104,19 +1125,20 @@ const PERIOD_LABEL = { morning: "Morning (breakfast and lunch)", dinner: "Evenin
 const PERIOD_SHORT = { morning: "morning", dinner: "dinner" };
 // rota: one character per weekday, indexed by Date.getDay(), so position 0 is Sunday: "SMTWTFS".
 // days and shifts spell out the availability label, so the rota can be checked against it.
+// rate = employer cost per hour, EUR. The F&B manager's hour is the EUR 25 used in the ROI calculator.
 const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
 const EMPLOYEES = [
-  { id: "e1", name: "Elena Marchetti", title: "F&B manager", role: "floor", contract: 40, rate: 28, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--AAPP" },
-  { id: "e2", name: "Tomás Rivera", title: "Head chef", role: "kitchen", contract: 40, rate: 26, avail: "Tue to Sun", days: [0, 2, 3, 4, 5, 6], shifts: "AP", off: [], rota: "--PPPPP" },
-  { id: "e3", name: "Priya Nair", title: "Sous chef", role: "kitchen", contract: 40, rate: 21, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "PP-PPP-" },
-  { id: "e4", name: "Jonas Weber", title: "Cook", role: "kitchen", contract: 40, rate: 17, avail: "Mon to Fri", days: [1, 2, 3, 4, 5], shifts: "AP", off: [], rota: "-AAAAA-" },
-  { id: "e5", name: "Amara Okoye", title: "Cook, part time", role: "kitchen", contract: 28, rate: 17, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "APP---A" },
-  { id: "e6", name: "Luc Moreau", title: "Kitchen porter", role: "kitchen", contract: 24, rate: 14.5, avail: "Fri to Sun", days: [0, 5, 6], shifts: "AP", off: [], rota: "P----PP" },
-  { id: "e7", name: "Sofia Lindgren", title: "Server", role: "floor", contract: 40, rate: 15, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "APPPP--" },
-  { id: "e8", name: "Mateo Alves", title: "Server", role: "floor", contract: 28, rate: 15, avail: "Thu to Sun", days: [0, 4, 5, 6], shifts: "AP", off: [{ dow: 0, note: "Family event" }], rota: "P---PPP" },
-  { id: "e9", name: "Hana Kobayashi", title: "Evening server", role: "floor", contract: 24, rate: 15, avail: "Evenings", days: ALL_DAYS, shifts: "P", off: [], rota: "-P---PP" },
-  { id: "e10", name: "Ben Carter", title: "Bartender", role: "bar", contract: 40, rate: 16.5, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--PPPP" },
-  { id: "e11", name: "Inês Duarte", title: "Breakfast host", role: "breakfast", contract: 35, rate: 15, avail: "Mornings", days: ALL_DAYS, shifts: "A", off: [], rota: "AAA--AA" },
+  { id: "e1", name: "Elena Marchetti", title: "F&B manager", role: "floor", contract: 40, rate: 25, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--AAPP" },
+  { id: "e2", name: "Tomás Rivera", title: "Head chef", role: "kitchen", contract: 40, rate: 17.5, avail: "Tue to Sun", days: [0, 2, 3, 4, 5, 6], shifts: "AP", off: [], rota: "--PPPPP" },
+  { id: "e3", name: "Priya Nair", title: "Sous chef", role: "kitchen", contract: 40, rate: 15, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "PP-PPP-" },
+  { id: "e4", name: "Jonas Weber", title: "Cook", role: "kitchen", contract: 40, rate: 12.5, avail: "Mon to Fri", days: [1, 2, 3, 4, 5], shifts: "AP", off: [], rota: "-AAAAA-" },
+  { id: "e5", name: "Amara Okoye", title: "Cook, part time", role: "kitchen", contract: 28, rate: 12.5, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "APP---A" },
+  { id: "e6", name: "Luc Moreau", title: "Kitchen porter", role: "kitchen", contract: 24, rate: 11, avail: "Fri to Sun", days: [0, 5, 6], shifts: "AP", off: [], rota: "P----PP" },
+  { id: "e7", name: "Sofia Lindgren", title: "Server", role: "floor", contract: 40, rate: 11.5, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "APPPP--" },
+  { id: "e8", name: "Mateo Alves", title: "Server", role: "floor", contract: 28, rate: 11.5, avail: "Thu to Sun", days: [0, 4, 5, 6], shifts: "AP", off: [{ dow: 0, note: "Family event" }], rota: "P---PPP" },
+  { id: "e9", name: "Hana Kobayashi", title: "Evening server", role: "floor", contract: 24, rate: 11.5, avail: "Evenings", days: ALL_DAYS, shifts: "P", off: [], rota: "-P---PP" },
+  { id: "e10", name: "Ben Carter", title: "Bartender", role: "bar", contract: 40, rate: 12, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--PPPP" },
+  { id: "e11", name: "Inês Duarte", title: "Breakfast host", role: "breakfast", contract: 35, rate: 11.5, avail: "Mornings", days: ALL_DAYS, shifts: "A", off: [], rota: "AAA--AA" },
 ];
 const outsideAvail = (e, dow, code) => code !== "-" && (!e.days.includes(dow) || !e.shifts.includes(code));
 // Rota check: shifts outside someone's availability, and weekly hours over their contract
@@ -1268,14 +1290,17 @@ function computeMetrics(S) {
   const wasteKg = w30.reduce((s, w) => s + w.qty * PBY[w.p].kg, 0);
   const wasteE = w30.reduce((s, w) => s + wasteEur(w), 0);
   let covers30 = 0, cost30 = 0, rev30 = 0;
+  const usedByDay = {};
   for (let i = 1; i <= 30; i++) {
     const d = addDays(TODAY, -i);
     MEALS.forEach((m) => { const c = pastActual(d, m); rev30 += c * SPEND[m]; if (m !== "bar") covers30 += c; });
-    cost30 += costOnDay(d);
+    cost30 += (usedByDay[-i] = costOnDay(d));
   }
+  // Waste as a share of the food bought (food used + food wasted), for the last 7 days and for the week four weeks ago
+  const shareOf = (from, to) => { let u = 0, w = 0; for (let k = from; k <= to; k++) u += usedByDay[-k] || 0; S.state.waste.forEach((x) => { if (x.dOff <= -from && x.dOff >= -to) w += wasteEur(x); }); return u + w ? w / (u + w) : 0; };
   const stockValue = S.state.batches.filter((b) => b.eOff >= 0).reduce((s, b) => s + b.qty * PBY[b.p].price, 0);
   const next7 = Array.from({ length: 7 }, (_, i) => costOnDay(addDays(TODAY, i))).reduce((a, b) => a + b, 0) / 7;
-  return { wasteKg, wasteE, wastePerCover: covers30 ? wasteKg / covers30 : 0 /* kg per cover, shown in grams */, stockouts: STOCKOUTS.length, foodCostPct: rev30 ? cost30 / rev30 : 0, daysOnHand: next7 ? stockValue / next7 : 0, stockValue, accuracy: accuracy(), covers30 };
+  return { wasteKg, wasteE, wastePerCover: covers30 ? wasteKg / covers30 : 0 /* kg per cover, shown in grams */, stockouts: STOCKOUTS.length, foodCostPct: rev30 ? (cost30 + wasteE) / rev30 : 0 /* food and drink bought, incl. what was thrown away */, wasteShare: cost30 + wasteE ? wasteE / (cost30 + wasteE) : 0, wasteShareLastWeek: shareOf(1, 7), wasteShareFourWeeksAgo: shareOf(22, 28), rev30, cost30, daysOnHand: next7 ? stockValue / next7 : 0, stockValue, accuracy: accuracy(), covers30 };
 }
 
 /* ---------- SECTION 16: HOURLY PROFILE (kept from the original skeleton) ---------- */
@@ -2340,10 +2365,10 @@ function TodayScreen() {
       <section aria-label="Business metrics">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3"><h3 className="font-serif text-[22px] text-head m-0">Last 30 days</h3><${SimTag} /></div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <${MetricTile} icon="trash" label="Food waste" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${eur(m.wasteE) + " at purchase price"} />
+          <${MetricTile} icon="trash" label="Food waste" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${`${eur(m.wasteE)}, ${NUMBER_FMT(m.wasteShare * 100, 1)}% of food bought`} />
           <${MetricTile} icon="plate" label="Waste per cover" value=${NUMBER_FMT(m.wastePerCover * 1000) + " g"} sub=${m.covers30 + " covers served"} />
           <${MetricTile} icon="alert" label="Stock-outs" value=${m.stockouts} sub="in the last 30 days" />
-          <${MetricTile} icon="coin" label="Food cost" value=${NUMBER_FMT(m.foodCostPct * 100, 1) + "%"} sub="of food and drink sales" />
+          <${MetricTile} icon="coin" label="Food cost" value=${NUMBER_FMT(m.foodCostPct * 100, 1) + "%"} sub="food and drink bought, as a share of sales" />
           <${MetricTile} icon="box" label="Days on hand" value=${NUMBER_FMT(m.daysOnHand, 1)} sub="at the current pace" />
           <${MetricTile} icon="coin" label="Cash tied up in stock" value=${eur(m.stockValue)} sub="at purchase price" />
           <${MetricTile} icon="trend" label="Forecast accuracy" value=${NUMBER_FMT(m.accuracy * 100, 0) + "%"} sub=${`error ${NUMBER_FMT((1 - m.accuracy) * 100, 1)}% (WAPE), last 28 days`} />
@@ -2901,11 +2926,12 @@ function WasteScreen() {
       </div>
       <div><div className="mb-2"><${SimTag} text="Earlier entries are simulated demo data" /></div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <${MetricTile} icon="trash" label="Waste, 30 days" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${eur(m.wasteE)} />
+          <${MetricTile} icon="trash" label="Waste, 30 days" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${`${eur(m.wasteE)}, ${NUMBER_FMT(m.wasteShare * 100, 1)}% of food bought`} />
           <${MetricTile} icon="plate" label="Per cover" value=${NUMBER_FMT(m.wastePerCover * 1000) + " g"} sub=${m.covers30 + " covers"} />
           <${MetricTile} icon="alert" label="Stock-outs, 30 days" value=${m.stockouts} sub="shortages on the day" />
-          <${MetricTile} icon="coin" label="Food cost" value=${NUMBER_FMT(m.foodCostPct * 100, 1) + "%"} sub="of sales" />
-        </div></div>
+          <${MetricTile} icon="coin" label="Food cost" value=${NUMBER_FMT(m.foodCostPct * 100, 1) + "%"} sub="food and drink bought, share of sales" />
+        </div>
+        <p className="mt-3 mb-0 text-[14.5px] text-muted tnum">In this simulated history, waste was ${NUMBER_FMT(m.wasteShareFourWeeksAgo * 100, 1)}% of the food bought four weeks ago and ${NUMBER_FMT(m.wasteShareLastWeek * 100, 1)}% last week, the kind of 30% cut the ROI calculator on the website assumes.</p></div>
 
       <section className="card p-5" aria-label="Learning loop">
         <div className="flex flex-wrap items-end justify-between gap-3 mb-4"><h3 className="font-serif text-[21px] text-head m-0">Forecast, purchase, consumption, waste, better decision</h3>
@@ -3025,7 +3051,7 @@ function CalendarScreen({ intent }) {
 /* =====================================================================
    AI BUDDY: rule-based, answers from the same engine, suggests actions
    ===================================================================== */
-const PRODUCT_WORDS = { tomatoes: /tomato/, seabass: /sea ?bass|\bfish\b/, salmon: /salmon/, chicken: /chicken/, mince: /mince|beef/, eggs: /\begg/, milk: /\bmilk/, cream: /cream/, butter: /butter/, cheese: /cheese/, salad: /salad|lettuce/, potatoes: /potato/, veg: /veg(etable)?s?\b/, herbs: /herb|basil/, berries: /berr/, bread: /\bbread/, dough: /dough|croissant|pastr/, pasta: /pasta/, rice: /\brice/, flour: /flour/, oil: /\boil\b/, beer: /\bbeer/, wine: /\bwine/, soft: /soft drink|soda|\bsoft\b|juice/ };
+const PRODUCT_WORDS = { tomatoes: /tomato/, seabass: /sea ?bass|\bfish\b/, salmon: /salmon/, chicken: /chicken/, mince: /mince|beef/, eggs: /\begg/, milk: /\bmilk/, cream: /cream/, butter: /butter/, cheese: /cheese/, salad: /salad|lettuce/, potatoes: /potato/, veg: /veg(etable)?s?\b/, herbs: /herb|basil/, berries: /berr/, bread: /\bbread/, dough: /dough|croissant|pastr/, pasta: /pasta/, rice: /\brice/, flour: /flour/, oil: /\boil\b/, beer: /\bbeer/, wine: /\bwine/, soft: /soft drink|soda|\bsoft\b/, juice: /juice/, bacon: /bacon/, ham: /\bham\b/, yoghurt: /yogh?urt/, coffee: /coffee/ };
 const DOW_WORDS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 function findProduct(t) { for (const [id, re] of Object.entries(PRODUCT_WORDS)) if (re.test(t)) return PBY[id]; return null; }
 function dayFromText(t, dflt = 1) {
