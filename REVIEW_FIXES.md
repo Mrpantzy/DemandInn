@@ -106,3 +106,9 @@ Group tags so far: `fixes-group-0`.
 - Before: "Contact: hello@[your-domain]", "Privacy policy [placeholder]", "Terms [placeholder]".
 - After: "Contact: hello@demandinn.example" as an underlined `mailto:` link. The two placeholder lines are gone. **Waiting:** the real address goes into `CONTACT_EMAIL` (top of the script).
 - Undo: `git revert <hash of 1.1>`
+
+#### 1.2 FAQ "Is my data safe? What about GDPR?"
+- Files and functions: `index.html`: `FAQ_ITEMS`.
+- Before: "[Placeholder: confirm with your legal adviser before launch.] The plan is to collect only what the forecast needs, store it in the EU and never sell it. Guest names are not needed."
+- After: "For pilots, we collect only what the forecast needs: booking and cover counts, sales by item, recipes and stock. Guest names are not needed. The data is stored in the EU, never sold, and deleted when you ask." Same promises as before, written as the pilot plan. It is still worth a check by a legal adviser before launch.
+- Undo: `git revert <hash of 1.2>`
