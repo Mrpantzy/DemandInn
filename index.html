@@ -235,6 +235,69 @@ button.rc-sh:hover{filter:brightness(.95)}
 .fact-num{font-family:var(--f-display);font-size:88px;line-height:.9;color:var(--forest);font-weight:600;letter-spacing:-.03em}
 .fact-quote{font-family:var(--f-display);font-style:italic;font-size:30px;line-height:1.1;color:var(--forest);margin:0}
 .fact-src{font-size:13px;color:var(--muted);margin:16px 0 0}
+.fact-num-sm{font-size:64px}
+/* Owner process: four plain steps */
+.owner-steps{list-style:none;margin:0;padding:0;display:grid;gap:18px;counter-reset:os}
+@media (min-width:768px){.owner-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.owner-steps{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.owner-steps li{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 20px 20px}
+.owner-steps .os-n{position:absolute;top:18px;right:20px;font-family:var(--f-display);font-size:44px;line-height:1;color:var(--amber);font-weight:600}
+.owner-steps .os-ic{width:44px;height:44px;border-radius:999px;background:var(--sage);color:var(--forest);display:flex;align-items:center;justify-content:center}
+.owner-steps h3{font-family:var(--f-display);font-size:23px;line-height:1.15;color:var(--forest);margin:16px 0 8px;padding-right:28px}
+.owner-steps p{margin:0;font-size:16px}
+/* Savings */
+.savings-grid{display:grid;gap:14px}
+@media (min-width:768px){.savings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.savings-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.savings-grid article{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+.savings-grid article.hi{background:var(--amber);border-color:var(--amber);color:var(--forest)}
+.savings-grid .sv-k{margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.savings-grid .hi .sv-k,.savings-grid .hi .fact-src{color:var(--forest)}
+.savings-grid .sv-n{margin:10px 0 6px;font-family:var(--f-display);font-size:48px;line-height:1;color:var(--forest);font-weight:600;letter-spacing:-.02em}
+.savings-grid .sv-s{margin:0;font-size:15.5px}
+/* Competitor table */
+.cmp-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:#fff}
+.cmp{width:100%;min-width:760px;border-collapse:collapse;font-size:15px}
+.cmp th,.cmp td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}
+.cmp tbody tr:last-child th,.cmp tbody tr:last-child td{border-bottom:0}
+.cmp thead th{font-family:var(--f-display);font-size:20px;color:var(--forest)}
+.cmp tbody th{font-weight:700;color:var(--forest);width:130px}
+.cmp .us{background:#f6efe0}
+.cmp thead .us{background:var(--forest);color:var(--on-dark)}
+/* Data flow diagram */
+.flow{display:grid;gap:14px;align-items:center}
+@media (min-width:1024px){.flow{grid-template-columns:minmax(0,1.5fr) 40px minmax(0,.8fr) 40px minmax(0,1fr)}}
+.flow-col{display:grid;gap:10px}
+.flow-src{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;align-items:start;border-radius:14px;background:#1f352d;border:1px solid hsla(0,0%,100%,.1);padding:14px}
+.flow-src .fi{grid-row:span 3;width:40px;height:40px;border-radius:999px;background:var(--amber);color:var(--forest);display:flex;align-items:center;justify-content:center}
+.flow-src b{color:var(--on-dark);font-size:16.5px}
+.flow-src span{color:var(--on-dark-muted);font-size:14px}
+.flow-src .how{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.flow-tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:3px 9px;background:hsla(0,0%,100%,.1);color:var(--on-dark)}
+.flow-tag.now{background:var(--amber);color:var(--forest)}
+.flow-arrow{display:flex;align-items:center;justify-content:center;color:var(--amber)}
+.flow-arrow svg{transform:rotate(90deg)}
+@media (min-width:1024px){.flow-arrow svg{transform:none}}
+.flow-core{border-radius:18px;background:var(--amber);color:var(--forest);padding:22px;text-align:center}
+.flow-out{border-radius:14px;background:var(--cream);color:var(--forest);padding:12px 14px;display:flex;gap:10px;align-items:center;font-weight:600}
+/* Live booking notification in the demo */
+.live-note{position:fixed;top:18px;right:18px;z-index:80;width:min(420px,calc(100vw - 32px));background:#fff;border:1px solid var(--line);border-left:6px solid var(--amber);border-radius:16px;box-shadow:0 18px 50px rgba(18,51,42,.25);padding:16px 18px;animation:ln-in .45s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes ln-in{from{transform:translateY(-24px);opacity:0}to{transform:none;opacity:1}}
+.flash{border-radius:8px;animation:flash 2.6s ease-out}
+@keyframes flash{0%,35%{background:rgba(223,165,80,.55);box-shadow:0 0 0 4px rgba(223,165,80,.55)}100%{background:transparent;box-shadow:0 0 0 0 transparent}}
+.save-card{border-left:6px solid var(--amber)}
+.save-row{display:grid;gap:18px;align-items:end}
+@media (min-width:900px){.save-row{grid-template-columns:1.1fr 1fr 1fr}}
+.sv-big{font-family:var(--f-display);font-size:46px;line-height:1;color:var(--forest);font-weight:600;margin:6px 0 0}
+.sv-mid{font-family:var(--f-display);font-size:32px;line-height:1;color:var(--forest);font-weight:600;margin:6px 0 0}
+.phone-frame{max-width:380px;margin:0 auto;border-radius:28px;padding:18px 14px 22px;background:#e9e3d6}
+.phone-frame.whatsapp{background:#e7dfd4}
+.pf-from{margin:0 0 10px;text-align:center;font-size:12.5px;color:var(--muted)}
+.pf-bubble{white-space:pre-wrap;font-size:15px;line-height:1.45;background:#fff;color:#1d2a24;border-radius:16px 16px 16px 4px;padding:12px 14px;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.phone-frame.whatsapp .pf-bubble{background:#dcf8c6;border-radius:16px 16px 4px 16px}
+.note-btn{margin-left:auto;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font:inherit;font-size:12.5px;font-weight:700;color:var(--forest);background:var(--amber);border:0;border-radius:999px;padding:5px 12px;cursor:pointer}
+.delta{display:inline-block;margin-left:6px;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 8px;background:var(--amber);color:var(--forest);vertical-align:middle}
+@media (prefers-reduced-motion:reduce){.live-note,.flash{animation:none}}
 
 .steps-lp{list-style:none;margin:0;padding:0;display:grid;gap:34px 40px}
 @media (min-width:768px){.steps-lp{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -288,7 +351,7 @@ button.rc-sh:hover{filter:brightness(.95)}
 
 /* ---------- SECTION 1: SETTINGS ---------- */
 const PRODUCT_NAME = "DemandInn";
-// The slogan. Used in the hero, the footer, the morning email and the page title.
+// The slogan. Used in the hero, the footer, the daily briefing and the page title.
 // Crawlers do not run scripts, so if it changes, also update <title>, og:title and twitter:title in the <head>.
 const BRAND_LINE = "Tomorrow's covers, forecasted today";
 // Contact address shown in the footer, the pilot form fallback and the <noscript> message.
@@ -303,7 +366,23 @@ const SOURCES = {
   wrap: { label: "WRAP, via Business Wales", url: "https://businesswales.gov.wales/news-and-blog/webinar-serving-action-plate-waste" },
   otelier: { label: "Otelier, The 2026 Hotel Operations Index (Jan 2026)", url: "https://www.hospitalitynet.org/news/4130590.html" },
   champions: { label: "Champions 12.3, The Business Case for Reducing Food Loss and Waste: Hotels (2018)", url: "https://champions123.org/the-business-case-for-reducing-food-loss-and-waste-hotels/" },
+  // Market study (team Drive, Oct 2026)
+  wrapHotels: { label: "WRAP, Overview of Waste in the UK Hospitality and Food Service Sector (2013)", url: "https://bfff.co.uk/wp-content/uploads/2014/01/WRAP-Waste-in-the-UK-Hospitality-and-Food-Service-Sector-2012-Report.pdf" },
+  wrap2024: { label: "WRAP, press release, 4 Nov 2024", url: "https://www.wrap.ngo/media-centre/press-releases/wrap-urges-hospitality-and-food-service-ceos-and-leaders-take-stand" },
+  visitbritain: { label: "VisitBritain, Accommodation Stock Audit 2026", url: "https://visitbritain.org/media/5872/download?attachment=" },
+  savills: { label: "Savills, citing AM:PM (2019)", url: "https://www.savills.co.uk/blog/article/279894/commercial-property/a-market-of-two-halves--branded-hotels-vs-independents.aspx" },
+  simpler: { label: "GOV.UK, Simpler Recycling in England", url: "https://www.gov.uk/guidance/simpler-recycling-workplace-recycling-in-england" },
+  euDirective: { label: "Directive (EU) 2025/1892, Debevoise analysis", url: "https://www.debevoise.com/insights/publications/2025/10/the-european-unions-revised-directive-on" },
+  // Competitors' published results
+  winnow: { label: "Winnow, hotels", url: "https://www.winnowsolutions.com/fr/industries/hotels" },
+  novotel: { label: "Accor via Hospitality Net, Oct 2023", url: "https://www.hospitalitynet.org/news/4118431/tackling-food-waste-a-spotlight-on-our-teams-making-a-difference" },
+  orbisk: { label: "Orbisk, TRIBE Canary Wharf, Jan 2026", url: "https://orbisk.com/blog/tribe-canary-wharf-cut-food-waste-with-tech/" },
+  orbiskPrice: { label: "FAO Agritech Observatory, Orbisk profile", url: "https://agritechobservatory.review.fao.org/ar/orbisk" },
+  leanpath: { label: "IEEE Spectrum, Leanpath Weighs Waste", url: "https://spectrum.ieee.org/leanpath-weighs-waste" },
 };
+// Price per month in GBP (about EUR 149), and the planning time a manager saves each day, used on the landing page and in the demo
+const PRICE_MONTH = 129;
+const TIME_SAVED = { minutes: 30, rate: 25 }; // rate = the F&B manager's cost per hour, GBP
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
 const MEAL_LABEL = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", bar: "Bar" };
@@ -340,8 +419,8 @@ const dayWord = (d) => (off(d) === 0 ? "today" : off(d) === 1 ? "tomorrow" : dow
 const winText = (L) => { const a = addDays(TODAY, L.winDays[0]), b = addDays(TODAY, L.winDays[L.winDays.length - 1]); return sameDay(a, b) ? fmtDate(a) : `${fmtDate(a)} to ${fmtDate(b)}`; };
 const dayOrDate = (d) => (off(d) >= 0 && off(d) <= 6 ? dowShort(d) : fmtDate(d, { day: "numeric", month: "short" }));
 const dayWordShort = (d) => (off(d) === 0 ? "today" : off(d) === 1 ? "tomorrow" : dowShort(d));
-const eur = (n) => "EUR " + Math.round(n).toLocaleString("en-GB");
-const eur1 = (n) => "EUR " + (Math.round(n * 10) / 10).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const gbp = (n) => "£" + Math.round(n).toLocaleString("en-GB");
+const gbp1 = (n) => "£" + (Math.round(n * 10) / 10).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const plural = (n, s, p) => (n === 1 ? s : p || s + "s");
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -454,7 +533,7 @@ const MENU = {
 // Where vegetarians go when they choose from the menu
 const VEG_SPLIT = { breakfast: [["bf_cooked", 0.6], ["bf_buffet", 0.4]], lunch: [["veg_main", 0.5], ["pasta", 0.3], ["soup", 0.2]], dinner: [["veg_main", 0.6], ["pasta", 0.4]] };
 const VEGAN_DISH = { breakfast: "bf_fruit", lunch: "veg_main", dinner: "veg_main" };
-// Average spend per guest, EUR, food and drink. Set so ingredients bought are about 30% of sales and labour about 35%.
+// Average spend per guest, GBP, food and drink. Set so ingredients bought are about 30% of sales and labour about 35%.
 const SPEND = { breakfast: 13, lunch: 19, dinner: 34, bar: 12 };
 
 /* ---------- SECTION 4: WEATHER, EVENTS, HOLIDAYS, GROUPS ---------- */
@@ -516,8 +595,11 @@ const GROUPS = [
 ];
 const eventsOn = (d) => EVENTS.filter((e) => sameDay(e.date, d));
 const holidayOn = (d) => HOLIDAYS.find((e) => sameDay(e.date, d));
-const groupOn = (d) => GROUPS.find((g) => sameDay(g.arrive, d) || sameDay(g.depart, d) || (diffDays(d, g.arrive) > 0 && diffDays(g.depart, d) > 0));
+const groupOn = (d) => GROUPS.find((g) => !g.table && (sameDay(g.arrive, d) || sameDay(g.depart, d) || (diffDays(d, g.arrive) > 0 && diffDays(g.depart, d) > 0)));
 const groupExtras = (d, m) => GROUPS.flatMap((g) => g.extras.filter((x) => sameDay(x.date, d) && x.meal === m).map((x) => ({ ...x, group: g })));
+// The live booking for presentations: a table for 15 tomorrow evening, booked a minute ago. It is added the way a real
+// group dinner is (an explicit input), so covers, menu, ingredients, orders and savings all follow. ?demo=booking plays it.
+const LIVE_BOOKING = { id: "live", table: true, name: "Birthday dinner, table for 15", guests: 15, time: "19:30", channel: "Table booking system", diet: { veg: 2, vegan: 1, gf: 1 } };
 
 /* ---------- SECTION 5: RESERVATIONS (the PMS layer) ---------- */
 // Reservations are generated once from a fixed seed. They are the starting point of the pipeline.
@@ -911,10 +993,10 @@ const SEED_ORDERS = [
 ];
 // Waste ledger. cat = Spoilage, Expired, Over-preparation, Plate waste, Damaged stock, Other
 const WASTE_CATS = ["Spoilage", "Expired", "Over-preparation", "Plate waste", "Damaged stock", "Other"];
-// Simulated waste log for the last 30 days, the same story as the ROI calculator: about 12% of the food bought
-// four weeks ago, falling to about 8.5% last week (a 30% cut). Each day's entries add up to that week's share of
+// Simulated waste log for the last 30 days, the same story as the savings section: about 12% of the food bought
+// four weeks ago, falling to about 9.5% last week (a 21% cut, the Champions 12.3 first-year average). Each day's entries add up to that week's share of
 // the food bought that day (food used + food wasted).
-const WASTE_SHARE_BY_WEEK = [0.085, 0.095, 0.11, 0.12]; // last week first
+const WASTE_SHARE_BY_WEEK = [0.095, 0.1, 0.11, 0.12]; // last week first
 const WASTE_PATTERNS = [
   ["salad", "Spoilage", "Wilted in the cold room"], ["bread", "Over-preparation", "Baked for a full house that stayed home"],
   ["tomatoes", "Spoilage", "Soft on delivery"], ["seabass", "Plate waste", "Left on plates, portion too large"],
@@ -935,7 +1017,7 @@ const SEED_WASTE = (() => {
   for (let k = 1; k <= 30; k++) {
     const share = WASTE_SHARE_BY_WEEK[Math.min(3, Math.floor((k - 1) / 7))];
     const used = costOnDay(addDays(TODAY, -k));
-    let left = (used / (1 - share)) * share; // EUR wasted that day
+    let left = (used / (1 - share)) * share; // GBP wasted that day
     const n = 1 + Math.floor(rnd() * 3);
     for (let i = 0; i < n && left > 0.5; i++) {
       const [pid, cat, reason] = WASTE_PATTERNS[Math.floor(rnd() * WASTE_PATTERNS.length)];
@@ -1070,6 +1152,7 @@ function topDishes(p, days) {
 
 const orderView = (o) => ({ ...o, orderDate: addDays(TODAY, o.orderOff), eta: addDays(TODAY, o.etaOff), origEta: o.origEtaOff != null ? addDays(TODAY, o.origEtaOff) : null, needed: o.needOff != null ? addDays(TODAY, o.needOff) : null, supplier: SUPPLIERS[o.sup], cost: orderCost(o), late: o.needOff != null && o.etaOff > o.needOff });
 const orderCost = (o) => o.lines.reduce((s, l) => s + l.qty * PBY[l.p].price, 0);
+const orderTotal = (list) => list.reduce((s, o) => s + orderCost(o), 0);
 
 // Builds suggested purchase orders (one per supplier) from the pipeline
 function suggestOrders(batches, orders, dismissed, mods = {}) {
@@ -1148,7 +1231,7 @@ const PERIOD_LABEL = { morning: "Morning (breakfast and lunch)", dinner: "Evenin
 const PERIOD_SHORT = { morning: "morning", dinner: "dinner" };
 // rota: one character per weekday, indexed by Date.getDay(), so position 0 is Sunday: "SMTWTFS".
 // days and shifts spell out the availability label, so the rota can be checked against it.
-// rate = employer cost per hour, EUR. The F&B manager's hour is the EUR 25 used in the ROI calculator.
+// rate = employer cost per hour, GBP. The F&B manager's hour is the £25 used in the ROI calculator.
 const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
 const EMPLOYEES = [
   { id: "e1", name: "Elena Marchetti", title: "F&B manager", role: "floor", contract: 40, rate: 25, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--AAPP" },
@@ -1308,6 +1391,17 @@ function pastActual(d, m) {
 }
 // Forecast accuracy shown on Today: 100% minus the same 28-day error (WAPE) as the Accuracy screen
 function accuracy() { return 1 - wape(backtest(28), "model") / 100; }
+// What the hotel saves, from the waste log: the drop in waste share since four weeks ago, applied to the food
+// bought last week, plus the planning time. Shown on Today and in the daily briefing.
+function savingsOf(m) {
+  let bought = 0; for (let i = 1; i <= 7; i++) bought += costOnDay(addDays(TODAY, -i));
+  const gross = bought / (1 - m.wasteShareLastWeek); // food used + food wasted last week
+  const cut = Math.max(0, m.wasteShareFourWeeksAgo - m.wasteShareLastWeek);
+  const foodWeek = gross * cut;
+  const timeWeek = (TIME_SAVED.minutes / 60) * 7 * TIME_SAVED.rate;
+  const month = (foodWeek + timeWeek) * 52 / 12;
+  return { foodWeek, timeWeek, hoursWeek: (TIME_SAVED.minutes / 60) * 7, foodMonth: foodWeek * 52 / 12, month, year: month * 12, cutPct: m.wasteShareFourWeeksAgo ? cut / m.wasteShareFourWeeksAgo : 0, net: month - PRICE_MONTH };
+}
 function computeMetrics(S) {
   const w30 = S.state.waste.filter((w) => w.dOff >= -30);
   const wasteKg = w30.reduce((s, w) => s + w.qty * PBY[w.p].kg, 0);
@@ -1636,7 +1730,7 @@ function OrderPanel({ id, onClose }) {
         <div><dt className="text-muted">${o.status === "delivered" ? "Arrived" : "Estimated arrival"}</dt><dd className="m-0 font-semibold">${dowShort(o.eta)} ${fmtDate(o.eta, { day: "numeric", month: "short" })}</dd></div>
         ${o.origEta && html`<div><dt className="text-muted">Original date</dt><dd className="m-0 font-semibold">${dowShort(o.origEta)} ${fmtDate(o.origEta, { day: "numeric", month: "short" })}</dd></div>`}
         <div><dt className="text-muted">Lead time</dt><dd className="m-0 font-semibold">${leadDays} ${plural(leadDays, "day")}</dd></div>
-        <div><dt className="text-muted">Estimated cost</dt><dd className="m-0 font-semibold">${eur(o.cost)}</dd></div>
+        <div><dt className="text-muted">Estimated cost</dt><dd className="m-0 font-semibold">${gbp(o.cost)}</dd></div>
       </dl>
       <h4 className="font-semibold mb-2 mt-0">Items</h4>
       <ul className="list-none p-0 m-0 mb-5 divide-y divide-line border border-line rounded-xl">
@@ -1943,6 +2037,7 @@ function TeamScreen({ intent }) {
    UI CORE: extra icons, store, shared widgets, forms and panels
    ===================================================================== */
 Object.assign(ICONS, {
+  bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
   spark: '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
   chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
   send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
@@ -1992,6 +2087,8 @@ function StoreProvider({ children }) {
   const summary = useMemo(() => stockSummary(state.batches, state.orders, suggested), [state.batches, state.orders, suggested]);
   const orders = useMemo(() => [...state.orders, ...suggested].map(orderView), [state.orders, suggested]);
   const metrics = useMemo(() => computeMetrics({ state, suggested }), [state, suggested]);
+  const sugRef = useRef(suggested); sugRef.current = suggested;
+  const [live, setLive] = useState(null);
   const mkOrder = (sug, id) => ({ id, sup: sug.sup, lines: sug.lines.map((l) => ({ p: l.p, qty: l.qty, ...(l.override ? { override: l.override } : {}), ...(l.manual ? { manual: true } : {}) })), orderOff: 0, etaOff: sug.etaOff, needOff: sug.needOff, status: "placed", fromSug: true, reason: sug.reason });
 
   const api = useMemo(() => ({
@@ -2042,10 +2139,30 @@ function StoreProvider({ children }) {
     removeLine(sup, pid, reason) { setState((s) => ({ ...s, removed: { ...s.removed, [overrideKey(sup, pid)]: reason || "Removed by manager" } })); say(`${PBY[pid].name} removed from this order.`); },
     restoreLine(sup, pid) { setState((s) => { const r = { ...s.removed }; delete r[overrideKey(sup, pid)]; return { ...s, removed: r }; }); },
     addLine(sup, pid, qty) { setState((s) => ({ ...s, added: { ...s.added, [sup]: [...(s.added[sup] || []).filter((x) => x.p !== pid), { p: pid, qty }] } })); say(`${PBY[pid].name} added to the ${SUPPLIERS[sup].name.toLowerCase()} order.`); },
+    // A new table booking arrives: snapshot tomorrow's dinner and the order list, add the booking, recompute everything
+    simulateBooking() {
+      if (GROUPS.some((g) => g.id === LIVE_BOOKING.id)) return;
+      const d = addDays(TODAY, 1), lines = {};
+      sugRef.current.forEach((o) => o.lines.forEach((l) => (lines[l.p] = (lines[l.p] || 0) + l.qty)));
+      const before = { dinner: fcDay(d).meals.dinner.covers, total: orderTotal(sugRef.current), lines };
+      GROUPS.push({ ...LIVE_BOOKING, rooms: 0, arrive: d, depart: d, arrivals: "", extras: [{ date: d, meal: "dinner", covers: LIVE_BOOKING.guests, time: LIVE_BOOKING.time, note: `${LIVE_BOOKING.name}, booked a minute ago`, diet: LIVE_BOOKING.diet, mix: {} }] });
+      clearForecastCaches();
+      setDataVer((v) => v + 1);
+      setLive({ id: Date.now(), date: d, before, open: true });
+    },
+    undoBooking() {
+      const i = GROUPS.findIndex((g) => g.id === LIVE_BOOKING.id);
+      if (i >= 0) GROUPS.splice(i, 1);
+      clearForecastCaches();
+      setDataVer((v) => v + 1);
+      setLive(null);
+      say("Booking removed. The forecast is back to how it was.");
+    },
+    closeBooking() { setLive((x) => (x ? { ...x, open: false } : x)); },
     addSpecial(s2) { setState((s) => ({ ...s, specials: [...s.specials, s2] })); say(`Added to ${s2.when}'s specials: ${s2.text}`); },
     say,
   }), []);
-  const value = useMemo(() => ({ state, suggested, summary, orders, metrics, toast, dataVer, refreshData, ...api }), [state, suggested, summary, orders, metrics, toast, dataVer, refreshData, api]);
+  const value = useMemo(() => ({ state, suggested, summary, orders, metrics, toast, dataVer, refreshData, live, ...api }), [state, suggested, summary, orders, metrics, toast, dataVer, refreshData, live, api]);
   return html`<${StoreCtx.Provider} value=${value}>${children}<//>`;
 }
 
@@ -2069,7 +2186,7 @@ function WasteForm({ productId, onClose }) {
       <${Field} label="Ingredient"><select id="w-prod" className="field" value=${pid} onChange=${(e) => setPid(e.target.value)} data-autofocus>${PRODUCTS.map((p) => html`<option key=${p.id} value=${p.id}>${p.name}</option>`)}</select><//>
       <div className="grid grid-cols-2 gap-3">
         <${Field} label=${`Quantity (${PBY[pid].unit})`}><input id="w-qty" type="number" min="0" step="any" inputMode="decimal" className="field" value=${qty} onInput=${(e) => setQty(e.target.value)} /><//>
-        <${Field} label="Value"><div className="field flex items-center bg-sage">${q > 0 ? eur1(q * PBY[pid].price) : "EUR 0.0"}</div><//>
+        <${Field} label="Value"><div className="field flex items-center bg-sage">${q > 0 ? gbp1(q * PBY[pid].price) : "£0.0"}</div><//>
       </div>
       <${Field} label="Category"><select id="w-cat" className="field" value=${cat} onChange=${(e) => setCat(e.target.value)}>${WASTE_CATS.map((c) => html`<option key=${c}>${c}</option>`)}</select><//>
       <${Field} label="Reason (optional)"><input id="w-reason" className="field" placeholder="For example: delivery arrived warm" value=${reason} onInput=${(e) => setReason(e.target.value)} /><//>
@@ -2248,7 +2365,7 @@ function buildAttention(S, nav) {
   if (risky) cards.push({ id: "risk", tone: "urgent", icon: "alert", title: `${risky.p.name} may run short ${dayWord(addDays(TODAY, risky.riskWith))}`, text: `Even with today's recommended order there is a gap before the next delivery. Check the supplier timing.`, action: "Open stock", run: () => nav.go("stock", { filter: "risk" }) });
   const due = S.orders.filter((o) => sameDay(o.eta, TODAY) && ["placed", "confirmed", "ontheway"].includes(o.status));
   if (due.length) cards.push({ id: "due", tone: "info", icon: "truck", title: `${due.length} ${plural(due.length, "delivery", "deliveries")} due today`, text: `${due.map((o) => o.supplier.name).join(" and ")}. Check items against the delivery note, then add them to stock.`, action: "Receive delivery", run: () => nav.openModal("receive", { orderId: due[0].id }) });
-  const g = GROUPS.find((x) => off(x.arrive) >= 0 && off(x.arrive) <= 6);
+  const g = GROUPS.find((x) => !x.table && off(x.arrive) >= 0 && off(x.arrive) <= 6);
   if (g) cards.push({ id: "group", tone: "info", icon: "heart", title: `${g.name} arrives ${dayWord(g.arrive)}: ${g.guests} guests`, text: g.extras.filter((x) => off(x.date) >= 0).map((x) => `${x.covers} ${x.meal} covers ${dowName(x.date)} at ${x.time}`).join(", ") + ". Set menu choices and dietary needs are already in the forecast.", action: "See the day", run: () => nav.openPanel("day", off(g.arrive)) });
   const tg = teamGaps(S.state.rota);
   const gp = tg.gaps[0];
@@ -2286,6 +2403,20 @@ function DataSources() {
   </div>`;
 }
 
+function SavingsCard() {
+  const S = useStore(), nav = useNav();
+  const m = S.metrics, sv = savingsOf(m);
+  return html`<section className="card p-5 md:p-6 save-card" aria-label="Your savings">
+    <div className="flex flex-wrap items-center justify-between gap-2 mb-3"><h3 className="font-serif text-[22px] text-head m-0">What ${PRODUCT_NAME} saves you</h3><${SimTag} /></div>
+    <div className="save-row tnum">
+      <div><p className="m-0 text-[13.5px] text-muted">This month, at the current pace</p><p className="sv-big">${gbp(sv.month)}</p><p className="m-0 mt-1 text-[14px] text-muted">on track for <b className="text-ink">${gbp(round100(sv.year))} a year</b>, against ${gbp(PRICE_MONTH)} a month for ${PRODUCT_NAME}</p></div>
+      <div><p className="m-0 text-[13.5px] text-muted">Food kept out of the bin</p><p className="sv-mid">${gbp(sv.foodMonth)}</p><p className="m-0 mt-1 text-[14px] text-muted">waste down from ${NUMBER_FMT(m.wasteShareFourWeeksAgo * 100, 1)}% to ${NUMBER_FMT(m.wasteShareLastWeek * 100, 1)}% of food bought in four weeks</p></div>
+      <div><p className="m-0 text-[13.5px] text-muted">Time given back</p><p className="sv-mid">${NUMBER_FMT(sv.hoursWeek * 52 / 12, 0)} h</p><p className="m-0 mt-1 text-[14px] text-muted">a month of counting and ordering, worth about ${gbp(sv.timeWeek * 52 / 12)}</p></div>
+    </div>
+    <button type="button" className="btn btn-quiet btn-sm !px-0 mt-3" onClick=${() => nav.go("waste")}>Where the waste came from<${Icon} name="arrow" size=${16} /></button>
+  </section>`;
+}
+
 // The greeting follows the real time of day on the viewer's clock
 const greeting = () => { const h = new Date().getHours(); return h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening"; };
 function TodayScreen() {
@@ -2317,7 +2448,7 @@ function TodayScreen() {
       <section className="rounded-[20px] dk p-5 md:p-6 grid md:grid-cols-[1.3fr_1fr] gap-5 items-center" aria-label="Today's decision">
         <div>
           <p className="eyebrow m-0">AI recommends. Hotel teams decide.</p>
-          <p className="font-serif text-[26px] md:text-[30px] leading-tight mt-2 mb-2 tnum">${S.suggested.length ? `${nLines} ${plural(nLines, "item")} across ${S.suggested.length} purchase ${plural(S.suggested.length, "order")}, ${eur(total)}` : "Stock covers the forecast"}</p>
+          <p key=${S.live ? S.live.id : "n"} className=${cls("font-serif text-[26px] md:text-[30px] leading-tight mt-2 mb-2 tnum", S.live && "flash")}>${S.suggested.length ? `${nLines} ${plural(nLines, "item")} across ${S.suggested.length} purchase ${plural(S.suggested.length, "order")}, ${gbp(total)}` : "Stock covers the forecast"}</p>
           <p className="m-0 muted text-[15.5px]">${next ? `First deadline: ${SUPPLIERS[next.sup].name.toLowerCase()} ${next.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, next.deadlineOff))} by ${next.cutoff}. Every quantity can be changed or removed.` : "Nothing is waiting for you."}</p>
         </div>
         <div className="flex flex-wrap gap-3 md:justify-end">
@@ -2325,6 +2456,8 @@ function TodayScreen() {
           ${S.suggested.length > 0 && html`<button type="button" className="btn btn-secondary btn-lg" onClick=${() => S.placeAll(S.suggested)}>Approve all</button>`}
         </div>
       </section>
+
+      <${SavingsCard} />
 
       <section>
         <div className="flex flex-wrap items-end justify-between gap-3 mb-3"><h3 className="font-serif text-[22px] text-head m-0">Planning for ${focus === 0 ? "today" : focus === 1 ? "tomorrow" : dowName(d)}</h3><${DayPicker} value=${focus} onChange=${setFocus} /></div>
@@ -2343,6 +2476,7 @@ function TodayScreen() {
           <p className="text-[14px] text-muted mt-0 mb-3">${f.board.BB + f.board.HB} of ${f.guests} guests have breakfast or half board, ${f.board.RO} are room only. ${f.dietGuests.veg + f.dietGuests.vegan + f.dietGuests.gf > 0 ? `${f.dietGuests.veg} vegetarian, ${f.dietGuests.vegan} vegan and ${f.dietGuests.gf} gluten-free guests are planned for.` : ""}</p>
           <div className="flex flex-wrap gap-2">
             ${f.group && html`<${Chip} tone="neutral" icon="heart">${f.group.name}, ${f.group.guests} guests<//>`}
+            ${f.meals.dinner.events.filter((x) => x.group.table).map((x) => html`<${Chip} key=${x.group.id} tone="amber" icon="bell">${x.group.name}, ${x.time}<//>`)}
             ${nextEv && html`<${Chip} tone="info" icon="music">${nextEv.name.split(" at ")[0]}, ${nextEv.time}<//>`}
             ${f.holiday && html`<${Chip} tone="info" icon="flag">${f.holiday.name}<//>`}
             <${Chip} tone="neutral" icon=${f.weather.kind === "rain" ? "rain" : "sun"}>${f.weather.label}, ${f.weather.hi}°<//>
@@ -2355,7 +2489,7 @@ function TodayScreen() {
             ${MEALS.map((mm) => { const x = f.meals[mm]; const vn = vsNormal(f, mm); return html`
               <li key=${mm}>
                 <div className="flex items-baseline justify-between gap-3"><span className="text-[15px]">${MEAL_LABEL[mm]}</span>
-                  <span className="tnum"><span className="font-serif text-[24px] text-head">${x.covers}</span> <span className="text-[13px] text-muted">likely ${x.p10}–${x.p90}</span>${Math.abs(vn) >= 0.08 && html` <span className=${cls("chip ml-1", vn > 0 ? "chip-amber" : "chip-info")}>${vn > 0 ? "+" : "−"}${Math.round(Math.abs(vn) * 100)}% vs normal</span>`}</span></div>
+                  <span className="tnum"><span key=${S.live && mm === "dinner" && sameDay(S.live.date, d) ? S.live.id : "n"} className=${cls("font-serif text-[24px] text-head px-1", S.live && mm === "dinner" && sameDay(S.live.date, d) && "flash")}>${x.covers}</span>${S.live && mm === "dinner" && sameDay(S.live.date, d) && html`<span className="delta">+${LIVE_BOOKING.guests} booked</span>`} <span className="text-[13px] text-muted">likely ${x.p10}–${x.p90}</span>${Math.abs(vn) >= 0.08 && html` <span className=${cls("chip ml-1", vn > 0 ? "chip-amber" : "chip-info")}>${vn > 0 ? "+" : "−"}${Math.round(Math.abs(vn) * 100)}% vs normal</span>`}</span></div>
               </li>`; })}
           </ul>
           <button type="button" className="btn btn-quiet btn-sm !px-0 mt-3" onClick=${() => nav.go("demand", { dateOff: focus })}>Covers, menu and ingredients<${Icon} name="arrow" size=${16} /></button>
@@ -2390,12 +2524,12 @@ function TodayScreen() {
       <section aria-label="Business metrics">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3"><h3 className="font-serif text-[22px] text-head m-0">Last 30 days</h3><${SimTag} /></div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <${MetricTile} icon="trash" label="Food waste" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${`${eur(m.wasteE)}, ${NUMBER_FMT(m.wasteShare * 100, 1)}% of food bought`} />
+          <${MetricTile} icon="trash" label="Food waste" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${`${gbp(m.wasteE)}, ${NUMBER_FMT(m.wasteShare * 100, 1)}% of food bought`} />
           <${MetricTile} icon="plate" label="Waste per cover" value=${NUMBER_FMT(m.wastePerCover * 1000) + " g"} sub=${m.covers30 + " covers served"} />
           <${MetricTile} icon="alert" label="Stock-outs" value=${m.stockouts} sub="in the last 30 days" />
           <${MetricTile} icon="coin" label="Food cost" value=${NUMBER_FMT(m.foodCostPct * 100, 1) + "%"} sub="food and drink bought, as a share of sales" />
           <${MetricTile} icon="box" label="Days on hand" value=${NUMBER_FMT(m.daysOnHand, 1)} sub="at the current pace" />
-          <${MetricTile} icon="coin" label="Cash tied up in stock" value=${eur(m.stockValue)} sub="at purchase price" />
+          <${MetricTile} icon="coin" label="Cash tied up in stock" value=${gbp(m.stockValue)} sub="at purchase price" />
           <${MetricTile} icon="trend" label="Forecast accuracy" value=${NUMBER_FMT(m.accuracy * 100, 0) + "%"} sub=${`error ${NUMBER_FMT((1 - m.accuracy) * 100, 1)}% (WAPE), last 28 days`} />
           <div className="card-flat p-3.5 flex items-center"><p className="m-0 text-[13.5px] text-muted">These figures are generated to show the dashboard. They are not results from a real hotel.</p></div>
         </div>
@@ -2499,7 +2633,7 @@ function IngredientsTab({ d }) {
   return html`<div className="grid gap-4">
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div className="seg" role="group" aria-label="Service">${[["all", "All services"], ...MEALS.map((m) => [m, MEAL_LABEL[m]])].map(([k, l]) => html`<button key=${k} type="button" aria-pressed=${meal === k} onClick=${() => setMeal(k)} className=${cls("seg-btn", meal === k && "on")}>${l}</button>`)}</div>
-      <p className="m-0 text-[14.5px] text-muted tnum">Ingredient cost for the day at purchase price: <span className="font-semibold text-ink">${eur(cost)}</span></p>
+      <p className="m-0 text-[14.5px] text-muted tnum">Ingredient cost for the day at purchase price: <span className="font-semibold text-ink">${gbp(cost)}</span></p>
     </div>
     <div className="card overflow-x-auto" tabIndex="0" role="region" aria-label="Ingredient demand, scrolls sideways on small screens">
       <table className="tbl w-full min-w-[720px]">
@@ -2690,9 +2824,9 @@ function suggestionLines(r) {
   if (l && r.wasteRisk && r.pr.firstShort !== null) {
     // Part of today's stock passes its date before it is used, and the item still runs out later: one message that explains both
     const keep = useOverDays(p, TODAY, r.pr.firstShort), short = addDays(TODAY, r.pr.firstShort); // what stock and open orders cover before the gap
-    out.push({ tone: "amber", text: `${fmtQty(p, keep)} usable until ${dayWordShort(addDays(short, -1))}; short from ${dayWordShort(short)}: order ${fmtQty(p, l.qty)} ${by} for ${dowShort(addDays(TODAY, r.sug.etaOff))} delivery and use the oldest batch first. About ${eur(r.pr.wasteValue)} of today's stock passes its date before it is needed${p.idea ? ": " + p.idea.charAt(0).toLowerCase() + p.idea.slice(1) : ""}.` });
+    out.push({ tone: "amber", text: `${fmtQty(p, keep)} usable until ${dayWordShort(addDays(short, -1))}; short from ${dayWordShort(short)}: order ${fmtQty(p, l.qty)} ${by} for ${dowShort(addDays(TODAY, r.sug.etaOff))} delivery and use the oldest batch first. About ${gbp(r.pr.wasteValue)} of today's stock passes its date before it is needed${p.idea ? ": " + p.idea.charAt(0).toLowerCase() + p.idea.slice(1) : ""}.` });
   } else {
-    if (r.wasteRisk) out.push({ tone: "amber", text: `May go unused (about ${eur(r.pr.wasteValue)}).${p.idea ? " " + p.idea + "." : ""}` });
+    if (r.wasteRisk) out.push({ tone: "amber", text: `May go unused (about ${gbp(r.pr.wasteValue)}).${p.idea ? " " + p.idea + "." : ""}` });
     else if (r.useFirst && p.idea) out.push({ tone: "amber", text: p.idea });
     if (l) out.push({ tone: r.sug.late ? "amber" : "terra", text: `Order ${fmtQty(p, l.qty)} ${by} (${SUPPLIERS[p.sup].name}, delivery ${dowShort(addDays(TODAY, r.sug.etaOff))}).` });
   }
@@ -2735,7 +2869,7 @@ function StockScreen({ intent }) {
         <${MetricTile} icon="alert" label="Need an order to avoid a shortage" value=${risk.length} sub=${risk.length ? risk.slice(0, 2).map((r) => r.p.name.toLowerCase()).join(", ") : "nothing this week"} />
         <${MetricTile} icon="leaf" label="Use within 48 hours" value=${uf.length} sub=${uf.length ? uf.slice(0, 2).map((r) => r.p.name.toLowerCase()).join(", ") : "nothing"} />
         <${MetricTile} icon="box" label="Days on hand" value=${NUMBER_FMT(m.daysOnHand, 1)} sub="at the current pace" />
-        <${MetricTile} icon="coin" label="Cash tied up" value=${eur(m.stockValue)} sub="at purchase price" />
+        <${MetricTile} icon="coin" label="Cash tied up" value=${gbp(m.stockValue)} sub="at purchase price" />
       </div>
       ${uf.length > 0 && html`
         <div className="rounded-[16px] bg-[#fbebc8] border border-[#e2bd6b] p-4 mb-5 text-[#5c3b07]">
@@ -2826,7 +2960,7 @@ function POLine({ o, l }) {
           </div>
         </div>
         <div className="tnum"><div className="text-[12.5px] text-muted">Recommended</div><div className="font-semibold text-[16.5px]">${fmtQty(p, l.rec)}</div><div className="text-[12.5px] text-muted" title="Middle half of likely outcomes (P25 to P75). The Explain panel shows P10 to P90.">likely ${rangeText(fq(p, L.range50[0]), fq(p, L.range50[1]))}</div></div>
-        <div className="tnum"><div className="text-[12.5px] text-muted">Your order</div><div className=${cls("font-semibold text-[16.5px]", changed && "text-terra")}>${fmtQty(p, l.qty)}</div><div className="text-[12.5px] text-muted">${eur1(l.qty * p.price)}</div></div>
+        <div className="tnum"><div className="text-[12.5px] text-muted">Your order</div><div className=${cls("font-semibold text-[16.5px]", changed && "text-terra")}>${fmtQty(p, l.qty)}</div><div className="text-[12.5px] text-muted">${gbp1(l.qty * p.price)}</div></div>
         <div className="text-[14px] text-muted">${fmtQty(p, L.forecast)} forecast ${L.win > 1 ? "from " : "on "}${winText(L)}, ${fmtQty(p, L.usable)} usable stock, ${fmtQty(p, L.buffer)} buffer, case ${p.step} ${p.unit}.</div>
       </div>
       <div className="flex flex-wrap gap-2">
@@ -2863,7 +2997,7 @@ function POCard({ o }) {
           <h3 className="font-serif text-[22px] text-head m-0">${sup.name}</h3>
           <p className="m-0 mt-1 text-[14.5px] text-muted">Order by <span className="font-semibold text-ink">${dl === 0 ? "today" : dowShort(addDays(TODAY, dl))} ${o.cutoff}</span>, delivery <span className="font-semibold text-ink">${dowShort(addDays(TODAY, o.etaOff))} ${fmtDate(addDays(TODAY, o.etaOff), { day: "numeric", month: "short" })}</span>, lead time ${sup.lead} ${plural(sup.lead, "day")}.</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2"><${Chip} tone=${o.confidence === "stockout risk" ? "urgent" : o.confidence === "waste risk" ? "amber" : "ok"} icon=${o.confidence === "balanced" ? "check" : "alert"}>${{ "stockout risk": "Shortage risk", "waste risk": "Some may expire if demand is low", balanced: "Balanced" }[o.confidence]}<//><span className="font-serif text-[22px] text-head tnum">${eur(total)}</span></div>
+        <div className="flex flex-wrap items-center gap-2"><${Chip} tone=${o.confidence === "stockout risk" ? "urgent" : o.confidence === "waste risk" ? "amber" : "ok"} icon=${o.confidence === "balanced" ? "check" : "alert"}>${{ "stockout risk": "Shortage risk", "waste risk": "Some may expire if demand is low", balanced: "Balanced" }[o.confidence]}<//><span className="font-serif text-[22px] text-head tnum">${gbp(total)}</span></div>
       </header>
       <div className="px-5 py-2">
         <p className="m-0 mt-2 text-[14.5px] text-muted">${o.reason}</p>
@@ -2884,7 +3018,7 @@ function OrderRow({ o }) {
   return html`
     <li>
       <button type="button" onClick=${() => nav.openPanel("order", o.id)} className="w-full text-left card p-4 grid gap-2 md:grid-cols-[1.1fr_1.6fr_1.2fr_auto] md:items-center hover:border-forest transition-colors min-h-[64px]">
-        <span><span className="block font-semibold text-[17px]">${o.supplier.name}</span><span className="block text-sm text-muted">${eur(o.cost)}</span></span>
+        <span><span className="block font-semibold text-[17px]">${o.supplier.name}</span><span className="block text-sm text-muted">${gbp(o.cost)}</span></span>
         <span className="text-[15px] text-ink">${items.slice(0, 3).join(", ")}${items.length > 3 ? ` and ${items.length - 3} more` : ""}</span>
         <span className="text-[15px]">${orderedText(o, true)}, arrives ${dowShort(o.eta)} ${fmtDate(o.eta, { day: "numeric", month: "short" })}${o.late ? html`<span className="block text-terra font-semibold inline-flex items-center gap-1.5 mt-0.5"><${Icon} name="alert" size=${15} />Arrives ${dowShort(o.eta)}, needed ${dowShort(o.needed)}</span>` : ""}</span>
         <span className="flex items-center gap-2"><${StatusChip} status=${o.status} /><${Icon} name="right" size=${18} cls="text-muted hidden md:block" /></span>
@@ -2903,7 +3037,7 @@ function PurchasingScreen() {
       <div className="flex flex-wrap items-end justify-between gap-3 mb-2">
         <div><h2 className="font-serif text-[30px] text-head m-0 leading-tight">Purchasing</h2><p className="mt-1 mb-0 text-muted">AI recommends. Hotel teams decide. Accept, change or remove anything, and every change keeps its reason.</p></div>
         <div className="flex flex-wrap gap-2.5">
-          ${sug.length > 0 && html`<button type="button" className="btn btn-primary" onClick=${() => S.placeAll(sug)}><${Icon} name="check" size=${18} />Accept all (${eur(total)})</button>`}
+          ${sug.length > 0 && html`<button type="button" className="btn btn-primary" onClick=${() => S.placeAll(sug)}><${Icon} name="check" size=${18} />Accept all (${gbp(total)})</button>`}
           <button type="button" className="btn btn-secondary" onClick=${() => nav.openModal("order", {})}><${Icon} name="plus" size=${18} />New order</button>
         </div>
       </div>
@@ -2949,7 +3083,7 @@ function WasteScreen() {
     ["trend", "Forecast", `${fmtQty(p, withW.forecast)} needed over the next ${withW.win} ${plural(withW.win, "day")}`],
     ["clipboard", "Purchase", `${fmtQty(p, withW.rec)} recommended today (${fmtQty(p, noW.rec)} without waste feedback). Before rounding to the case: ${fmtQty(p, withW.net)} (${fmtQty(p, noW.net)} without).`],
     ["plate", "Consumption", `about ${fmtQty(p, useAvg)} used in the last 14 days`],
-    ["trash", "Waste", `${fmtQty(p, lost)} logged in the last 14 days (${eur1(lost * p.price)})`],
+    ["trash", "Waste", `${fmtQty(p, lost)} logged in the last 14 days (${gbp1(lost * p.price)})`],
     ["bulb", "Better decision", withW.wasteCut > 0 ? `Safety buffer trimmed by ${fmtQty(p, withW.wasteCut)}` : "No change to the buffer yet"],
   ];
   return html`
@@ -2960,7 +3094,7 @@ function WasteScreen() {
       </div>
       <div><div className="mb-2"><${SimTag} text="Earlier entries are simulated demo data" /></div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <${MetricTile} icon="trash" label="Waste, 30 days" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${`${eur(m.wasteE)}, ${NUMBER_FMT(m.wasteShare * 100, 1)}% of food bought`} />
+          <${MetricTile} icon="trash" label="Waste, 30 days" value=${NUMBER_FMT(m.wasteKg, 1) + " kg"} sub=${`${gbp(m.wasteE)}, ${NUMBER_FMT(m.wasteShare * 100, 1)}% of food bought`} />
           <${MetricTile} icon="plate" label="Per cover" value=${NUMBER_FMT(m.wastePerCover * 1000) + " g"} sub=${m.covers30 + " covers"} />
           <${MetricTile} icon="alert" label="Stock-outs, 30 days" value=${m.stockouts} sub="shortages on the day" />
           <${MetricTile} icon="coin" label="Food cost" value=${NUMBER_FMT(m.foodCostPct * 100, 1) + "%"} sub="food and drink bought, share of sales" />
@@ -2979,13 +3113,13 @@ function WasteScreen() {
           <div className="flex flex-wrap items-center gap-2 mb-3" role="group" aria-label="Filter by category">${[["all", "All"], ...WASTE_CATS.map((c) => [c, c])].map(([k, l]) => html`<button key=${k} type="button" aria-pressed=${cat === k} onClick=${() => setCat(k)} className=${cls("filter-chip", cat === k && "on")}>${l}</button>`)}</div>
           <div className="card overflow-x-auto" tabIndex="0" role="region" aria-label="Waste log, scrolls sideways on small screens">
             <table className="tbl w-full min-w-[620px]"><thead><tr><th>Date</th><th>Ingredient</th><th className="num">Quantity</th><th className="num">Value</th><th>Category</th><th>Reason</th></tr></thead>
-              <tbody>${list.map((w) => html`<tr key=${w.id}><td>${w.dOff === 0 ? "Today" : fmtDate(addDays(TODAY, w.dOff), { day: "numeric", month: "short" })}</td><td className="font-semibold">${PBY[w.p].name}</td><td className="num">${fmtQty(PBY[w.p], w.qty)}</td><td className="num">${eur1(wasteEur(w))}</td><td><${Chip} tone="neutral">${w.cat}<//></td><td className="text-muted">${w.reason || "-"}</td></tr>`)}
+              <tbody>${list.map((w) => html`<tr key=${w.id}><td>${w.dOff === 0 ? "Today" : fmtDate(addDays(TODAY, w.dOff), { day: "numeric", month: "short" })}</td><td className="font-semibold">${PBY[w.p].name}</td><td className="num">${fmtQty(PBY[w.p], w.qty)}</td><td className="num">${gbp1(wasteEur(w))}</td><td><${Chip} tone="neutral">${w.cat}<//></td><td className="text-muted">${w.reason || "-"}</td></tr>`)}
                 ${list.length === 0 && html`<tr><td colSpan="6" className="text-muted">No entries in this category.</td></tr>`}</tbody></table>
           </div>
         </section>
         <section className="card p-5 content-start" aria-label="Waste by category">
           <h3 className="font-serif text-[20px] text-head mt-0 mb-3">By category, 30 days</h3>
-          <ul className="list-none p-0 m-0 grid gap-3">${byCat.map(({ c, e }) => html`<li key=${c}><div className="flex justify-between text-[14.5px]"><span>${c}</span><span className="tnum font-semibold">${eur(e)}</span></div><div className="h-2.5 rounded-full bg-sage mt-1"><div className="h-2.5 rounded-full bar-fill" style=${{ width: e / maxE * 100 + "%" }}></div></div></li>`)}</ul>
+          <ul className="list-none p-0 m-0 grid gap-3">${byCat.map(({ c, e }) => html`<li key=${c}><div className="flex justify-between text-[14.5px]"><span>${c}</span><span className="tnum font-semibold">${gbp(e)}</span></div><div className="h-2.5 rounded-full bg-sage mt-1"><div className="h-2.5 rounded-full bar-fill" style=${{ width: e / maxE * 100 + "%" }}></div></div></li>`)}</ul>
         </section>
       </div>
     </div>`;
@@ -3105,7 +3239,7 @@ function mealFromText(t, dflt = "dinner") {
 }
 function buddyPrompts(S) {
   const tom = S.suggested.flatMap((o) => o.lines).find((l) => l.p === "tomatoes");
-  const g = GROUPS.find((x) => off(x.arrive) >= 0 && off(x.arrive) <= 6);
+  const g = GROUPS.find((x) => !x.table && off(x.arrive) >= 0 && off(x.arrive) <= 6);
   const ge = g && g.extras.find((x) => x.meal === "dinner");
   const fri = dayFromText("friday");
   return [
@@ -3119,14 +3253,14 @@ function buddyPrompts(S) {
     `Do I have enough staff on ${dowName(addDays(TODAY, fri))}?`,
     "How do I get my own data into DemandInn?",
     "How accurate is the forecast?",
-    "What will the morning email say?",
+    "What will the daily briefing say?",
     "What is the weather doing to tomorrow's covers?",
   ];
 }
 
 function answerFor(raw, S, nav) {
   const t = raw.toLowerCase();
-  const wedding = GROUPS.find((x) => off(x.arrive) >= 0 && off(x.arrive) <= 7);
+  const wedding = GROUPS.find((x) => !x.table && off(x.arrive) >= 0 && off(x.arrive) <= 7);
   // 1. what-if
   if (/what if|suppose|grows?|\bextra\b|more guests|add \d+|\+\s?\d+/.test(t) && /(\d+)/.test(t)) {
     const nums = (t.match(/\d+/g) || []).map(Number);
@@ -3155,12 +3289,12 @@ function answerFor(raw, S, nav) {
       actions: [{ label: "Open Use your own data", run: () => nav.go("data") }],
     };
   }
-  if (/\b(e-?mail|digest|inbox)\b/.test(t)) {
+  if (/\b(e-?mail|digest|inbox|briefing|whatsapp|sms|text message)\b/.test(t)) {
     const tips = morningTips(S);
     return {
-      title: `Tomorrow morning's email: ${tips.length} tips`,
+      title: `Tomorrow morning's briefing: ${tips.length} points`,
       lines: tips.map((x, i) => `${i + 1}. ${x.title}`),
-      actions: [{ label: "Preview the email", run: () => nav.go("email") }],
+      actions: [{ label: "Preview the daily briefing", run: () => nav.go("briefing") }],
     };
   }
   if (/accura|backtest|wape|proof|pilot|how good|reliable/.test(t) && !/what if/.test(t)) {
@@ -3247,7 +3381,7 @@ function answerFor(raw, S, nav) {
     acts.push({ label: "Open stock", run: () => nav.go("stock", { filter: "use" }) });
     return {
       title: uf.length ? `${uf.length} ${plural(uf.length, "item")} to use within 48 hours` : "Nothing is close to its date",
-      lines: [...uf.map((r) => `${r.p.name}: ${fmtQty(r.p, r.exp48)} expires within 48 hours. ${r.p.idea}.`), ...wr.filter((r) => !uf.includes(r)).map((r) => `${r.p.name} may go unused, about ${eur(r.pr.wasteValue)}.`), `Waste in the last 30 days: ${NUMBER_FMT(S.metrics.wasteKg, 1)} kg, ${eur(S.metrics.wasteE)} (simulated demo data).`],
+      lines: [...uf.map((r) => `${r.p.name}: ${fmtQty(r.p, r.exp48)} expires within 48 hours. ${r.p.idea}.`), ...wr.filter((r) => !uf.includes(r)).map((r) => `${r.p.name} may go unused, about ${gbp(r.pr.wasteValue)}.`), `Waste in the last 30 days: ${NUMBER_FMT(S.metrics.wasteKg, 1)} kg, ${gbp(S.metrics.wasteE)} (simulated demo data).`],
       actions: acts,
     };
   }
@@ -3277,7 +3411,7 @@ function answerFor(raw, S, nav) {
     const sug = S.suggested;
     const total = sug.reduce((s, o) => s + o.lines.reduce((a, l) => a + l.qty * PBY[l.p].price, 0), 0);
     return {
-      title: sug.length ? `${sug.length} purchase ${plural(sug.length, "order")} ready, ${eur(total)}` : "Nothing to order today",
+      title: sug.length ? `${sug.length} purchase ${plural(sug.length, "order")} ready, ${gbp(total)}` : "Nothing to order today",
       lines: sug.map((o) => `${SUPPLIERS[o.sup].name}: ${o.lines.slice(0, 3).map((l) => `${fmtQty(PBY[l.p], l.qty)} ${PBY[l.p].name.toLowerCase()}`).join(", ")}${o.lines.length > 3 ? ` and ${o.lines.length - 3} more` : ""}. Order by ${o.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, o.deadlineOff))} ${o.cutoff}.`),
       actions: sug.length ? [{ label: "Open purchasing", run: () => nav.go("purchasing") }, { label: "Accept all orders", run: () => S.placeAll(S.suggested) }] : [],
     };
@@ -3296,7 +3430,7 @@ function answerFor(raw, S, nav) {
   const picks = (best.length ? best : pool.slice(0, 3)).map((x) => x.q);
   return {
     title: "I am not sure I understood. Did you mean one of these?",
-    lines: ["I answer from the same forecast, stock and orders you see on screen, and I do not invent figures. I can cover orders, covers, dishes, ingredients, waste, staffing, weather, accuracy, the morning email and how to import your data."],
+    lines: ["I answer from the same forecast, stock and orders you see on screen, and I do not invent figures. I can cover orders, covers, dishes, ingredients, waste, staffing, weather, accuracy, the daily briefing and how to import your data."],
     actions: picks.map((q) => ({ label: q.length > 46 ? q.slice(0, 44) + "..." : q, run: null, ask: q })),
   };
 }
@@ -3341,7 +3475,7 @@ function BuddyPanel({ chat, setChat, onClose }) {
    ===================================================================== */
 
 /* =====================================================================
-   NEW SCREENS: MENU, MORNING EMAIL, ACCURACY, USE YOUR OWN DATA
+   NEW SCREENS: MENU, DAILY BRIEFING, ACCURACY, USE YOUR OWN DATA
    ===================================================================== */
 const HISTORY_DEFAULT = { ...HISTORY_FACTOR };
 const DATA_SOURCE = { kind: "demo", name: "Demo hotel (simulated)", rows: 0, from: null, to: null };
@@ -3361,7 +3495,7 @@ function MenuScreen({ intent }) {
     </div>`;
 }
 
-/* ---------- Morning email ---------- */
+/* ---------- Daily briefing (email, WhatsApp or SMS) ---------- */
 function morningTips(S) {
   const tips = [];
   const f1 = fcDay(addDays(TODAY, 1)), m = f1.meals;
@@ -3369,13 +3503,13 @@ function morningTips(S) {
   const nxt = S.suggested.slice().sort((a, b) => a.deadlineOff - b.deadlineOff)[0];
   if (nxt) {
     const total = nxt.lines.reduce((s, l) => s + l.qty * PBY[l.p].price, 0);
-    tips.push({ sev: nxt.deadlineOff === 0 ? "high" : "med", kicker: "Order", title: `Order from ${SUPPLIERS[nxt.sup].name} by ${nxt.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, nxt.deadlineOff))} ${nxt.cutoff}`, why: `${nxt.lines.length} ${plural(nxt.lines.length, "line")}, about ${eur(total)}. Review it, change what you want and approve.` });
+    tips.push({ sev: nxt.deadlineOff === 0 ? "high" : "med", kicker: "Order", title: `Order from ${SUPPLIERS[nxt.sup].name} by ${nxt.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, nxt.deadlineOff))} ${nxt.cutoff}`, why: `${nxt.lines.length} ${plural(nxt.lines.length, "line")}, about ${gbp(total)}. Review it, change what you want and approve.` });
   } else tips.push({ sev: "ok", kicker: "Order", title: "Nothing to order today", why: "Stock and open orders cover the forecast until the next delivery." });
   for (let i = 0; i < 7; i++) {
     const f = fcDay(addDays(TODAY, i));
     if (f.group || (f.events && f.events[0])) {
       const what = f.group ? f.group.name : f.events[0].name;
-      tips.push({ sev: "high", kicker: f.group ? "Group" : "Event", title: `${what} on ${i === 0 ? "today" : dowName(f.date)}`, why: `${f.meals.dinner.covers} dinner covers expected that day, ${vsNormal(f, "dinner") >= 0 ? "+" : "−"}${Math.round(Math.abs(vsNormal(f, "dinner")) * 100)}% against a normal ${dowName(f.date)}.` });
+      tips.push({ sev: "high", kicker: f.group ? "Group" : "Event", title: `${what} ${i === 0 ? "today" : "on " + dowName(f.date)}`, why: `${f.meals.dinner.covers} dinner covers expected that day, ${vsNormal(f, "dinner") >= 0 ? "+" : "−"}${Math.round(Math.abs(vsNormal(f, "dinner")) * 100)}% against a normal ${dowName(f.date)}.` });
       break;
     }
   }
@@ -3389,7 +3523,7 @@ function morningTips(S) {
 }
 const SEV_COL = { high: ["#B5483A", "#FFFFFF"], med: ["#E9A23B", "#12332A"], ok: ["#2E7D5B", "#FFFFFF"], info: ["#2E7D5B", "#FFFFFF"] };
 function buildEmail(S, link) {
-  const tips = morningTips(S), f1 = fcDay(addDays(TODAY, 1)), m = f1.meals;
+  const tips = morningTips(S), f1 = fcDay(addDays(TODAY, 1)), m = f1.meals, sv = savingsOf(S.metrics);
   const subject = `${HOTEL.name}: ${m.lunch.covers + m.dinner.covers + m.breakfast.covers} covers tomorrow, ${tips[1] ? tips[1].title : "your plan"}`.slice(0, 110);
   const cards = tips.map((t, k) => `<tr><td style="padding:0 0 12px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E4E0D9;border-radius:14px"><tr>
     <td width="56" valign="top" style="padding:16px 0 16px 16px"><div style="width:34px;height:34px;border-radius:17px;background:${SEV_COL[t.sev][0]};color:${SEV_COL[t.sev][1]};text-align:center;line-height:34px;font-size:15px;font-weight:700;font-family:Georgia,serif">${k + 1}</div></td>
@@ -3403,7 +3537,8 @@ function buildEmail(S, link) {
   <tr><td style="background:#12332A;border-radius:20px;padding:26px 24px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E9A23B;font-weight:700">Good morning · ${esc(fmtDate(TODAY, { weekday: "long", day: "numeric", month: "long" }))}</div>
   <div style="font-family:Georgia,serif;font-size:27px;line-height:1.2;color:#FFFFFF;margin:10px 0 6px;font-weight:700">${esc(BRAND_LINE)}</div>
   <div style="font-size:14px;color:#C5D6CC">${esc(dowName(addDays(TODAY, 1)))}, dinner likely ${m.dinner.p10}–${m.dinner.p90}. The ${tips.length} things that matter most today:</div>
-  <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:16px"><tr>${nums}</tr></table></td></tr>
+  <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:16px"><tr>${nums}</tr></table>
+  <div style="margin-top:16px;padding-top:12px;border-top:1px solid #2E4A3F;font-size:14px;color:#C5D6CC">Saved with ${PRODUCT_NAME} this month: <b style="color:#E9A23B;font-size:16px">${esc(gbp(sv.month))}</b></div></td></tr>
   <tr><td style="height:16px;line-height:16px">&nbsp;</td></tr>${cards}
   <tr><td align="center" style="padding:10px 0 6px"><a href="${esc(link)}" style="display:inline-block;background:#E9A23B;color:#12332A;text-decoration:none;font-weight:700;font-size:16px;padding:14px 30px;border-radius:999px">See everything in ${PRODUCT_NAME}</a></td></tr>
   <tr><td align="center" style="padding:14px 8px 0;font-size:12px;line-height:1.5;color:#6B766F">Numbers are forecasts, not promises. Simulated demo data for ${esc(HOTEL.name)}.</td></tr>
@@ -3411,45 +3546,67 @@ function buildEmail(S, link) {
   const text = `${subject}\n\nGood morning. Tomorrow (${dowName(addDays(TODAY, 1))}): ${m.breakfast.covers} breakfast, ${m.lunch.covers} lunch, ${m.dinner.covers} dinner, ${m.bar.covers} bar.\n\n` + tips.map((t, k) => `${k + 1}. ${t.title}\n   ${t.why}`).join("\n\n") + `\n\nSee everything: ${link}\nNumbers are forecasts, not promises. Simulated demo data.`;
   return { subject, inner, text, tips };
 }
-const MAIL_KEY = "demandinn-morning-email";
-function EmailScreen() {
+// The same briefing as a short text message, for WhatsApp or SMS (SMS keeps the top three)
+function briefingText(S, link, max) {
+  const tips = morningTips(S).slice(0, max || 5), m = fcDay(addDays(TODAY, 1)).meals, sv = savingsOf(S.metrics);
+  return `${PRODUCT_NAME} · ${HOTEL.name} · ${fmtDate(TODAY)}\nTomorrow: ${m.breakfast.covers} breakfasts, ${m.lunch.covers} lunches, ${m.dinner.covers} dinners.\n\n` + tips.map((x, k) => `${k + 1}. ${x.title}`).join("\n") + `\n\nSaved this month: ${gbp(sv.month)}\nSee everything: ${link}`;
+}
+const CHANNELS = [
+  { id: "email", label: "Email", icon: "send", field: "Email address", type: "email", ph: "you@yourhotel.com", note: "A short email with the five things that matter most today, and a button to see more." },
+  { id: "whatsapp", label: "WhatsApp", icon: "chat", field: "Mobile number", type: "tel", ph: "+44 7700 900123", note: "The same five points as a WhatsApp message. Easy to forward to the chef." },
+  { id: "sms", label: "SMS", icon: "chat", field: "Mobile number", type: "tel", ph: "+44 7700 900123", note: "The three most important points as a text message. Works on any phone." },
+];
+const MAIL_KEY = "demandinn-daily-briefing";
+function BriefingScreen() {
   const S = useStore();
   const saved = useMemo(() => { try { return JSON.parse(localStorage.getItem(MAIL_KEY) || "null") || {}; } catch (e) { return {}; } }, []);
-  const [addr, setAddr] = useState(saved.email || "");
+  const [ch, setCh] = useState(saved.ch || "email");
+  const [addr, setAddr] = useState(saved.addr || "");
   const [time, setTime] = useState(saved.time || "07:00");
   const [on, setOn] = useState(!!saved.on);
+  const C = CHANNELS.find((x) => x.id === ch);
   const link = useMemo(() => location.href.split("#")[0] + "#/app/today", []);
-  const mail = useMemo(() => buildEmail(S, link), [S.suggested, S.summary, S.dataVer, link]);
-  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(addr.trim());
-  const save = () => { try { localStorage.setItem(MAIL_KEY, JSON.stringify({ email: addr.trim(), time, on: true })); } catch (e) {} setOn(true); S.say(`Saved on this device. The email would arrive at ${time}.`); };
-  const copy = async () => { try { await navigator.clipboard.writeText(mail.text); S.say("Email text copied."); } catch (e) { S.say("Copy was blocked by the browser. Select the text in the preview instead."); } };
+  const mail = useMemo(() => buildEmail(S, link), [S.suggested, S.summary, S.metrics, S.dataVer, link]);
+  const msg = useMemo(() => briefingText(S, link, ch === "sms" ? 3 : 5), [S.suggested, S.summary, S.metrics, S.dataVer, link, ch]);
+  const digits = addr.replace(/[^\d+]/g, "");
+  const valid = ch === "email" ? /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(addr.trim()) : digits.replace(/\D/g, "").length >= 8;
+  const save = () => { try { localStorage.setItem(MAIL_KEY, JSON.stringify({ ch, addr: addr.trim(), time, on: true })); } catch (e) {} setOn(true); S.say(`Saved on this device. The briefing would arrive by ${C.label} at ${time}.`); };
+  const text = ch === "email" ? mail.text : msg;
+  const copy = async () => { try { await navigator.clipboard.writeText(text); S.say("Briefing text copied."); } catch (e) { S.say("Copy was blocked by the browser. Select the text in the preview instead."); } };
   const download = () => {
     try {
       const doc = `<!doctype html><html><head><meta charset="utf-8"><title>${esc(mail.subject)}</title></head><body style="margin:0;background:#F6F2EA">${mail.inner}</body></html>`;
-      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([doc], { type: "text/html" })); a.download = "demandinn-morning-email.html"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([doc], { type: "text/html" })); a.download = "demandinn-daily-briefing.html"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
     } catch (e) { S.say("The download was blocked by the browser."); }
   };
-  const mailto = `mailto:${encodeURIComponent(addr.trim())}?subject=${encodeURIComponent(mail.subject)}&body=${encodeURIComponent(mail.text)}`;
+  // Opens the viewer's own mail, WhatsApp or messages app with the briefing filled in. Nothing is sent by the demo.
+  const sendLink = ch === "email" ? `mailto:${encodeURIComponent(addr.trim())}?subject=${encodeURIComponent(mail.subject)}&body=${encodeURIComponent(mail.text)}`
+    : ch === "whatsapp" ? `https://wa.me/${digits.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`
+    : `sms:${digits}?&body=${encodeURIComponent(msg)}`;
   return html`
     <div className="grid gap-6">
-      <div><h2 className="font-serif text-[30px] text-head m-0 leading-tight">Morning email</h2><p className="mt-1 mb-0 text-muted max-w-[70ch]">For managers who do not want to open an app. Every morning, the five things that matter most today in one short email, with a button to see more.</p></div>
+      <div><h2 className="font-serif text-[30px] text-head m-0 leading-tight">Daily briefing</h2><p className="mt-1 mb-0 text-muted max-w-[70ch]">For managers who do not want to open an app. Every morning, the things that matter most today, by email, WhatsApp or text message, with a link to see more.</p></div>
       <div className="grid xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)] gap-5 items-start">
-        <section className="card p-5 grid gap-4" aria-label="Email settings">
+        <section className="card p-5 grid gap-4" aria-label="Briefing settings">
           <h3 className="font-serif text-[21px] text-head m-0">Send it to me</h3>
-          <label className="block"><span className="block text-[14.5px] font-semibold mb-1">Email address</span><input type="email" autoComplete="email" className="field" placeholder="you@yourhotel.com" value=${addr} onInput=${(e) => setAddr(e.target.value)} /></label>
+          <div role="radiogroup" aria-label="How to receive it" className="flex flex-wrap gap-2">${CHANNELS.map((x) => html`<button key=${x.id} type="button" role="radio" aria-checked=${ch === x.id} onClick=${() => { if (x.type !== C.type) setAddr(""); setCh(x.id); setOn(false); }} className=${cls("filter-chip", ch === x.id && "on")}><${Icon} name=${x.icon} size=${16} />${x.label}</button>`)}</div>
+          <p className="m-0 text-[14px] text-muted">${C.note}</p>
+          <label className="block"><span className="block text-[14.5px] font-semibold mb-1">${C.field}</span><input type=${C.type} autoComplete=${C.type === "email" ? "email" : "tel"} className="field" placeholder=${C.ph} value=${addr} onInput=${(e) => setAddr(e.target.value)} /></label>
           <label className="block"><span className="block text-[14.5px] font-semibold mb-1">Time</span><select className="field" value=${time} onChange=${(e) => setTime(e.target.value)}>${["06:00", "06:30", "07:00", "07:30", "08:00", "09:00"].map((t) => html`<option key=${t} value=${t}>${t}</option>`)}</select></label>
-          <div className="flex flex-wrap gap-2 items-center"><button type="button" className="btn btn-primary" disabled=${!valid} onClick=${save}>${on ? "Update" : "Turn on the morning email"}</button>${on && html`<${Chip} tone="ok" icon="check">Saved on this device<//>`}</div>
+          <div className="flex flex-wrap gap-2 items-center"><button type="button" className="btn btn-primary" disabled=${!valid} onClick=${save}>${on ? "Update" : "Turn on the daily briefing"}</button>${on && html`<${Chip} tone="ok" icon="check">Saved on this device<//>`}</div>
           <div className="flex flex-wrap gap-2">
-            <a className=${cls("btn btn-secondary btn-sm", !valid && "opacity-50 pointer-events-none")} href=${valid ? mailto : undefined} aria-disabled=${!valid}><${Icon} name="send" size=${16} />Send it to myself</a>
+            <a className=${cls("btn btn-secondary btn-sm", !valid && "opacity-50 pointer-events-none")} href=${valid ? sendLink : undefined} target=${ch === "whatsapp" ? "_blank" : undefined} rel="noopener noreferrer" aria-disabled=${!valid}><${Icon} name="send" size=${16} />Send it to myself</a>
             <button type="button" className="btn btn-secondary btn-sm" onClick=${copy}>Copy text</button>
-            <button type="button" className="btn btn-secondary btn-sm" onClick=${download}>Download .html</button>
+            ${ch === "email" && html`<button type="button" className="btn btn-secondary btn-sm" onClick=${download}>Download .html</button>`}
           </div>
-          <p className="m-0 text-[13.5px] text-muted">This demo has no mail server. "Send it to myself" opens your own mail app with today's email filled in. In a pilot, delivery every morning is switched on for you.</p>
+          <p className="m-0 text-[13.5px] text-muted">This demo sends nothing itself. "Send it to myself" opens your own ${ch === "email" ? "mail app" : ch === "whatsapp" ? "WhatsApp" : "messages app"} with today's briefing filled in. In a pilot, delivery every morning is switched on for you.</p>
         </section>
-        <section className="card p-4 sm:p-5 min-w-0" aria-label="Email preview">
+        <section className="card p-4 sm:p-5 min-w-0" aria-label="Briefing preview">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-3"><h3 className="font-serif text-[21px] text-head m-0">What you will receive</h3><${SimTag} text="Built from the live forecast" /></div>
-          <dl className="m-0 mb-3 grid gap-1 text-[14.5px]"><div className="flex gap-3"><dt className="text-muted w-14">From</dt><dd className="m-0">${PRODUCT_NAME}</dd></div><div className="flex gap-3"><dt className="text-muted w-14">To</dt><dd className="m-0">${addr || "you@yourhotel.com"}</dd></div><div className="flex gap-3"><dt className="text-muted w-14">Subject</dt><dd className="m-0 font-semibold">${mail.subject}</dd></div></dl>
-          <div className="mail-frame" dangerouslySetInnerHTML=${{ __html: mail.inner }}></div>
+          ${ch === "email" ? html`
+            <dl className="m-0 mb-3 grid gap-1 text-[14.5px]"><div className="flex gap-3"><dt className="text-muted w-14">From</dt><dd className="m-0">${PRODUCT_NAME}</dd></div><div className="flex gap-3"><dt className="text-muted w-14">To</dt><dd className="m-0">${addr || C.ph}</dd></div><div className="flex gap-3"><dt className="text-muted w-14">Subject</dt><dd className="m-0 font-semibold">${mail.subject}</dd></div></dl>
+            <div className="mail-frame" dangerouslySetInnerHTML=${{ __html: mail.inner }}></div>` : html`
+            <div className=${cls("phone-frame", ch)}><p className="pf-from">${ch === "whatsapp" ? `${PRODUCT_NAME} · WhatsApp` : `${PRODUCT_NAME} · Text message`} · ${time}</p><div className="pf-bubble">${msg}</div></div>`}
         </section>
       </div>
     </div>`;
@@ -3538,15 +3695,37 @@ function parseDate(s) {
   const d = new Date(y, mo - 1, da);
   return d.getFullYear() === y && d.getMonth() === mo - 1 && d.getDate() === da ? sod(d) : null;
 }
+// The columns a CSV can have. Only "date" and one service are required; the rest are read when present.
+// src says which system the column would come from once connected: pms, till, weather, events or team.
+const CSV_COLS = [
+  { key: "date", alias: ["date", "day"], as: "Date", src: "-", use: "Required. One row per day.", kind: "date" },
+  { key: "rooms_booked", alias: ["rooms_booked", "rooms", "rooms_sold", "occupied_rooms"], as: "Rooms booked", src: "pms", use: "Links covers to occupancy", kind: "num" },
+  { key: "guests", alias: ["guests", "guests_in_house", "pax"], as: "Guests staying", src: "pms", use: "Breakfasts per guest", kind: "num" },
+  { key: "half_board_guests", alias: ["half_board_guests", "hb_guests", "half_board"], as: "Half-board guests", src: "pms", use: "Dinners already sold with the room", kind: "num" },
+  { key: "arrivals", alias: ["arrivals", "arriving_guests", "arrivals_guests"], as: "Guests arriving", src: "pms", use: "Late arrivals skip dinner", kind: "num" },
+  { key: "breakfast", alias: ["breakfast", "breakfast_covers"], as: "Breakfast covers", src: "till", use: "Calibrates the forecast", kind: "num", svc: true },
+  { key: "lunch", alias: ["lunch", "lunch_covers"], as: "Lunch covers", src: "till", use: "Calibrates the forecast", kind: "num", svc: true },
+  { key: "dinner", alias: ["dinner", "dinner_covers"], as: "Dinner covers", src: "till", use: "Calibrates the forecast", kind: "num", svc: true },
+  { key: "bar", alias: ["bar", "bar_covers"], as: "Bar covers", src: "till", use: "Calibrates the forecast", kind: "num", svc: true },
+  { key: "walk_ins", alias: ["walk_ins", "walkins", "walk_in_covers"], as: "Walk-in covers", src: "till", use: "Demand from non-residents", kind: "num" },
+  { key: "weather", alias: ["weather", "conditions"], as: "Weather", src: "weather", use: "Effect of rain on lunch and the bar", kind: "text" },
+  { key: "temp_c", alias: ["temp_c", "temperature", "temp"], as: "Temperature, °C", src: "weather", use: "Terrace and bar demand", kind: "num" },
+  { key: "local_event", alias: ["local_event", "event"], as: "Local event", src: "events", use: "Uplift on event days", kind: "text" },
+  { key: "group_covers", alias: ["group_covers", "event_covers", "groups"], as: "Group covers", src: "team", use: "Kept apart from the normal pattern", kind: "num" },
+];
+const SRC_NAME = { "-": "", pms: "Booking system (PMS)", till: "Till (POS)", weather: "Weather service", events: "Events calendar", team: "Typed in by the team" };
 function parseCsv(text) {
   const lines = String(text).replace(/^﻿/, "").split(/\r?\n/).filter((l) => l.trim());
   if (lines.length < 2) return { error: "The file needs a header row and at least one row of data." };
   const sep = (lines[0].match(/;/g) || []).length > (lines[0].match(/,/g) || []).length ? ";" : ",";
-  const head = lines[0].split(sep).map((h) => h.trim().toLowerCase().replace(/^"|"$/g, ""));
-  const idx = {}; ["date", ...MEALS].forEach((k) => (idx[k] = head.indexOf(k)));
+  const head = lines[0].split(sep).map((h) => h.trim().toLowerCase().replace(/^"|"$/g, "").replace(/[\s-]+/g, "_"));
+  const idx = {}; CSV_COLS.forEach((c) => (idx[c.key] = head.findIndex((h) => c.alias.includes(h))));
   if (idx.date < 0) return { error: 'There is no "date" column. The first row must name the columns, for example: date,breakfast,lunch,dinner,bar.' };
   const svc = MEALS.filter((m) => idx[m] >= 0);
   if (!svc.length) return { error: "Add at least one of these columns: breakfast, lunch, dinner, bar (covers served)." };
+  const cols = CSV_COLS.filter((c) => idx[c.key] >= 0).map((c) => ({ ...c, name: head[idx[c.key]] }));
+  const ignored = head.filter((h, i) => h && !CSV_COLS.some((c) => idx[c.key] === i));
+  const extras = cols.filter((c) => !c.svc && c.key !== "date");
   const rows = [], bad = [], seen = new Set();
   lines.slice(1).forEach((line, i) => {
     const c = line.split(sep).map((x) => x.trim().replace(/^"|"$/g, ""));
@@ -3559,11 +3738,52 @@ function parseCsv(text) {
       if (c[idx[m]] === "" || !Number.isFinite(n) || n < 0 || n > 2000) return bad.push(`Row ${i + 2}: ${m} must be a number between 0 and 2000.`);
       covers[m] = Math.round(n);
     }
-    seen.add(+date); rows.push({ date, dow: date.getDay(), covers });
+    const x = {};
+    extras.forEach((col) => { const v = c[idx[col.key]]; if (v == null || v === "") return; if (col.kind === "num") { const n = Number(v); if (Number.isFinite(n)) x[col.key] = n; } else x[col.key] = v; });
+    seen.add(+date); rows.push({ date, dow: date.getDay(), covers, x });
   });
   if (!rows.length) return { error: bad[0] || "No usable rows." , bad };
   rows.sort((a, b) => a.date - b.date);
-  return { rows, bad, svc };
+  return { rows, bad, svc, cols, ignored };
+}
+// What the extra columns say, each day compared with the average for its weekday so a busy Saturday is not mistaken for a sunny one
+function csvInsights(rows) {
+  const out = [], has = (k) => rows.some((r) => r.x[k] != null);
+  const core = (r, m) => (r.covers[m] == null ? null : r.covers[m] - (m === "dinner" ? r.x.group_covers || 0 : 0));
+  const dowAvg = {};
+  MEALS.forEach((m) => { dowAvg[m] = {}; rows.forEach((r) => { const v = core(r, m); if (v != null) (dowAvg[m][r.dow] = dowAvg[m][r.dow] || []).push(v); }); Object.keys(dowAvg[m]).forEach((d) => { const v = dowAvg[m][d]; dowAvg[m][d] = v.reduce((a, b) => a + b, 0) / v.length; }); });
+  const rel = (r, m) => { const v = core(r, m), a = dowAvg[m][r.dow]; return v == null || !a ? null : v / a; };
+  const avgRel = (list, m) => { const v = list.map((r) => rel(r, m)).filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const pct = (x) => `${x >= 1 ? "+" : "−"}${Math.round(Math.abs(x - 1) * 100)}%`;
+  if (has("guests") && rows[0].covers.breakfast != null) {
+    const g = rows.reduce((s, r) => s + (r.x.guests || 0), 0), b = rows.reduce((s, r) => s + (r.x.guests ? r.covers.breakfast : 0), 0);
+    if (g) out.push({ icon: "users", src: "pms", t: `${NUMBER_FMT(b / g, 2)} breakfasts per guest staying`, s: "The forecast starts from the guests on the books." });
+  }
+  if (has("rooms_booked") && rows[0].covers.dinner != null) {
+    // Within each weekday, so Saturdays being both fuller and busier does not count twice
+    const rr = rows.filter((r) => r.x.rooms_booked != null), roomAvg = {};
+    rr.forEach((r) => (roomAvg[r.dow] = roomAvg[r.dow] || []).push(r.x.rooms_booked));
+    Object.keys(roomAvg).forEach((d) => { const v = roomAvg[d]; roomAvg[d] = v.reduce((a, b) => a + b, 0) / v.length; });
+    const pts = rr.map((r) => [r.x.rooms_booked - roomAvg[r.dow], core(r, "dinner") - dowAvg.dinner[r.dow]]);
+    const sxx = pts.reduce((s, p) => s + p[0] ** 2, 0), sxy = pts.reduce((s, p) => s + p[0] * p[1], 0);
+    if (sxx > 0 && sxy > 0) out.push({ icon: "calendar", src: "pms", t: `Each extra room booked brings about ${NUMBER_FMT(sxy / sxx, 1)} dinner covers`, s: "So a late booking changes tomorrow's order straight away." });
+  }
+  if (has("weather")) {
+    const wet = (r) => /rain|shower|storm|drizzle|wet/i.test(r.x.weather || "");
+    ["lunch", "bar"].filter((m) => rows[0].covers[m] != null).forEach((m) => {
+      const w = avgRel(rows.filter(wet), m), d = avgRel(rows.filter((r) => r.x.weather && !wet(r)), m);
+      if (w && d) out.push({ icon: "rain", src: "weather", t: `Rainy days: ${MEAL_LABEL[m].toLowerCase()} ${pct(w / d)} against dry days`, s: `${rows.filter(wet).length} rainy days in your file. The weather forecast feeds this in every day.` });
+    });
+  }
+  if (has("local_event") && rows[0].covers.dinner != null) {
+    const ev = rows.filter((r) => r.x.local_event), e = avgRel(ev, "dinner"), n = avgRel(rows.filter((r) => !r.x.local_event), "dinner");
+    if (e && n && ev.length >= 2) out.push({ icon: "music", src: "events", t: `Local event days: dinner ${pct(e / n)}`, s: `${ev.length} event days in your file, such as ${ev[0].x.local_event}.` });
+  }
+  if (has("group_covers")) {
+    const g = rows.filter((r) => r.x.group_covers > 0), tot = g.reduce((s, r) => s + r.x.group_covers, 0);
+    if (g.length) out.push({ icon: "heart", src: "team", t: `${g.length} ${plural(g.length, "day")} with groups, ${NUMBER_FMT(tot)} covers`, s: "Kept apart, so one wedding does not make every Saturday look busier." });
+  }
+  return out;
 }
 // Learns one factor per weekday: your average covers on that weekday (any dates in the file) against what the model,
 // run with a neutral weekday factor, gives for the same weekday over its simulated history
@@ -3578,7 +3798,7 @@ function calibrate(rows) {
     const model = {};
     for (let k = 1; k <= HISTORY_DAYS; k++) { const d = addDays(TODAY, -k), f = forecastDay(d, {}).meals; (model[d.getDay()] = model[d.getDay()] || []).push(svc3.reduce((s, m) => s + f[m].covers, 0)); }
     const yours = {};
-    rows.forEach((r) => (yours[r.dow] = yours[r.dow] || []).push(sum(r.covers)));
+    rows.forEach((r) => (yours[r.dow] = yours[r.dow] || []).push(sum(r.covers) - (svc3.includes("dinner") && r.x ? r.x.group_covers || 0 : 0)));
     const avg = (v) => v.reduce((a, b) => a + b, 0) / v.length;
     Object.entries(yours).forEach(([dow, v]) => { if (v.length >= 2 && model[dow] && avg(model[dow]) > 0) out[dow] = clamp(Math.round((avg(v) / avg(model[dow])) * 1000) / 1000, 0.8, 1.25); });
   } finally { Object.assign(HISTORY_FACTOR, keep); }
@@ -3595,17 +3815,76 @@ function pastCovers(d, m) {
   const r = mulberry32((off(d) + 9000) * 7919 + MEALS.indexOf(m))();
   return Math.max(0, Math.round(_dowAvg[key] * seasonOf(d) * (0.85 + 0.3 * r)));
 }
-const templateCsv = (days = 365) => "date,breakfast,lunch,dinner,bar\n" + Array.from({ length: days }, (_, k) => { const d = addDays(TODAY, k - days); return [toISO(d), ...MEALS.map((m) => pastCovers(d, m))].join(","); }).join("\n");
-const sampleCsv = () => { // a hotel whose weekends are busier than the demo assumes
-  const lines = templateCsv().split("\n");
-  return [lines[0], ...lines.slice(1).map((l) => { const c = l.split(","); const dow = parseDate(c[0]).getDay(); const k = dow === 5 || dow === 6 ? 1.12 : dow === 2 ? 0.93 : 1; return [c[0], ...c.slice(1).map((v) => Math.round(Number(v) * k))].join(","); })].join("\n");
-};
+// The test file: 12 months of one hotel's days, with bookings (PMS), covers (till), weather, local events and groups.
+// Covers follow the demo's history; rain, events and groups move them the way the importer then finds.
+const UK_HIGH = [8, 9, 11, 14, 17, 20, 22, 22, 19, 15, 11, 8]; // average daily high, °C, by month
+const CSV_EVENTS = ["Concert at Riverside Hall", "Farmers market", "Football match", "Business conference", "Theatre opening night"];
+const RICH_HEAD = "date,rooms_booked,guests,half_board_guests,arrivals,breakfast,lunch,dinner,bar,walk_ins,weather,temp_c,local_event,group_covers";
+function richCsv(days = 365, weekendBoost = 1) {
+  const rows = [];
+  for (let k = days; k >= 1; k--) {
+    const d = addDays(TODAY, -k), dow = d.getDay(), rnd = mulberry32(k * 7919 + 17);
+    const occBase = { 1: 0.62, 2: 0.66, 3: 0.71, 4: 0.82, 5: 0.96, 6: 0.96, 0: 0.75 }[dow] * (0.88 + 0.12 * seasonOf(d));
+    const occ = clamp(occBase + (rnd() - 0.5) * 0.12, 0.35, 1);
+    const rooms = Math.round(HOTEL.rooms * occ), guests = Math.round(rooms * (1.5 + 0.2 * rnd()));
+    const wx = rnd(), rain = wx < 0.3 + 0.12 * Math.cos((2 * Math.PI * (d.getMonth() - 0.5)) / 12);
+    const weather = rain ? (wx < 0.12 ? "Rain" : "Showers") : wx > 0.75 ? "Sunny" : "Cloudy";
+    const temp = Math.round(UK_HIGH[d.getMonth()] + (rnd() - 0.5) * 6 - (rain ? 2 : 0));
+    const ev = rnd() < 0.035 ? CSV_EVENTS[Math.floor(rnd() * CSV_EVENTS.length)] : "";
+    const grp = (dow === 6 || dow === 5) && rnd() < 0.06 ? 20 + Math.floor(rnd() * 21) : 0;
+    const wk = dow === 5 || dow === 6 ? weekendBoost : 1;
+    const c = {};
+    MEALS.forEach((m) => {
+      let v = pastCovers(d, m) * wk * Math.pow(occ / occBase, m === "breakfast" ? 1 : m === "lunch" ? 0.15 : 0.4); // fuller hotel, more covers
+      if (rain && m === "lunch") v *= 0.88;
+      if (rain && m === "bar") v *= 0.9;
+      if (!rain && temp >= 20 && m === "bar") v *= 1.12;
+      if (ev && (m === "dinner" || m === "bar")) v *= 1.18;
+      c[m] = Math.round(v);
+    });
+    c.dinner += grp;
+    rows.push([toISO(d), rooms, guests, Math.round(guests * (0.22 + 0.16 * rnd())), Math.round(rooms * (0.35 + 0.25 * rnd())), c.breakfast, c.lunch, c.dinner, c.bar, Math.round((c.lunch + c.dinner - grp) * (0.25 + 0.1 * rnd())), weather, temp, ev, grp].join(","));
+  }
+  return RICH_HEAD + "\n" + rows.join("\n");
+}
+const templateCsv = () => richCsv();
+const sampleCsv = () => richCsv(365, 1.12); // a hotel whose weekends are busier than the demo assumes
 const SOURCE_ROWS = [
   ["Hotel and PMS", [["Occupancy and guests per night", "demo", "Nightly, from your PMS export"], ["Board type per booking", "demo", "Biggest driver of breakfast and dinner"], ["Dietary flags", "demo", "Vegetarian, vegan, gluten-free are hard constraints"], ["Groups and events", "demo", "Typed in by the team, never guessed"]]],
   ["Food and beverage", [["Covers per service (past actuals)", "csv", "Upload below. Calibrates the forecast"], ["Dish-level sales from the till", "planned", "Learns the menu mix"], ["Recipes, yields and trim", "demo", "Starter recipes loaded"], ["Stock, deliveries, expiry", "demo", "Entered in the app"], ["Waste by reason", "demo", "Built into the app"]]],
   ["External signals", [["Weather outlook", "demo", "7 days, then seasonal average"], ["Public and school holidays", "demo", "From a calendar"], ["Local events", "demo", "Entered or from an events feed"]]],
 ];
 const SRC_TONE = { demo: ["amber", "Demo data"], csv: ["ok", "CSV"], planned: ["neutral", "Planned"] };
+// What arrives once a system is connected: example messages, built from the demo's own numbers
+function ApiPreview() {
+  const S = useStore(), nav = useNav();
+  const [tab, setTab] = useState("booking");
+  const d = addDays(TODAY, 1), y = addDays(TODAY, -1), w = fcDay(d).weather;
+  const stamp = `${toISO(TODAY)}T09:14:02Z`;
+  const msgs = {
+    booking: { label: "New booking", from: "Table booking system or PMS", body: { event: "reservation.created", received: stamp, reservation: { date: toISO(d), time: LIVE_BOOKING.time, party_size: LIVE_BOOKING.guests, occasion: "Birthday dinner", dietary: { vegetarian: LIVE_BOOKING.diet.veg, vegan: LIVE_BOOKING.diet.vegan, gluten_free: LIVE_BOOKING.diet.gf } } } },
+    weather: { label: "Weather", from: "Weather service, every morning", body: { date: toISO(d), summary: w.label, temp_max_c: w.hi, rain_probability: w.kind === "rain" ? 0.8 : w.kind === "mixed" ? 0.5 : 0.1 } },
+    sales: { label: "Till sales", from: "Till (POS), every night", body: { event: "sales.daily", date: toISO(y), covers: Object.fromEntries(MEALS.map((m) => [m, pastActual(y, m)])) } },
+  };
+  const M = msgs[tab];
+  return html`<section className="rounded-[20px] dk p-5 md:p-6 grid gap-5" aria-label="How the connection works">
+    <div><h3 className="font-serif text-[24px] text-on-dark m-0">How the connection works</h3><p className="m-0 mt-1 muted text-[15.5px] max-w-[72ch]">Each source sends a small message. ${PRODUCT_NAME} reads it and recalculates. In the pilot, the same data comes in as a CSV file instead.</p></div>
+    <${DataFlow} />
+    <div className="grid lg:grid-cols-[1.3fr_1fr] gap-5 items-start">
+      <div className="rounded-[14px] bg-[#13261f] border border-white/10 p-4 min-w-0">
+        <div role="tablist" aria-label="Example messages" className="flex flex-wrap gap-2 mb-3">${Object.entries(msgs).map(([k, x]) => html`<button key=${k} role="tab" type="button" aria-selected=${tab === k} onClick=${() => setTab(k)} className=${cls("flow-tag !text-[13px] !py-1.5 !px-3 cursor-pointer border-0", tab === k && "now")}>${x.label}</button>`)}</div>
+        <p className="m-0 mb-2 text-[13px] muted">From: ${M.from}</p>
+        <pre className="m-0 text-[13px] leading-[1.5] text-on-dark overflow-x-auto whitespace-pre">${JSON.stringify(M.body, null, 2)}</pre>
+      </div>
+      <div className="rounded-[14px] bg-amber text-forest p-5">
+        <p className="m-0 font-serif text-[22px] leading-tight">Try it: send a test booking</p>
+        <p className="m-0 mt-2 text-[15px]">A table for ${LIVE_BOOKING.guests} tomorrow at ${LIVE_BOOKING.time}, as if it had just come in from your booking system. Watch the covers and the order list update.</p>
+        <button type="button" className="btn btn-dark mt-4" onClick=${() => { if (!S.live) S.simulateBooking(); nav.go("today"); }}><${Icon} name="bell" size=${17} />${S.live ? "Booking sent, see Today" : "Send a test booking"}</button>
+      </div>
+    </div>
+  </section>`;
+}
+
 function DataScreen() {
   const S = useStore(), nav = useNav();
   const fileRef = useRef(null);
@@ -3615,7 +3894,7 @@ function DataScreen() {
   const loadText = (text, name) => { setFname(name); setResult(null); setParsed(parseCsv(text)); };
   const onFile = async (f) => { if (!f) return; try { loadText(await f.text(), f.name); } catch (e) { setParsed({ error: "That file could not be read." }); } };
   const download = () => {
-    try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([templateCsv()], { type: "text/csv" })); a.download = "demandinn-template.csv"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
+    try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([templateCsv()], { type: "text/csv" })); a.download = "demandinn-test-data.csv"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
     catch (e) { S.say("The download was blocked by the browser."); }
   };
   const apply = () => {
@@ -3634,7 +3913,7 @@ function DataScreen() {
   const reset = () => { Object.assign(HISTORY_FACTOR, HISTORY_DEFAULT); clearForecastCaches(); Object.assign(DATA_SOURCE, { kind: "demo", name: "Demo hotel (simulated)", rows: 0, from: null, to: null, dowCounts: null }); setParsed(null); setResult(null); setFname(""); S.refreshData(); S.say("Back to the simulated demo hotel."); };
   const routes = [
     ["file", "Upload an export", "Available in this demo", "ok", "Export covers served from your till and the booking list from your PMS as CSV (Excel can save as CSV). Upload it here. This is how every pilot starts."],
-    ["link", "Connect with an API key", "Planned after the pilot", "neutral", "Your PMS, channel manager or till supplier gives you a read-only API key. You paste it into DemandInn and data arrives nightly. You can revoke it at any time."],
+    ["link", "Connect with an API key", "Planned after the pilot", "neutral", "Your PMS, channel manager or till supplier gives you a read-only API key. You paste it into DemandInn: bookings arrive as they happen, sales every night. You can revoke it at any time."],
     ["edit", "Type in what only you know", "Available in this demo", "ok", "Groups, weddings, events, deliveries and waste are entered in the app. They are explicit inputs, never guessed."],
   ];
   return html`
@@ -3650,20 +3929,27 @@ function DataScreen() {
         <div className="rounded-xl bg-forest text-on-dark p-4 mt-4 flex gap-3 items-start"><${Icon} name="shield" size=${22} cls="text-amber mt-0.5 shrink-0" /><p className="m-0 text-[15.5px]"><b>We never connect to Booking.com or other booking sites directly.</b> Bookings reach ${PRODUCT_NAME} through your own PMS or channel manager, with your consent. You decide what is shared, we only read, and guest names are not needed.</p></div>
       </section>
 
+      <${ApiPreview} />
+
       <div className="grid xl:grid-cols-[1.2fr_1fr] gap-5 items-start">
         <section className="card p-5 grid gap-4" aria-label="Upload history">
-          <div><h3 className="font-serif text-[21px] text-head m-0">Upload your history</h3><p className="mt-1 mb-0 text-[14.5px] text-muted">At least 30 days, ideally 6 to 12 months. Columns: <code>date</code> plus any of <code>breakfast</code>, <code>lunch</code>, <code>dinner</code>, <code>bar</code> (covers served). Your file stays in this browser. Nothing is uploaded to a server.</p></div>
+          <div><h3 className="font-serif text-[21px] text-head m-0">Upload your history</h3><p className="mt-1 mb-0 text-[14.5px] text-muted">At least 30 days, ideally 6 to 12 months. Needed: <code>date</code> and covers served (<code>breakfast</code>, <code>lunch</code>, <code>dinner</code>, <code>bar</code>). Also read when present: rooms booked, guests, half board, arrivals, walk-ins, weather, temperature, local events and group covers. Your file stays in this browser. Nothing is uploaded to a server.</p></div>
           <div className="rounded-[14px] border-2 border-dashed border-line bg-cream p-6 text-center" onDragOver=${(e) => e.preventDefault()} onDrop=${(e) => { e.preventDefault(); onFile(e.dataTransfer.files[0]); }}>
             <p className="m-0 mb-3">Drop a CSV file here, or</p>
-            <div className="flex flex-wrap gap-2 justify-center"><button type="button" className="btn btn-primary" onClick=${() => fileRef.current && fileRef.current.click()}>Choose a file</button><button type="button" className="btn btn-secondary" onClick=${() => loadText(sampleCsv(), "Sample hotel, 12 months (weekend-heavy).csv")}>Try a sample file</button></div>
+            <div className="flex flex-wrap gap-2 justify-center"><button type="button" className="btn btn-primary" onClick=${() => fileRef.current && fileRef.current.click()}>Choose a file</button><button type="button" className="btn btn-secondary" onClick=${() => loadText(sampleCsv(), "demandinn-test-data.csv (weekend-heavy hotel)")}>Try the test file</button></div>
             <input ref=${fileRef} type="file" accept=".csv,text/csv,text/plain" style=${{ display: "none" }} onChange=${(e) => { onFile(e.target.files[0]); e.target.value = ""; }} />
           </div>
-          <div className="flex flex-wrap gap-2"><button type="button" className="btn btn-secondary btn-sm" onClick=${download}>Download the template</button><button type="button" className="btn btn-secondary btn-sm" onClick=${reset} disabled=${DATA_SOURCE.kind === "demo" && !parsed}><${Icon} name="undo" size=${15} />Reset to the demo hotel</button></div>
+          <div className="flex flex-wrap gap-2"><button type="button" className="btn btn-secondary btn-sm" onClick=${download}>Download the test file (12 months)</button><button type="button" className="btn btn-secondary btn-sm" onClick=${reset} disabled=${DATA_SOURCE.kind === "demo" && !parsed}><${Icon} name="undo" size=${15} />Reset to the demo hotel</button></div>
           ${parsed && parsed.error && html`<div role="alert" className="rounded-xl bg-[#f8e0dc] text-urgent p-3 flex gap-2 items-start"><${Icon} name="alert" size=${20} cls="shrink-0" /><span>${parsed.error}</span></div>`}
           ${parsed && parsed.rows && html`
             <div className="grid gap-3">
               <div className="rounded-xl bg-ok-tint text-ok-ink p-3 flex gap-2 items-start" role="status"><${Icon} name="checkcircle" size=${20} cls="shrink-0" /><span><b>${fname}</b>: ${parsed.rows.length} days read, ${fmtDate(parsed.rows[0].date, { day: "numeric", month: "short", year: "numeric" })} to ${fmtDate(parsed.rows[parsed.rows.length - 1].date, { day: "numeric", month: "short", year: "numeric" })}. Services found: ${parsed.svc.map((m) => MEAL_LABEL[m].toLowerCase()).join(", ")}.${parsed.rows.length < 30 ? " Fewer than 30 days: the forecast will be rough." : ""}</span></div>
               ${parsed.bad.length > 0 && html`<details className="rounded-xl bg-[#fbebc8] text-terra p-3"><summary className="cursor-pointer font-semibold">${parsed.bad.length} ${plural(parsed.bad.length, "row")} skipped</summary><ul className="mt-2 mb-0 pl-5">${parsed.bad.slice(0, 8).map((b) => html`<li key=${b}>${b}</li>`)}</ul></details>`}
+              <details className="rounded-xl border border-line p-3" open=${parsed.cols.length > 5}><summary className="cursor-pointer font-semibold">${parsed.cols.length} ${plural(parsed.cols.length, "column")} recognised${parsed.ignored.length ? `, ${parsed.ignored.length} ignored` : ""}</summary>
+                <div className="overflow-x-auto mt-2"><table className="w-full text-[14px]"><thead><tr className="text-left text-muted text-[12.5px]"><th className="py-1 font-medium">In your file</th><th className="font-medium">Read as</th><th className="font-medium">Comes from</th><th className="font-medium">Used for</th></tr></thead>
+                <tbody>${parsed.cols.map((c) => html`<tr key=${c.key} className="border-t border-line"><td className="py-1.5"><code>${c.name}</code></td><td>${c.as}</td><td className="text-muted">${SRC_NAME[c.src]}</td><td>${c.use}</td></tr>`)}</tbody></table>
+                ${parsed.ignored.length > 0 && html`<p className="m-0 mt-2 text-[13px] text-muted">Ignored: ${parsed.ignored.join(", ")}.</p>`}</div></details>
+              ${(() => { const ins = csvInsights(parsed.rows); return ins.length > 0 && html`<div className="rounded-xl bg-cream p-4"><h4 className="font-serif text-[18px] text-head m-0 mb-2">What your file tells us</h4><ul className="list-none p-0 m-0 grid gap-2.5">${ins.map((x) => html`<li key=${x.t} className="flex gap-3 items-start"><span className="w-8 h-8 rounded-full bg-sage text-forest flex items-center justify-center shrink-0"><${Icon} name=${x.icon} size=${16} /></span><span><b className="text-[15px]">${x.t}</b><span className="block text-[13.5px] text-muted">${x.s}</span></span></li>`)}</ul><p className="m-0 mt-3 text-[12.5px] text-muted">In this demo, the weekday pattern is applied to the forecast. Weather, events and occupancy effects are applied in the pilot model.</p></div>`; })()}
               <div className="overflow-x-auto"><table className="w-full text-[14.5px] tnum"><thead><tr className="text-left text-muted text-[13px]"><th className="py-1 font-medium">Date</th>${parsed.svc.map((m) => html`<th key=${m} className="font-medium text-right">${MEAL_LABEL[m]}</th>`)}</tr></thead>
                 <tbody>${parsed.rows.slice(-5).map((r) => html`<tr key=${+r.date} className="border-t border-line"><td className="py-1.5">${fmtDate(r.date)}</td>${parsed.svc.map((m) => html`<td key=${m} className="text-right">${r.covers[m]}</td>`)}</tr>`)}</tbody></table><p className="m-0 mt-1 text-[12.5px] text-muted">Last 5 of ${parsed.rows.length} rows.</p></div>
               <div><button type="button" className="btn btn-primary" onClick=${apply}><${Icon} name="refresh" size=${17} />Use this data for the forecast</button></div>
@@ -3702,8 +3988,40 @@ function DataScreen() {
     </div>`;
 }
 
-const SCREENS = [["today", "Today", "home"], ["demand", "Demand", "layers"], ["menu", "Menu", "plate"], ["calendar", "Calendar", "calendar"], ["stock", "Stock", "box"], ["purchasing", "Purchasing", "clipboard"], ["waste", "Waste", "trash"], ["team", "Team", "users"], ["email", "Morning email", "send"], ["accuracy", "Accuracy", "trend"], ["data", "Use your own data", "database"]];
-const screenFromHash = () => { const m = /^#\/app\/([a-z]+)/.exec(location.hash); const k = m && m[1]; return SCREENS.some((x) => x[0] === k) ? k : "today"; };
+// The notification when the live booking arrives, with what moved because of it
+function LiveBookingNote() {
+  const S = useStore(), nav = useNav();
+  const L = S.live;
+  if (!L || !L.open) return null;
+  const f = fcDay(L.date), after = f.meals.dinner.covers, total = orderTotal(S.suggested);
+  const now = {}; S.suggested.forEach((o) => o.lines.forEach((l) => (now[l.p] = (now[l.p] || 0) + l.qty)));
+  const moved = Object.keys(now).map((p) => ({ p: PBY[p], q: now[p] - (L.before.lines[p] || 0) })).filter((x) => x.q > 1e-6).sort((a, b) => b.q * b.p.price - a.q * a.p.price).slice(0, 3);
+  const dT = total - L.before.total;
+  const dg = LIVE_BOOKING.diet;
+  return html`<div className="live-note" role="status" aria-live="assertive">
+    <div className="flex items-start justify-between gap-3">
+      <p className="m-0 flex items-center gap-2 text-[12.5px] font-bold tracking-wider uppercase text-terra"><${Icon} name="bell" size=${16} />New booking · just now</p>
+      <button type="button" className="btn btn-quiet btn-sm !px-2 !min-h-[32px]" aria-label="Close" onClick=${S.closeBooking}><${Icon} name="x" size=${16} /></button>
+    </div>
+    <p className="font-serif text-[21px] text-head m-0 mt-1 leading-tight">${LIVE_BOOKING.name}</p>
+    <p className="m-0 mt-1 text-[14px] text-muted">${dayWord(L.date) === "tomorrow" ? "Tomorrow" : dowName(L.date)}, ${LIVE_BOOKING.time} · from your ${LIVE_BOOKING.channel.toLowerCase()} · ${dg.veg} vegetarian, ${dg.vegan} vegan, ${dg.gf} gluten-free</p>
+    <p className="m-0 mt-3 text-[13px] font-bold tracking-wider uppercase text-muted">Forecast updated</p>
+    <ul className="list-none p-0 m-0 mt-1.5 grid gap-1.5 text-[15px] tnum">
+      <li className="flex justify-between gap-3"><span>Dinner covers</span><span><b>${L.before.dinner} → ${after}</b><span className="delta">+${after - L.before.dinner}</span></span></li>
+      <li className="flex justify-between gap-3"><span>Order list</span><span><b>${gbp(L.before.total)} → ${gbp(total)}</b>${Math.round(dT) !== 0 && html`<span className="delta">${dT > 0 ? "+" : "−"}${gbp(Math.abs(dT))}</span>`}</span></li>
+      ${moved.length > 0 ? html`<li className="text-[14px] text-muted">Added to the orders: ${moved.map((x) => `${fmtQty(x.p, x.q)} ${x.p.name.toLowerCase()}`).join(", ")}</li>` : html`<li className="text-[14px] text-muted">Stock and open orders already cover it. Nothing extra to buy.</li>`}
+    </ul>
+    <div className="flex flex-wrap gap-2 mt-3">
+      <button type="button" className="btn btn-primary btn-sm" onClick=${() => { S.closeBooking(); nav.go("demand", { dateOff: off(L.date) }); }}>See the new forecast</button>
+      <button type="button" className="btn btn-secondary btn-sm" onClick=${() => { S.closeBooking(); nav.go("purchasing"); }}>See the orders</button>
+      <button type="button" className="btn btn-quiet btn-sm" onClick=${S.undoBooking}><${Icon} name="undo" size=${15} />Undo</button>
+    </div>
+  </div>`;
+}
+const DEMO_PARAM = (() => { try { return new URLSearchParams(window.location.search).get("demo"); } catch (e) { return null; } })();
+
+const SCREENS = [["today", "Today", "home"], ["demand", "Demand", "layers"], ["menu", "Menu", "plate"], ["calendar", "Calendar", "calendar"], ["stock", "Stock", "box"], ["purchasing", "Purchasing", "clipboard"], ["waste", "Waste", "trash"], ["team", "Team", "users"], ["briefing", "Daily briefing", "send"], ["accuracy", "Accuracy", "trend"], ["data", "Use your own data", "database"]];
+const screenFromHash = () => { const m = /^#\/app\/([a-z]+)/.exec(location.hash); const k = m && (m[1] === "email" ? "briefing" : m[1]); return SCREENS.some((x) => x[0] === k) ? k : "today"; };
 
 function AppWindow({ initial = "today", id = "app", full = false }) {
   const S = useStore();
@@ -3726,6 +4044,8 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
     window.addEventListener("hashchange", hc);
     return () => { document.removeEventListener("keydown", k); window.removeEventListener("hashchange", hc); };
   }, []);
+  // ?demo=booking: the new booking arrives a few seconds after the demo opens, for recording the presentation video
+  useEffect(() => { if (DEMO_PARAM !== "booking") return; const tm = setTimeout(() => S.simulateBooking(), 4000); return () => clearTimeout(tm); }, []);
   const onKey = (e) => {
     const i = SCREENS.findIndex((x) => x[0] === screen);
     if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) {
@@ -3747,14 +4067,14 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
           ${full && html`<a href="#top" className="side-back"><${Icon} name="left" size=${16} />Back to the website</a>`}
           <button type="button" className="side-assist" onClick=${() => nav.openPanel("buddy")} aria-label="Open the assistant"><${Icon} name="spark" size=${19} /><span>Assistant</span><kbd>Ctrl K</kbd></button>
           <div role="tablist" aria-orientation="vertical" aria-label="App screens" onKeyDown=${onKey} className="side-nav">
-            ${SCREENS.map(([k, l, ic]) => [k === "email" && html`<div key="sep" role="presentation" className="side-sep">Share and prove</div>`, html`
+            ${SCREENS.map(([k, l, ic]) => [k === "briefing" && html`<div key="sep" role="presentation" className="side-sep">Share and prove</div>`, html`
               <button key=${k} id=${`${id}-tab-${k}`} role="tab" type="button" aria-selected=${screen === k} aria-controls=${`${id}-panel`} tabIndex=${screen === k ? 0 : -1}
                 onClick=${() => nav.go(k)} className=${cls("side-link", screen === k && "on")}><${Icon} name=${ic} size=${20} /><span>${l}</span>${badges[k] > 0 && html`<span className="badge" aria-label=${`${badges[k]} to look at`}>${badges[k]}</span>`}</button>`])}
           </div>
           <div className="side-hotel"><b>${HOTEL.name}</b><span>${HOTEL.rooms} rooms · restaurant and bar</span><span>${fmtDate(TODAY, { day: "numeric", month: "short" })} · demo data</span></div>
         </aside>
         <div className="app-main">
-        <p className="app-note"><${Icon} name="database" size=${15} />${DATA_SOURCE.kind === "csv" ? `Forecast calibrated on your file "${DATA_SOURCE.name}" (${DATA_SOURCE.rows} days). Bookings, stock and orders are still simulated for ${HOTEL.name}.` : `${SIM_NOTE}. Every number is computed live by the forecasting engine. The history is simulated.`} Changes reset when you reload.${DATE_FROM_LINK ? ` Demo date fixed to ${fmtDate(TODAY, { weekday: "short", day: "numeric", month: "short", year: "numeric" })} by the link.` : ""}</p>
+        <p className="app-note"><${Icon} name="database" size=${15} />${DATA_SOURCE.kind === "csv" ? `Forecast calibrated on your file "${DATA_SOURCE.name}" (${DATA_SOURCE.rows} days). Bookings, stock and orders are still simulated for ${HOTEL.name}.` : `${SIM_NOTE}. Every number is computed live by the forecasting engine. The history is simulated.`} Changes reset when you reload.${DATE_FROM_LINK ? ` Demo date fixed to ${fmtDate(TODAY, { weekday: "short", day: "numeric", month: "short", year: "numeric" })} by the link.` : ""}<button type="button" className="note-btn" onClick=${() => (S.live ? S.undoBooking() : S.simulateBooking())}><${Icon} name=${S.live ? "undo" : "bell"} size=${14} />${S.live ? "Remove the test booking" : "Simulate a new booking"}</button></p>
         <div id=${`${id}-panel`} role="tabpanel" aria-labelledby=${`${id}-tab-${screen}`} ref=${scroller} tabIndex="0" className="app-body">
           <div key=${nonce}>
             ${screen === "today" && html`<${TodayScreen} />`}
@@ -3765,7 +4085,7 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
             ${screen === "purchasing" && html`<${PurchasingScreen} />`}
             ${screen === "waste" && html`<${WasteScreen} />`}
             ${screen === "team" && html`<${TeamScreen} intent=${intent} />`}
-            ${screen === "email" && html`<${EmailScreen} />`}
+            ${screen === "briefing" && html`<${BriefingScreen} />`}
             ${screen === "accuracy" && html`<${AccuracyScreen} />`}
             ${screen === "data" && html`<${DataScreen} />`}
           </div>
@@ -3785,12 +4105,13 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
         ${modal.type === "waste" && html`<${WasteForm} productId=${modal.data && modal.data.productId} onClose=${closeM} />`}
         ${modal.type === "order" && html`<${OrderForm} editingId=${modal.data && modal.data.editingId} onClose=${closeM} />`}
       <//>`}
+      <${LiveBookingNote} />
       ${S.toast && html`<div role="status" aria-live="polite" className="toast"><${Icon} name="check" size=${18} />${S.toast.msg}</div>`}
     <//>`;
 }
 
 /* ---------- Landing ---------- */
-const NAV_LINKS = [["A day at Aurora", "#day"], ["How it works", "#how"], ["Your data", "#data"], ["ROI", "#roi"], ["Become a pilot", "#pilot"]];
+const NAV_LINKS = [["How it works", "#process"], ["Savings", "#savings"], ["Your data", "#data"], ["Compare", "#compare"], ["Become a pilot", "#pilot"]];
 function Logo({ light }) {
   return html`<a href="#top" className=${cls("inline-flex items-center gap-2.5 min-h-[44px] no-underline", light ? "text-head" : "text-on-dark")} aria-label=${`${PRODUCT_NAME}, home`}>
     <svg className="logo-mark" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M5 27h26M8 27a10 10 0 0 1 20 0" /><path d="M18 17v-3" /><circle cx="18" cy="12.5" r="1.6" fill="currentColor" stroke="none" /></svg>
@@ -3861,9 +4182,9 @@ function Hero() {
         <div className="min-w-0 relative">
           <p className="kicker">Demand forecasting for hotel food and beverage</p>
           <h1 className="hero-title">${BRAND_LINE.includes(", ") ? html`${BRAND_LINE.slice(0, BRAND_LINE.indexOf(", ") + 1)} <em>${BRAND_LINE.slice(BRAND_LINE.indexOf(", ") + 2)}.</em>` : html`<em>${BRAND_LINE}.</em>`}</h1>
-          <p className="hero-lede">Less food in the bin, lower food cost, calmer services for the kitchen team. ${PRODUCT_NAME} turns the bookings you already have into covers for breakfast, lunch and dinner, and into one clear order list, every evening.</p>
+          <p className="hero-lede">Less food in the bin, lower food cost, calmer services for the kitchen team. ${PRODUCT_NAME} turns the bookings you already have into covers for breakfast, lunch and dinner, and into one clear order list, every evening. <a href="#savings" className="text-head font-semibold" style=${{ textDecoration: "underline" }}>A ${HOTEL.rooms}-room hotel can expect to keep about ${gbp(round100(ROI_BASE.foodSaved))} of food a year out of the bin.</a></p>
           <div className="flex flex-wrap gap-3 mb-7"><a href="#/app" className="btn btn-primary btn-lg">Open the live demo<${Icon} name="arrow" size=${18} /></a><a href="#pilot" className="btn btn-secondary btn-lg">Become a pilot hotel</a></div>
-          <p className="m-0 text-[15px] text-muted terms"><span><b className="text-head">Free</b> backtest on your data</span><span><b className="text-head">4 weeks</b> shadow mode, zero risk</span><span><b className="text-head">EUR 149</b>/month after</span></p>
+          <p className="m-0 text-[15px] text-muted terms"><span><b className="text-head">Free</b> backtest on your data</span><span><b className="text-head">4 weeks</b> shadow mode, zero risk</span><span><b className="text-head">£${PRICE_MONTH}</b>/month after</span></p>
         </div>
         <div className="hero-photos min-w-0">
           <${Photo} k="chef" w=${900} sizes="(min-width: 1024px) 480px, 84vw" cls="ph-main" eager=${true} />
@@ -3925,9 +4246,9 @@ const Wrap = ({ children }) => html`<div className="max-w-[1180px] mx-auto px-4 
 
 function Problem() {
   const cards = [
-    { stat: "18%", text: "of the food bought in UK hospitality is thrown away.", src: SOURCES.wrap },
+    { stat: "£318m", text: "of food is thrown away by UK hotels every year: 79,000 tonnes, about £0.52 for every meal served.", src: SOURCES.wrapHotels },
+    { stat: "45%", text: "of that waste comes from cooking and preparing too much, because the kitchen did not know how many would eat.", src: SOURCES.wrapHotels },
     { stat: "11%", text: "of hotels have a fully integrated tech stack, so bookings, sales and stock rarely meet.", src: SOURCES.otelier },
-    { icon: "plate", title: "Guests notice when an item runs out.", text: "A dish missing from the menu on a full Friday costs more than the food. It costs the evening.", source: "Not a statistic" },
   ];
   return html`
     <section id="problem" className="py-16 md:py-20" style=${{ background: "var(--surface)" }}>
@@ -3967,7 +4288,7 @@ function HowItWorks() {
 }
 
 function ProductTour() {
-  const tiles = [["home", "Today", "today", "Covers, orders and alerts at a glance"], ["layers", "Demand", "demand", "Bookings to covers to ingredients"], ["plate", "Menu", "menu", "Portions per dish, dietary needs first"], ["calendar", "Calendar", "calendar", "Events, groups and order deadlines"], ["box", "Stock", "stock", "Batches, expiry and what to use first"], ["clipboard", "Purchasing", "purchasing", "Accept, change or remove every line"], ["trash", "Waste", "waste", "The loop that teaches the next order"], ["users", "Team", "team", "Staff needed per service"], ["send", "Morning email", "email", "Five tips, no app to open"], ["trend", "Accuracy", "accuracy", "Backtest against the usual guess"], ["database", "Use your own data", "data", "Upload a CSV and watch it recalibrate"]];
+  const tiles = [["home", "Today", "today", "Covers, orders and alerts at a glance"], ["layers", "Demand", "demand", "Bookings to covers to ingredients"], ["plate", "Menu", "menu", "Portions per dish, dietary needs first"], ["calendar", "Calendar", "calendar", "Events, groups and order deadlines"], ["box", "Stock", "stock", "Batches, expiry and what to use first"], ["clipboard", "Purchasing", "purchasing", "Accept, change or remove every line"], ["trash", "Waste", "waste", "The loop that teaches the next order"], ["users", "Team", "team", "Staff needed per service"], ["send", "Daily briefing", "briefing", "Email, WhatsApp or SMS, no app to open"], ["trend", "Accuracy", "accuracy", "Backtest against the usual guess"], ["database", "Use your own data", "data", "Upload a CSV and watch it recalibrate"]];
   return html`
     <section id="demo" className="py-16 md:py-20 paper">
       <${Wrap}>
@@ -3985,18 +4306,35 @@ function ProductTour() {
     </section>`;
 }
 
+// Where each input comes from, how it gets in today and once connected, and what comes out. Used on the landing page and in the demo.
+const FLOW_SOURCES = [
+  ["calendar", "Bookings", "Your booking system (PMS) and table bookings", "Rooms, guests, board type, arrival time, groups", [["CSV export today", true], ["Live by API after the pilot", false]]],
+  ["coin", "Till sales", "Your till (POS)", "Covers and dishes sold per service, walk-ins", [["CSV export today", true], ["Nightly by API after the pilot", false]]],
+  ["sun", "Weather", "A public weather service", "7-day forecast: rain and temperature", [["Automatic", true]]],
+  ["music", "Local events", "Events calendar, or typed in", "Concerts, markets, matches, holidays", [["Automatic or typed in", true]]],
+  ["edit", "Your team", `The ${PRODUCT_NAME} app`, "Deliveries, waste, group menus", [["Two taps", true]]],
+];
+const FLOW_OUT = [["users", "Covers for every service"], ["clipboard", "One order list to approve"], ["send", "Daily briefing"], ["coin", "Savings, every month"]];
+function DataFlow() {
+  return html`<div className="flow">
+    <div className="flow-col">${FLOW_SOURCES.map(([ic, t, from, what, tags]) => html`<div key=${t} className="flow-src"><span className="fi"><${Icon} name=${ic} size=${20} /></span><b>${t}</b><span>${from}: ${what.toLowerCase()}</span><span className="how">${tags.map(([x, now]) => html`<span key=${x} className=${cls("flow-tag", now && "now")}>${x}</span>`)}</span></div>`)}</div>
+    <div className="flow-arrow" aria-hidden="true"><${Icon} name="arrow" size=${30} /></div>
+    <div className="flow-core"><p className="font-serif text-[28px] m-0 leading-tight">${PRODUCT_NAME}</p><p className="m-0 mt-2 text-[15px]">Joins it all up and recalculates within minutes of any change. A new booking updates tomorrow's order by itself.</p><p className="m-0 mt-3 text-[13px] font-semibold">Reads only. Never writes to your systems.</p></div>
+    <div className="flow-arrow" aria-hidden="true"><${Icon} name="arrow" size=${30} /></div>
+    <div className="flow-col">${FLOW_OUT.map(([ic, t]) => html`<div key=${t} className="flow-out"><${Icon} name=${ic} size=${20} />${t}</div>`)}</div>
+  </div>`;
+}
+
 function DataSection() {
   return html`
     <section id="data" className="py-16 md:py-20 dk">
       <${Wrap}>
-        <${SectionHead} dark=${true} title="What it reads, and where it comes from" intro="Your hotel data sets the starting point. External signals adjust it. You always see which is which." />
-        <div className="grid md:grid-cols-[1.4fr_1fr] gap-5">
-          <div className="rounded-[16px] bg-[#1f352d] border border-white/10 p-6"><h3 className="font-serif text-[22px] text-on-dark mt-0 mb-3">Hotel data</h3><ul className="list-none p-0 m-0 grid gap-2.5 text-[16.5px] muted">${["Reservations with room type, party size, children and channel", "Board type per booking (bed and breakfast, half board, room only)", "Arrival times and early departures", "Groups, weddings and their set menus", "Past sales by dish, recipes and supplier lists"].map((x) => html`<li key=${x} className="flex gap-2.5"><${Icon} name="check" size=${19} cls="text-amber mt-1" />${x}</li>`)}</ul></div>
-          <div className="rounded-[16px] bg-[#1f352d] border border-white/10 p-6"><h3 className="font-serif text-[22px] text-on-dark mt-0 mb-3">External signals</h3><ul className="list-none p-0 m-0 grid gap-2.5 text-[16.5px] muted">${["Weather outlook for walk-ins and the bar", "Local events and how they shift dinner", "Public holidays and school breaks"].map((x) => html`<li key=${x} className="flex gap-2.5"><${Icon} name="globe" size=${19} cls="text-amber mt-1" />${x}</li>`)}</ul></div>
-        </div>
+        <${SectionHead} dark=${true} title="How your data gets in" intro="Five inputs, most of which you already have. Today they come in as a CSV file. After the pilot, they flow in by themselves." />
+        <${DataFlow} />
+        <p className="m-0 mt-4 text-[13.5px] muted">Systems differ from hotel to hotel. Pilots start with CSV exports, which every booking system and till can produce. No connection to a specific system is live yet.</p>
         <div className="rounded-[16px] bg-amber text-forest p-6 mt-5 grid lg:grid-cols-[1.1fr_1fr] gap-6 items-center" id="data-in">
-          <div><h3 className="font-serif text-[26px] m-0 mb-2">How your data gets in</h3><p className="m-0 text-[16.5px]"><b>We do not connect to Booking.com or other booking sites directly.</b> Bookings reach ${PRODUCT_NAME} through your own PMS or channel manager, with your consent. We read, we never write.</p></div>
-          <ol className="list-none p-0 m-0 grid gap-2 text-[16px]">${[["Today", "Upload a CSV export from your PMS and till. Excel can save as CSV."], ["After the pilot", "A read-only API key from your PMS, channel manager or till supplier."], ["Always", "Groups, events, deliveries and waste typed in by the team."]].map(([t, x]) => html`<li key=${t} className="flex gap-3"><b className="w-28 shrink-0">${t}</b><span>${x}</span></li>`)}<li><a href="#/app/data" className="btn btn-dark btn-sm mt-1">Try the CSV import in the demo</a></li></ol>
+          <div><h3 className="font-serif text-[26px] m-0 mb-2">Never touches Booking.com</h3><p className="m-0 text-[16.5px]"><b>We do not connect to Booking.com or other booking sites directly.</b> Bookings reach ${PRODUCT_NAME} through your own PMS or channel manager, with your consent. We read, we never write.</p></div>
+          <ol className="list-none p-0 m-0 grid gap-2 text-[16px]">${[["Today", "Upload a CSV export from your PMS and till. Excel can save as CSV."], ["After the pilot", "A read-only API key from your PMS, channel manager or till supplier."], ["Always", "Groups, events, deliveries and waste typed in by the team."]].map(([t, x]) => html`<li key=${t} className="flex gap-3"><b className="w-28 shrink-0">${t}</b><span>${x}</span></li>`)}<li className="flex flex-wrap gap-2"><a href="#/app/data" className="btn btn-dark btn-sm mt-1">Try the CSV import in the demo</a><a href="demandinn-test-data.csv" download className="btn btn-secondary btn-sm mt-1">Download the test CSV</a></li></ol>
         </div>
       <//>
     </section>`;
@@ -4014,19 +4352,110 @@ function SelfLearning() {
     </section>`;
 }
 
-// The deck's ROI model (7 Oct deck), so the site and the deck give the same answer.
-// Defaults: the 28-room demo hotel. Food waste share: Winnow puts it at 5 to 15% of food bought.
-const PRICE_MONTH = 149;
-const ROI_DEFAULTS = { rooms: HOTEL.rooms, occ: 75, gpr: 1.6, uptake: 85, costCover: 4, wastePct: 12, cut: 30, minutes: 30, rate: 25 };
+// The savings model, from the market study (team Drive, Oct 2026), in GBP:
+// meals a year × food wasted per meal (WRAP: £0.52 per meal in UK hotels, 2011 prices) = food thrown away today;
+// × the first-year cut (Champions 12.3: 21% on average across 42 hotels) = food saved.
+// Defaults: the 28-room demo hotel. Restaurant covers = its average lunch and dinner covers a day.
+const ROI_DEFAULTS = { rooms: HOTEL.rooms, occ: 75, gpr: 1.6, uptake: 85, restCovers: 40, wastePerMeal: 0.52, cut: 21, ...TIME_SAVED };
 function roiModel(v) {
-  const coversYear = v.rooms * (v.occ / 100) * v.gpr * (v.uptake / 100) * 365;
-  const foodYear = coversYear * v.costCover;
-  const wasteYear = foodYear * (v.wastePct / 100);
+  const breakfasts = v.rooms * (v.occ / 100) * v.gpr * (v.uptake / 100) * 365;
+  const mealsYear = breakfasts + v.restCovers * 365;
+  const wasteYear = mealsYear * v.wastePerMeal;
   const foodSaved = wasteYear * (v.cut / 100);
-  const timeSaved = (v.minutes / 60) * v.rate * 365;
+  const hoursYear = (v.minutes / 60) * 365;
+  const timeSaved = hoursYear * v.rate;
   const priceYear = PRICE_MONTH * 12;
-  return { coversYear, foodYear, wasteYear, foodSaved, timeSaved, total: foodSaved + timeSaved, priceYear, multiple: (foodSaved + timeSaved) / priceYear };
+  return { breakfasts, mealsYear, wasteYear, foodSaved, hoursYear, timeSaved, total: foodSaved + timeSaved, priceYear, net: foodSaved + timeSaved - priceYear, foodMultiple: foodSaved / priceYear, paybackMonths: priceYear / ((foodSaved + timeSaved) / 12) };
 }
+const ROI_BASE = roiModel(ROI_DEFAULTS);
+const round100 = (n) => Math.round(n / 100) * 100;
+
+// The process, in the words a hotel owner would use
+function OwnerProcess() {
+  const steps = [
+    ["file", "Send us two exports", "Your booking list and your till sales, as CSV files. Your booking system and till can already export them. About 10 minutes, once."],
+    ["trend", "See what you would have saved", `We run your last year through ${PRODUCT_NAME} and show you, in pounds, what it would have saved. Free, before you pay anything.`],
+    ["clipboard", "Approve tomorrow's order", "Every evening at 18:00: tomorrow's covers and one order list. Accept, change or remove each line. About 5 minutes."],
+    ["coin", "Log waste, watch the savings", "Two taps when something goes in the bin. The forecast learns from it, and every month you see what you saved."],
+  ];
+  return html`
+    <section id="process" className="py-16 md:py-20" style=${{ background: "var(--surface)" }}>
+      <${Wrap}>
+        <${SectionHead} title="How it works for you, in four steps" intro="No new hardware and no new habits for the kitchen. You keep your booking system, your till and your suppliers." />
+        <ol className="owner-steps">
+          ${steps.map(([ic, t, s], i) => html`<li key=${t}><span className="os-n" aria-hidden="true">${i + 1}</span><span className="os-ic" aria-hidden="true"><${Icon} name=${ic} size=${22} /></span><h3>${t}</h3><p>${s}</p></li>`)}
+        </ol>
+        <p className="m-0 mt-8 text-[16px] text-muted terms"><span><b className="text-head">Free</b> backtest on your data</span><span><b className="text-head">4 weeks</b> side by side with your usual ordering</span><span><b className="text-head">£${PRICE_MONTH}</b>/month after, if it helps</span></p>
+      <//>
+    </section>`;
+}
+
+function Savings() {
+  const r = ROI_BASE;
+  const cols = [
+    { k: "Thrown away today", n: gbp(round100(r.wasteYear)), s: `about ${NUMBER_FMT(round100(r.mealsYear))} meals a year × £${NUMBER_FMT(ROI_DEFAULTS.wastePerMeal, 2)} of food wasted per meal`, src: SOURCES.wrapHotels },
+    { k: `${PRODUCT_NAME} saves`, n: gbp(round100(r.foodSaved)), s: `of food a year, from a ${ROI_DEFAULTS.cut}% cut in waste, the average first-year result of 42 hotels`, src: SOURCES.champions, hi: true },
+    { k: "Plus your time", n: `${NUMBER_FMT(r.hoursYear / 52, 1)} h`, s: `a week of planning and ordering, worth about ${gbp(round100(r.timeSaved))} a year at £${ROI_DEFAULTS.rate} an hour` },
+    { k: "You pay", n: gbp(r.priceYear), s: `a year (£${PRICE_MONTH} a month). The food saved alone pays for it ${NUMBER_FMT(r.foodMultiple, 1)} times over.` },
+  ];
+  return html`
+    <section id="savings" className="py-16 md:py-20 paper">
+      <${Wrap}>
+        <${SectionHead} title=${`What a ${HOTEL.rooms}-room hotel saves`} intro=${`A typical independent hotel with breakfast and a restaurant, at ${ROI_DEFAULTS.occ}% occupancy. Industry figures, not our own results yet: pilots will measure the real number.`} />
+        <div className="savings-grid">
+          ${cols.map((c) => html`<article key=${c.k} className=${c.hi ? "hi" : ""}><p className="sv-k">${c.k}</p><p className="sv-n tnum">${c.n}</p><p className="sv-s">${c.s}</p>${c.src && html`<p className="fact-src">Source: <a href=${c.src.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>${c.src.label}</a></p>`}</article>`)}
+        </div>
+        <div className="rounded-[16px] bg-forest text-on-dark p-6 mt-5 flex flex-wrap items-center justify-between gap-4">
+          <p className="m-0 font-serif text-[24px] md:text-[28px] leading-tight tnum">About <span className="text-amber">${gbp(round100(r.net))} a year</span> better off, paid back in ${Math.max(1, Math.round(r.paybackMonths))} ${plural(Math.max(1, Math.round(r.paybackMonths)), "month")}.</p>
+          <a href="#roi" className="btn btn-primary">Use your own numbers<${Icon} name="arrow" size=${18} /></a>
+        </div>
+      <//>
+    </section>`;
+}
+
+function WhyNow() {
+  const src = (s) => html`<a href=${s.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>${s.label}</a>`;
+  const cards = [
+    { n: "≈2,300", t: "independent hotels in London, and about 12,000 in England. That is who we build for first.", s: html`${src(SOURCES.visitbritain)} (3,157 hotels in London, 16,377 in England) × 73% independent (${src(SOURCES.savills)})` },
+    { n: "2025", t: "Since 31 March 2025, every business in England with 10 or more staff must separate its food waste. Small firms follow in March 2027. Waste is now visible, and paid for.", s: html`${src(SOURCES.simpler)}` },
+    { n: "−50%", t: "is the UK target for hospitality food waste by 2030. The EU asks for −30%. Small hotels have no tool to measure it, let alone cut it.", s: html`${src(SOURCES.wrap2024)}; ${src(SOURCES.euDirective)}` },
+  ];
+  return html`
+    <section id="market" className="py-16 md:py-20" style=${{ background: "var(--surface)" }}>
+      <${Wrap}>
+        <${SectionHead} title="Why now" intro="The question “how much do we throw away, and why?” is landing on the manager's desk." />
+        <div className="facts">
+          ${cards.map((c) => html`<article key=${c.n}><div className="fact-num fact-num-sm tnum">${c.n}</div><p className="text-[17px] mt-4 mb-0">${c.t}</p><p className="fact-src">Source: ${c.s}</p></article>`)}
+        </div>
+      <//>
+    </section>`;
+}
+
+function Compare() {
+  const src = (s, t) => html`<a href=${s.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>${t}</a>`;
+  const cols = [PRODUCT_NAME, "Winnow", "Orbisk", "Leanpath"];
+  const rows = [
+    ["How it works", "Forecasts demand from your bookings and orders the right amount, before the food is bought", "A camera and scale on the bin measure what is thrown away", "A camera and scale on the bin measure what is thrown away", "Staff weigh waste on a scale with a tablet"],
+    ["Hardware", "None", "Yes", "Yes", "Yes"],
+    ["Built for", "Independent hotels, 20 to 60 rooms", "Mostly large groups (Hilton, Marriott, Accor, IHG)", "Hotels and chains, such as Accor's programme", "Contract caterers, universities, corporate dining"],
+    ["Price", `£${PRICE_MONTH} a month, published`, "On quote", html`On quote, about €7,000 a year (${src(SOURCES.orbiskPrice, "FAO estimate")})`, "On quote"],
+    ["Published results", "Pilots start this year", html`Marriott Canary Wharf −67% waste, $14,000 a year (${src(SOURCES.winnow, "Winnow")}); Novotel ExCeL −45% (${src(SOURCES.novotel, "Accor")})`, html`TRIBE Canary Wharf −37% waste per cover in 9 months, £25,047 saved (${src(SOURCES.orbisk, "Orbisk")})`, html`Customers save 2 to 8% of food purchases (${src(SOURCES.leanpath, "IEEE Spectrum")})`],
+  ];
+  return html`
+    <section id="compare" className="py-16 md:py-20 paper">
+      <${Wrap}>
+        <${SectionHead} title="How we compare" intro="Bin-measuring tools have proved that London hotels can cut food waste by 37 to 67%. They count waste after it happens, and mostly sell to big chains. We stop the 45% that comes from preparing too much, before it is bought." />
+        <div className="cmp-wrap">
+          <table className="cmp">
+            <thead><tr><th scope="col"><span className="sr-only">Feature</span></th>${cols.map((c, i) => html`<th key=${c} scope="col" className=${i === 0 ? "us" : ""}>${c}</th>`)}</tr></thead>
+            <tbody>${rows.map(([k, ...v]) => html`<tr key=${k}><th scope="row">${k}</th>${v.map((x, i) => html`<td key=${i} className=${i === 0 ? "us" : ""}>${x}</td>`)}</tr>`)}</tbody>
+          </table>
+        </div>
+        <p className="m-0 mt-4 text-[14.5px] text-muted">Competitor information from their own websites and press, October 2026. They work well alongside ${PRODUCT_NAME}: one counts what is thrown away, the other stops it being bought.</p>
+      <//>
+    </section>`;
+}
+
 function RoiCalculator() {
   const [v, setV] = useState(ROI_DEFAULTS);
   const r = roiModel(v);
@@ -4035,7 +4464,7 @@ function RoiCalculator() {
   return html`
     <section id="roi" className="py-16 md:py-20 dk2">
       <${Wrap}>
-        <${SectionHead} dark=${true} title="What could it be worth to you?" intro="A simple what-if with your own numbers. These are assumptions you set, not results we have measured." />
+        <${SectionHead} dark=${true} title="How much would your hotel save?" intro="Move the sliders to match your hotel. The defaults come from UK industry figures. They are estimates, not results we have measured." />
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-5 items-stretch">
           <div className="rounded-[16px] bg-[#1f352d] border border-white/10 p-6 grid gap-5">
             <p className="m-0 text-[13px] font-bold tracking-wider uppercase muted">Your hotel</p>
@@ -4043,19 +4472,19 @@ function RoiCalculator() {
             ${slider("occ", "Average occupancy", v.occ + "%", 30, 100, 1)}
             ${slider("gpr", "Guests per occupied room", NUMBER_FMT(v.gpr, 1), 1, 2.5, 0.1)}
             ${slider("uptake", "Guests who eat breakfast", v.uptake + "%", 30, 100, 1)}
-            ${slider("costCover", "Food cost per breakfast cover", "EUR " + NUMBER_FMT(v.costCover, 2), 1, 10, 0.25)}
+            ${slider("restCovers", "Lunch and dinner covers a day", v.restCovers, 0, 200, 5)}
             <p className="m-0 mt-2 text-[13px] font-bold tracking-wider uppercase muted">Assumptions</p>
-            ${slider("wastePct", "Share of food wasted today (typical range 5 to 15%)", v.wastePct + "%", 3, 25, 1)}
-            ${slider("cut", "Assumed reduction in that waste", v.cut + "%", 0, 50, 1)}
+            ${slider("wastePerMeal", "Food wasted per meal (UK hotel average £0.52)", "£" + NUMBER_FMT(v.wastePerMeal, 2), 0.2, 1.2, 0.02)}
+            ${slider("cut", "Cut in that waste (first-year average 21%)", v.cut + "%", 0, 50, 1)}
             ${slider("minutes", "Manager time saved per day", v.minutes + " min", 0, 90, 5)}
-            ${slider("rate", "Cost of that time per hour", "EUR " + v.rate, 10, 50, 1)}
+            ${slider("rate", "Cost of that time per hour", "£" + v.rate, 10, 50, 1)}
           </div>
           <div className="rounded-[16px] bg-amber text-forest p-6 flex flex-col justify-center">
-            <p className="m-0 text-[14px] font-bold tracking-wider uppercase">Hypothetical value per year</p>
-            <p className="font-serif text-[56px] leading-none my-3 tnum" aria-live="polite">EUR ${NUMBER_FMT(Math.round(r.total))}</p>
-            <p className="m-0 text-[16px] tnum">EUR ${NUMBER_FMT(Math.round(r.foodSaved))} of food no longer thrown away, plus EUR ${NUMBER_FMT(Math.round(r.timeSaved))} of manager time.</p>
-            <p className="m-0 mt-3 text-[16px] tnum">Against EUR ${NUMBER_FMT(r.priceYear)} a year for ${PRODUCT_NAME} (EUR ${PRICE_MONTH} × 12), that is about <b>${NUMBER_FMT(r.multiple, 1)}×</b> what it costs.</p>
-            <p className="m-0 mt-3 text-[14.5px]">Arithmetic on your inputs: rooms × occupancy × guests per room × breakfast uptake × 365 gives the covers; covers × food cost × waste share × reduction gives the food saved. It is not a promise.</p>
+            <p className="m-0 text-[14px] font-bold tracking-wider uppercase">Your hotel saves, per year</p>
+            <p className="font-serif text-[56px] leading-none my-3 tnum" aria-live="polite">${gbp(r.total)}</p>
+            <p className="m-0 text-[16px] tnum"><b>${gbp(r.foodSaved)}</b> of food no longer thrown away (out of ${gbp(r.wasteYear)} today), plus <b>${gbp(r.timeSaved)}</b> of manager time (${Math.round(r.hoursYear)} hours).</p>
+            <p className="m-0 mt-3 text-[16px] tnum">Against ${gbp(r.priceYear)} a year for ${PRODUCT_NAME} (£${PRICE_MONTH} × 12): <b>${r.net >= 0 ? `${gbp(r.net)} better off` : `${gbp(-r.net)} short`}</b>${r.net > 0 ? `, paid back in about ${Math.max(1, Math.round(r.paybackMonths))} ${plural(Math.max(1, Math.round(r.paybackMonths)), "month")}` : ""}.</p>
+            <p className="m-0 mt-3 text-[14.5px]">How it is worked out: meals a year (breakfasts from your rooms, plus lunch and dinner) × food wasted per meal gives what you throw away today. × the cut gives the food saved. Sources: WRAP (£0.52 per meal, 2011 prices, so likely higher today) and Champions 12.3 (21%). It is not a promise.</p>
           </div>
         </div>
       <//>
@@ -4067,7 +4496,7 @@ function Principles() {
   return html`
     <section id="principles" className="py-16 md:py-20" style=${{ background: "var(--surface)" }}>
       <${Wrap}>
-        <${SectionHead} title="How we think about it" intro=${`One platform at EUR ${PRICE_MONTH} a month, where stacking separate tools for forecasting, inventory and staffing (such as Tenzo, MarketMan and Planday) costs a small hotel about EUR 400–550.`} />
+        <${SectionHead} title="How we think about it" intro=${`One platform at £${PRICE_MONTH} a month, where stacking separate tools for forecasting, inventory and staffing (such as Tenzo, MarketMan and Planday) costs a small hotel about £350–480.`} />
         <div className="ruled-lp">${items.map(([ic, t, s]) => html`<article key=${t}><h3 className="font-serif text-[25px] text-head mt-0 mb-2">${t}</h3><p className="m-0 text-[17px]">${s}</p></article>`)}</div>
         <div className="grid md:grid-cols-[1.3fr_1fr] gap-5 mt-10">
           <article className="rounded-[16px] bg-forest text-on-dark p-8"><p className="font-serif text-[30px] md:text-[34px] leading-tight m-0">42 hotels in 15 countries cut kitchen waste 21% in one year (2018).</p><p className="mt-5 mb-0 text-[15px] muted">Industry evidence: <a href=${SOURCES.champions.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>Champions 12.3</a>. Not our own results.</p></article>
@@ -4097,7 +4526,7 @@ function Pilot() {
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); setSt({ err: "", done: "sent" }); })
       .catch(() => setSt({ err: `Sorry, that didn't go through. Please try again, or email us at ${CONTACT_EMAIL}.`, done: "" }));
   };
-  const steps = [["Free backtest", "Send us last year's bookings and sales. We show how the forecast would have done."], ["4 weeks in shadow mode", "It runs next to your normal ordering. You compare, nothing changes."], ["EUR 149 a month after", "Keep it if it helps. One plan for the whole kitchen."]];
+  const steps = [["Free backtest", "Send us last year's bookings and sales. We show how the forecast would have done."], ["4 weeks in shadow mode", "It runs next to your normal ordering. You compare, nothing changes."], [`£${PRICE_MONTH} a month after`, "Keep it if it helps. One plan for the whole kitchen."]];
   return html`
     <section id="pilot" className="py-16 md:py-20 dk">
       <${Wrap}>
@@ -4177,7 +4606,7 @@ function App() {
         <div className="lp">
         <a href="#main" className="skip-link">Skip to content</a>
         <${Header} />
-        <main id="main"><${Hero} /><${DayAtHotel} /><${Problem} /><${HowItWorks} /><${ProductTour} /><${DataSection} /><${SelfLearning} /><${RoiCalculator} /><${Principles} /><${Pilot} /><${FAQ} /></main>
+        <main id="main"><${Hero} /><${OwnerProcess} /><${DayAtHotel} /><${Problem} /><${Savings} /><${WhyNow} /><${Compare} /><${HowItWorks} /><${ProductTour} /><${DataSection} /><${SelfLearning} /><${RoiCalculator} /><${Principles} /><${Pilot} /><${FAQ} /></main>
         <${Footer} />
         </div>`}
     <//>`;

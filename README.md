@@ -15,3 +15,5 @@ Then go to http://localhost:8000. The demo app is at http://localhost:8000/#/app
 ## Deploy
 
 It's a static site, so it works on GitHub Pages, Netlify or Vercel without a build step. Keep the file named `index.html` at the root of the repository.
+
+Version II (23 Oct 2026): see `VERSION_II.md` for what changed, the test CSV and the presentation links.
