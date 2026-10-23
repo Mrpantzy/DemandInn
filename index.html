@@ -286,10 +286,22 @@ button.rc-sh:hover{filter:brightness(.95)}
 .flash{border-radius:8px;animation:flash 2.6s ease-out}
 @keyframes flash{0%,35%{background:rgba(223,165,80,.55);box-shadow:0 0 0 4px rgba(223,165,80,.55)}100%{background:transparent;box-shadow:0 0 0 0 transparent}}
 .save-card{border-left:6px solid var(--amber)}
-.save-row{display:grid;gap:18px;align-items:end}
-@media (min-width:900px){.save-row{grid-template-columns:1.1fr 1fr 1fr}}
-.sv-big{font-family:var(--f-display);font-size:46px;line-height:1;color:var(--forest);font-weight:600;margin:6px 0 0}
-.sv-mid{font-family:var(--f-display);font-size:32px;line-height:1;color:var(--forest);font-weight:600;margin:6px 0 0}
+.save-row{display:grid;gap:14px;align-items:stretch}
+@media (min-width:900px){.save-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.sv-col{display:flex;flex-direction:column;border-radius:14px;background:var(--cream);padding:16px 18px}
+.sv-col.main{background:#f6e7c8}
+.sv-label{margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);min-height:2.6em}
+.sv-fig{display:inline-flex;align-items:baseline;gap:10px;align-self:flex-start;margin:6px 0 8px;padding:0;border:0;background:none;cursor:pointer;font-family:var(--f-display);font-size:40px;line-height:1.05;color:var(--forest);font-weight:600;text-decoration:underline dotted rgba(27,50,42,.35);text-underline-offset:6px;text-decoration-thickness:2px}
+.sv-fig:hover,.sv-fig:focus-visible{text-decoration-color:var(--amber)}
+.sv-how{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-body,inherit);font-size:12.5px;font-weight:700;color:var(--forest);background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 9px;text-decoration:none}
+.sv-sub{margin:0;font-size:14.5px;color:var(--muted)}
+.calc-steps{list-style:none;margin:0;padding:0;display:grid;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.calc-steps li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px;padding:12px 14px;border-top:1px solid var(--line);background:#fff}
+.calc-steps li:first-child{border-top:0}
+.calc-steps li.last{background:#f6e7c8}
+.calc-steps .cs-l{font-weight:600;font-size:15px}
+.calc-steps .cs-v{font-family:var(--f-display);font-size:19px;color:var(--forest);font-weight:600;text-align:right}
+.calc-steps .cs-h{grid-column:1/-1;font-size:13px;color:var(--muted)}
 .phone-frame{max-width:380px;margin:0 auto;border-radius:28px;padding:18px 14px 22px;background:#e9e3d6}
 .phone-frame.whatsapp{background:#e7dfd4}
 .pf-from{margin:0 0 10px;text-align:center;font-size:12.5px;color:var(--muted)}
@@ -977,6 +989,9 @@ const SEED_BATCHES = PRODUCTS.map((p) => {
   return { p: p.id, qty: seedQ(p.id, dUse(p.id, days)), pOff, eOff: p.perish ? pOff + p.life : pOff + p.life };
 }).concat([
   { p: "tomatoes", qty: seedQ("tomatoes", dUse("tomatoes", 0.6)), pOff: -5, eOff: 2 }, // an older box to use first
+  { p: "chicken", qty: seedQ("chicken", dUse("chicken", 0.5)), pOff: -4, eOff: 1 }, // older batches close to their date,
+  { p: "cream", qty: seedQ("cream", dUse("cream", 0.6)), pOff: -7, eOff: 1 }, // so six items show under "use within 48 hours"
+  { p: "berries", qty: seedQ("berries", dUse("berries", 0.5)), pOff: -3, eOff: 1 },
   { p: "salad", qty: 0.8, pOff: -6, eOff: -1 }, // one forgotten box past its date
 ]);
 // Orders. orderOff / etaOff are days from today. Quantities cover the days until the next delivery an order can make.
@@ -1400,7 +1415,7 @@ function savingsOf(m) {
   const foodWeek = gross * cut;
   const timeWeek = (TIME_SAVED.minutes / 60) * 7 * TIME_SAVED.rate;
   const month = (foodWeek + timeWeek) * 52 / 12;
-  return { foodWeek, timeWeek, hoursWeek: (TIME_SAVED.minutes / 60) * 7, foodMonth: foodWeek * 52 / 12, month, year: month * 12, cutPct: m.wasteShareFourWeeksAgo ? cut / m.wasteShareFourWeeksAgo : 0, net: month - PRICE_MONTH };
+  return { used: bought, gross, cut, foodWeek, timeWeek, hoursWeek: (TIME_SAVED.minutes / 60) * 7, foodMonth: foodWeek * 52 / 12, timeMonth: timeWeek * 52 / 12, month, year: month * 12, cutPct: m.wasteShareFourWeeksAgo ? cut / m.wasteShareFourWeeksAgo : 0, net: month - PRICE_MONTH };
 }
 function computeMetrics(S) {
   const w30 = S.state.waste.filter((w) => w.dOff >= -30);
@@ -2403,17 +2418,69 @@ function DataSources() {
   </div>`;
 }
 
+// Each figure on the savings card opens its calculation: the steps, the numbers and where each one comes from
+function savingsSteps(k, m, sv) {
+  const pc = (x) => NUMBER_FMT(x * 100, 1) + "%";
+  const food = [
+    ["Food the kitchen used last week", gbp(sv.used), "Covers served × recipes × ingredient prices, from the demo's simulated history"],
+    ["Share thrown away last week", pc(m.wasteShareLastWeek), "Waste log on the Waste screen, last 7 days"],
+    ["Food bought last week", gbp(sv.gross), `Used ÷ (1 − ${pc(m.wasteShareLastWeek)}), so it includes what was thrown away`],
+    ["Share thrown away four weeks ago", pc(m.wasteShareFourWeeksAgo), "Waste log, 22 to 28 days ago, before the forecast was in use"],
+    ["Cut in waste", `${NUMBER_FMT(sv.cut * 100, 1)} points (−${Math.round(sv.cutPct * 100)}%)`, "Set in the demo to the first-year average of 42 hotels: 21% (Champions 12.3, quoted in our market study)"],
+    ["Food saved last week", gbp(sv.foodWeek), `${gbp(sv.gross)} × ${NUMBER_FMT(sv.cut * 100, 1)}%`],
+    ["Food saved per month", gbp(sv.foodMonth), `${gbp(sv.foodWeek)} × 52 weeks ÷ 12 months`],
+  ];
+  const time = [
+    ["Time saved per day", `${TIME_SAVED.minutes} min`, "Counting stock and writing orders by hand. A team assumption from the 7 Oct deck, not measured yet"],
+    ["Hours per month", `${NUMBER_FMT(sv.hoursWeek * 52 / 12, 1)} h`, `${TIME_SAVED.minutes} min × 7 days × 52 weeks ÷ 12 months`],
+    ["Cost of an hour", `£${TIME_SAVED.rate}`, "F&B manager's cost per hour, a team assumption"],
+    ["Time saved per month", gbp(sv.timeMonth), `${NUMBER_FMT(sv.hoursWeek * 52 / 12, 1)} h × £${TIME_SAVED.rate}`],
+  ];
+  const total = [
+    ["Food saved per month", gbp(sv.foodMonth), "See “Food kept out of the bin”"],
+    ["Time saved per month", gbp(sv.timeMonth), "See “Time given back”"],
+    ["Total per month", gbp(sv.month), "Food + time"],
+    ["Per year", gbp(sv.year), "× 12 months (rounded to £100 on the card)"],
+    [`${PRODUCT_NAME} per month`, gbp(PRICE_MONTH), "Our price, about €149"],
+    ["Left after paying for it", `${gbp(sv.net)} a month`, `${gbp(sv.month)} − ${gbp(PRICE_MONTH)}`],
+  ];
+  return {
+    total: { title: "Saved this month", steps: total, note: "Food saved is cash: food you no longer buy. Time saved is the value of the manager's hours, not cash." },
+    food: { title: "Food kept out of the bin", steps: food, note: "Hotel Aurora's figures are simulated. In a pilot, both waste shares come from your own waste log." },
+    time: { title: "Time given back", steps: time, note: "Pilots will measure the real time saved." },
+  }[k];
+}
+function CalcPanel({ k }) {
+  const S = useStore();
+  const c = savingsSteps(k, S.metrics, savingsOf(S.metrics));
+  return html`<div className="grid gap-4">
+    <p className="m-0 text-[15px] text-muted">How we got <b className="text-ink">${c.title.toLowerCase()}</b>, step by step.</p>
+    <ol className="calc-steps">${c.steps.map(([l, v, how], i) => html`<li key=${l} className=${i === c.steps.length - 1 ? "last" : ""}><span className="cs-l">${l}</span><span className="cs-v tnum">${v}</span><span className="cs-h">${how}</span></li>`)}</ol>
+    <p className="m-0 text-[13.5px] text-muted">${c.note}</p>
+    <${SimTag} />
+  </div>`;
+}
 function SavingsCard() {
   const S = useStore(), nav = useNav();
   const m = S.metrics, sv = savingsOf(m);
+  const cols = [
+    ["total", "Saved this month, at the current pace", gbp(sv.month), html`on track for <b className="text-ink">${gbp(round100(sv.year))} a year</b>, against ${gbp(PRICE_MONTH)} a month for ${PRODUCT_NAME}`],
+    ["food", "Food kept out of the bin", gbp(sv.foodMonth), `waste down from ${NUMBER_FMT(m.wasteShareFourWeeksAgo * 100, 1)}% to ${NUMBER_FMT(m.wasteShareLastWeek * 100, 1)}% of food bought in four weeks`],
+    ["time", "Time given back", `${NUMBER_FMT(sv.hoursWeek * 52 / 12, 0)} h`, `a month of counting and ordering, worth about ${gbp(sv.timeMonth)}`],
+  ];
   return html`<section className="card p-5 md:p-6 save-card" aria-label="Your savings">
-    <div className="flex flex-wrap items-center justify-between gap-2 mb-3"><h3 className="font-serif text-[22px] text-head m-0">What ${PRODUCT_NAME} saves you</h3><${SimTag} /></div>
+    <div className="flex flex-wrap items-center justify-between gap-2 mb-4"><h3 className="font-serif text-[22px] text-head m-0">What ${PRODUCT_NAME} saves you</h3><${SimTag} /></div>
     <div className="save-row tnum">
-      <div><p className="m-0 text-[13.5px] text-muted">This month, at the current pace</p><p className="sv-big">${gbp(sv.month)}</p><p className="m-0 mt-1 text-[14px] text-muted">on track for <b className="text-ink">${gbp(round100(sv.year))} a year</b>, against ${gbp(PRICE_MONTH)} a month for ${PRODUCT_NAME}</p></div>
-      <div><p className="m-0 text-[13.5px] text-muted">Food kept out of the bin</p><p className="sv-mid">${gbp(sv.foodMonth)}</p><p className="m-0 mt-1 text-[14px] text-muted">waste down from ${NUMBER_FMT(m.wasteShareFourWeeksAgo * 100, 1)}% to ${NUMBER_FMT(m.wasteShareLastWeek * 100, 1)}% of food bought in four weeks</p></div>
-      <div><p className="m-0 text-[13.5px] text-muted">Time given back</p><p className="sv-mid">${NUMBER_FMT(sv.hoursWeek * 52 / 12, 0)} h</p><p className="m-0 mt-1 text-[14px] text-muted">a month of counting and ordering, worth about ${gbp(sv.timeWeek * 52 / 12)}</p></div>
+      ${cols.map(([k, label, fig, sub], i) => html`<div key=${k} className=${cls("sv-col", i === 0 && "main")}>
+        <p className="sv-label">${label}</p>
+        <button type="button" className="sv-fig" onClick=${() => nav.openPanel("calc", k)} aria-label=${`${fig}. Show how this figure is calculated`}>${fig}<span className="sv-how"><${Icon} name="info" size=${14} />How?</span></button>
+        <p className="sv-sub">${sub}</p>
+      </div>`)}
     </div>
-    <button type="button" className="btn btn-quiet btn-sm !px-0 mt-3" onClick=${() => nav.go("waste")}>Where the waste came from<${Icon} name="arrow" size=${16} /></button>
+    <div className="flex flex-wrap items-center justify-between gap-2 mt-4">
+      <p className="m-0 text-[13.5px] text-muted">Click a figure to see how it is calculated.</p>
+      <button type="button" className="btn btn-quiet btn-sm !px-0" onClick=${() => nav.go("waste")}>Where the waste came from<${Icon} name="arrow" size=${16} /></button>
+    </div>
   </section>`;
 }
 
@@ -2875,7 +2942,7 @@ function StockScreen({ intent }) {
         <div className="rounded-[16px] bg-[#fbebc8] border border-[#e2bd6b] p-4 mb-5 text-[#5c3b07]">
           <div className="flex items-center gap-2 font-semibold text-[18px]"><${Icon} name="leaf" size=${22} />${uf.length} ${plural(uf.length, "item")} to use within 48 hours</div>
           <ul className="list-none p-0 mt-3 mb-0 grid gap-2 md:grid-cols-3">
-            ${uf.slice(0, 5).map((r) => html`<li key=${r.p.id} className="bg-white/60 rounded-xl p-3 text-[15px]"><span className="font-semibold">${r.p.name}, ${fmtQty(r.p, r.exp48)}.</span> ${r.p.idea}.
+            ${uf.slice(0, 6).map((r) => html`<li key=${r.p.id} className="bg-white/60 rounded-xl p-3 text-[15px]"><span className="font-semibold">${r.p.name}, ${fmtQty(r.p, r.exp48)}.</span> ${r.p.idea}.
               <span className="block mt-2 flex flex-wrap gap-2"><button type="button" className="btn btn-secondary btn-sm !min-h-[36px]" onClick=${() => S.addSpecial({ when: "tomorrow", text: r.p.name.toLowerCase() + " special" })}>Use in tomorrow's special</button></span></li>`)}
             ${plenty.length > 0 && html`<li className="bg-white/60 rounded-xl p-3 text-[15px]"><span className="font-semibold">Reduce next order.</span> You have plenty of ${plenty.map((r) => r.p.name.toLowerCase()).join(", ")}.</li>`}
           </ul>
@@ -4058,7 +4125,7 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
   };
   const closeP = () => setPanel(null), closeM = () => setModal(null);
   const badges = { stock: S.summary.filter((r) => r.useFirst || r.expired.length).length, purchasing: S.suggested.length, team: teamGaps(S.state.rota).gaps.length };
-  const panelTitle = panel && { order: "Order", event: "Event details", day: "Day forecast", list: "More orders", explain: "Why this order", buddy: "AI Buddy" }[panel.type];
+  const panelTitle = panel && { order: "Order", event: "Event details", day: "Day forecast", list: "More orders", explain: "Why this order", buddy: "AI Buddy", calc: "How this figure is calculated" }[panel.type];
   return html`
     <${NavCtx.Provider} value=${nav}>
       <div className=${cls("app-window app-shell", full && "app-full")}>
@@ -4099,6 +4166,7 @@ function AppWindow({ initial = "today", id = "app", full = false }) {
         ${panel.type === "list" && html`<${OrderListPanel} ids=${panel.data} />`}
         ${panel.type === "explain" && html`<${ExplainPanel} pid=${panel.data.pid} onClose=${closeP} />`}
         ${panel.type === "buddy" && html`<${BuddyPanel} chat=${chat} setChat=${setChat} onClose=${closeP} />`}
+        ${panel.type === "calc" && html`<${CalcPanel} k=${panel.data} />`}
       <//>`}
       ${modal && html`<${Overlay} title=${{ receive: "Receive a delivery", waste: "Log waste", order: modal.data && modal.data.editingId && !modal.data.editingId.startsWith("sug-") ? "Edit order" : "New order" }[modal.type]} onClose=${closeM} wide=${modal.type === "receive"}>
         ${modal.type === "receive" && html`<${ReceiveForm} orderId=${modal.data && modal.data.orderId} onClose=${closeM} />`}
