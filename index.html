@@ -403,8 +403,8 @@ const SOURCES = {
   orbiskPrice: { label: "FAO Agritech Observatory, Orbisk profile", url: "https://agritechobservatory.review.fao.org/ar/orbisk" },
   leanpath: { label: "IEEE Spectrum, Leanpath Weighs Waste", url: "https://spectrum.ieee.org/leanpath-weighs-waste" },
 };
-// Price per month in GBP (about EUR 149), and the planning time a manager saves each day, used on the landing page and in the demo
-const PRICE_MONTH = 129;
+// Price per month in GBP (about EUR 290), and the planning time a manager saves each day, used on the landing page and in the demo
+const PRICE_MONTH = 250;
 const TIME_SAVED = { minutes: 30, rate: 25 }; // rate = the F&B manager's cost per hour, GBP
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
@@ -2452,7 +2452,7 @@ function savingsSteps(k, m, sv) {
     ["Time saved per month", gbp(sv.timeMonth), "See “Time given back”"],
     ["Total per month", gbp(sv.month), "Food + time"],
     ["Per year", gbp(sv.year), "× 12 months (rounded to £100 on the card)"],
-    [`${PRODUCT_NAME} per month`, gbp(PRICE_MONTH), "Our price, about €149"],
+    [`${PRODUCT_NAME} per month`, gbp(PRICE_MONTH), "Our price, about €290"],
     ["Left after paying for it", `${gbp(sv.net)} a month`, `${gbp(sv.month)} − ${gbp(PRICE_MONTH)}`],
   ];
   return {
@@ -4474,7 +4474,7 @@ function Savings() {
     { k: "Thrown away today", n: gbp(round100(r.wasteYear)), s: `about ${NUMBER_FMT(round100(r.mealsYear))} meals a year × £${NUMBER_FMT(ROI_DEFAULTS.wastePerMeal, 2)} of food wasted per meal`, src: SOURCES.wrapHotels },
     { k: `${PRODUCT_NAME} saves`, n: gbp(round100(r.foodSaved)), s: `of food a year, from a ${ROI_DEFAULTS.cut}% cut in waste, the average first-year result of 42 hotels`, src: SOURCES.champions, hi: true },
     { k: "Plus your time", n: `${NUMBER_FMT(r.hoursYear / 52, 1)} h`, s: `a week of planning and ordering, worth about ${gbp(round100(r.timeSaved))} a year at £${ROI_DEFAULTS.rate} an hour` },
-    { k: "You pay", n: gbp(r.priceYear), s: `a year (£${PRICE_MONTH} a month). The food saved alone pays for it ${NUMBER_FMT(r.foodMultiple, 1)} times over.` },
+    { k: "You pay", n: gbp(r.priceYear), s: `a year (£${PRICE_MONTH} a month). ${r.foodMultiple >= 1 ? `The food saved alone pays for it ${NUMBER_FMT(r.foodMultiple, 1)} times over.` : `The food saved alone covers ${Math.round(r.foodMultiple * 100)}% of it, and the time given back covers the rest.`}` },
   ];
   return html`
     <section id="savings" className="py-16 md:py-20 paper">

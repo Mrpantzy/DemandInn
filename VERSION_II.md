@@ -30,7 +30,7 @@ Changes from the team call of 23 Oct 2026, on the branch `version-II`. It starts
 
 ## Still to check
 
-- Price of £129 a month.
+- Price of £250 a month (was £129, changed 27 Oct 2026).
 - The savings use industry averages (WRAP 2013 at 2011 prices, Champions 12.3). The demo hotel buys more food than the WRAP average, so its monthly saving (about £400 of food) is higher than the landing page's £2,700 a year.
 - Competitor prices are not published, except a third-party estimate for Orbisk (FAO).
 
@@ -40,3 +40,7 @@ Changes from the team call of 23 Oct 2026, on the branch `version-II`. It starts
 - Stock: six items to use within 48 hours (three batches close to their date added to the demo stock).
 - Numbers use DM Sans instead of Fraunces, so figures read plainly. Words in headings stay in Fraunces.
 - Vercel: Vercel Authentication is off for the demandinn project, so the version II preview opens for anyone without a share link: https://demandinn-git-version-ii-matteoevenacademic-9707s-projects.vercel.app. It was "all except custom domains" before. demandinn.vercel.app is unchanged. To turn it back on: Vercel → demandinn → Settings → Deployment Protection → Vercel Authentication.
+
+## Updates, 27 Oct 2026
+
+- Price is now £250 a month (about €290), up from £129. Every figure that uses it follows: £3,000 a year, about £4,300 a year better off for the 28-room hotel (was £5,700), paid back in about 5 months (was 3). The food saved alone (about £2,700) no longer covers the price on its own, so the "You pay" card now says it covers 91% and the time given back covers the rest. The calculator and the demo's savings card work from the same price.
