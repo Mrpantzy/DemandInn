@@ -405,6 +405,10 @@ const SOURCES = {
 };
 // Price per month in GBP (about EUR 290), and the planning time a manager saves each day, used on the landing page and in the demo
 const PRICE_MONTH = 250;
+// Commercial terms (team business model, Oct 2026): 12-month contracts, 5% off when the year is paid upfront,
+// a one-time setup fee, and add-ons priced individually
+const CONTRACT_MONTHS = 12, ANNUAL_DISCOUNT = 0.05, SETUP_FEE = 300;
+const PRICE_YEAR_UPFRONT = Math.round(PRICE_MONTH * 12 * (1 - ANNUAL_DISCOUNT));
 const TIME_SAVED = { minutes: 30, rate: 25 }; // rate = the F&B manager's cost per hour, GBP
 const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Andrea" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
@@ -2456,7 +2460,7 @@ function savingsSteps(k, m, sv) {
     ["Time saved per month", gbp(sv.timeMonth), "See “Time given back”"],
     ["Total per month", gbp(sv.month), "Food + time"],
     ["Per year", gbp(sv.year), "× 12 months (rounded to £100 on the card)"],
-    [`${PRODUCT_NAME} per month`, gbp(PRICE_MONTH), "Our price, about €290"],
+    [`${PRODUCT_NAME} per month`, gbp(PRICE_MONTH), `Our price, about €290, on a ${CONTRACT_MONTHS}-month contract`],
     ["Left after paying for it", `${gbp(sv.net)} a month`, `${gbp(sv.month)} − ${gbp(PRICE_MONTH)}`],
   ];
   return {
@@ -4478,7 +4482,7 @@ function Savings() {
     { k: "Thrown away today", n: gbp(round100(r.wasteYear)), s: `about ${NUMBER_FMT(round100(r.mealsYear))} meals a year × £${NUMBER_FMT(ROI_DEFAULTS.wastePerMeal, 2)} of avoidable food waste per meal`, src: SOURCES.wrapHotels },
     { k: `${PRODUCT_NAME} saves`, n: gbp(round100(r.foodSaved)), s: `of food a year, from a ${ROI_DEFAULTS.cut}% cut in waste, the average first-year result of 42 hotels that started measuring and cutting their waste`, src: SOURCES.champions, hi: true },
     { k: "Plus your time", n: `${NUMBER_FMT(r.hoursYear / 52, 1)} h`, s: `a week of planning and ordering, worth about ${gbp(round100(r.timeSaved))} a year at £${ROI_DEFAULTS.rate} an hour` },
-    { k: "You pay", n: gbp(r.priceYear), s: `a year (£${PRICE_MONTH} a month). ${r.foodMultiple >= 1 ? `The food saved alone pays for it ${NUMBER_FMT(r.foodMultiple, 1)} times over.` : `The food saved alone covers ${Math.round(r.foodMultiple * 100)}% of it, and the time given back covers the rest.`}` },
+    { k: "You pay", n: gbp(r.priceYear), s: `a year (£${PRICE_MONTH} a month, ${CONTRACT_MONTHS}-month contract), plus £${SETUP_FEE} once for setup. ${r.foodMultiple >= 1 ? `The food saved alone pays for it ${NUMBER_FMT(r.foodMultiple, 1)} times over.` : `The food saved alone covers ${Math.round(r.foodMultiple * 100)}% of it, and the time given back covers the rest.`}` },
   ];
   return html`
     <section id="savings" className="py-16 md:py-20 paper">
@@ -4565,7 +4569,7 @@ function RoiCalculator() {
             <p className="m-0 text-[14px] font-bold tracking-wider uppercase">Your hotel saves, per year</p>
             <p className="font-serif text-[56px] leading-none my-3 tnum" aria-live="polite">${gbp(r.total)}</p>
             <p className="m-0 text-[16px] tnum"><b>${gbp(r.foodSaved)}</b> of food no longer thrown away (out of ${gbp(r.wasteYear)} today), plus <b>${gbp(r.timeSaved)}</b> of manager time (${Math.round(r.hoursYear)} hours).</p>
-            <p className="m-0 mt-3 text-[16px] tnum">Against ${gbp(r.priceYear)} a year for ${PRODUCT_NAME} (£${PRICE_MONTH} × 12): <b>${r.net >= 0 ? `${gbp(r.net)} better off` : `${gbp(-r.net)} short`}</b>${r.net > 0 ? `, about £${NUMBER_FMT(r.perPound, 2)} back for every £1` : ""}.</p>
+            <p className="m-0 mt-3 text-[16px] tnum">Against ${gbp(r.priceYear)} a year for ${PRODUCT_NAME} (£${PRICE_MONTH} × 12, plus £${SETUP_FEE} once for setup): <b>${r.net >= 0 ? `${gbp(r.net)} better off` : `${gbp(-r.net)} short`}</b>${r.net > 0 ? `, about £${NUMBER_FMT(r.perPound, 2)} back for every £1` : ""}.</p>
             <p className="m-0 mt-3 text-[14.5px]">How it is worked out: meals a year (breakfasts from your rooms, plus lunch and dinner) × avoidable food waste per meal gives what you throw away today. × the cut gives the food saved. Sources: WRAP (£0.52 per meal, 2011 prices, so likely higher today) and Champions 12.3 (21%). It is not a promise.</p>
           </div>
         </div>
@@ -4608,7 +4612,7 @@ function Pilot() {
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); setSt({ err: "", done: "sent" }); })
       .catch(() => setSt({ err: `Sorry, that didn't go through. Please try again, or email us at ${CONTACT_EMAIL}.`, done: "" }));
   };
-  const steps = [["Free backtest", "Send us last year's bookings and sales. We show how the forecast would have done."], ["4 weeks in shadow mode", "It runs next to your normal ordering. You compare, nothing changes."], [`£${PRICE_MONTH} a month after`, "Keep it if it helps. One plan for the whole kitchen."]];
+  const steps = [["Free backtest", "Send us last year's bookings and sales. We show how the forecast would have done."], ["4 weeks in shadow mode", "It runs next to your normal ordering. You compare, nothing changes."], [`£${PRICE_MONTH} a month after`, `On a ${CONTRACT_MONTHS}-month contract, with a £${SETUP_FEE} one-time setup fee. Pay the year upfront and save ${Math.round(ANNUAL_DISCOUNT * 100)}%: ${gbp(PRICE_YEAR_UPFRONT)} instead of ${gbp(PRICE_MONTH * 12)}. Add-ons are priced separately.`]];
   return html`
     <section id="pilot" className="py-16 md:py-20 dk">
       <${Wrap}>
@@ -4641,6 +4645,7 @@ const FAQ_ITEMS = [
   ["Does it handle weddings and groups?", "Yes. A group is an explicit input, with its covers, time, dietary needs and set menu, added on top of the normal forecast."],
   ["What if the forecast is wrong?", "You change the quantity and give a reason. Both are kept, and the change feeds into the next order."],
   ["Is my data safe? What about GDPR?", "For pilots, we collect only what the forecast needs: booking and cover counts, sales by item, recipes and stock. Guest names are not needed. The data is stored in the EU, never sold, and deleted when you ask."],
+  ["How much does it cost?", `The backtest and the 4 weeks in shadow mode are free. After that, ${PRODUCT_NAME} costs £${PRICE_MONTH} a month on a ${CONTRACT_MONTHS}-month contract, plus a £${SETUP_FEE} one-time setup fee. Paying the year upfront saves ${Math.round(ANNUAL_DISCOUNT * 100)}% (${gbp(PRICE_YEAR_UPFRONT)} instead of ${gbp(PRICE_MONTH * 12)}). Optional add-ons are priced individually.`],
   ["Is it only for breakfast?", "No. The same bookings drive breakfast, lunch, dinner and the bar. Covers are forecast per service, and dishes, ingredients and orders follow from them. Breakfast-only hotels benefit too, because board type and who is staying carry most of that forecast."],
   ["Do you connect to Booking.com or my other apps?", "Not directly. Bookings and sales reach DemandInn through your own systems. Today you upload a CSV export from your PMS and till. After a pilot, a read-only API key from your PMS, channel manager or till supplier can feed it nightly. You can try the import in the demo."],
 ];
