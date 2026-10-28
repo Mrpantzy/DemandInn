@@ -406,7 +406,7 @@ const SOURCES = {
 // Price per month in GBP (about EUR 290), and the planning time a manager saves each day, used on the landing page and in the demo
 const PRICE_MONTH = 250;
 const TIME_SAVED = { minutes: 30, rate: 25 }; // rate = the F&B manager's cost per hour, GBP
-const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Elena" };
+const HOTEL = { name: "Hotel Aurora", rooms: 28, manager: "Andrea" };
 const MEALS = ["breakfast", "lunch", "dinner", "bar"];
 const MEAL_LABEL = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", bar: "Bar" };
 const HISTORY_DAYS = 56; // simulated history the demo has "read": 8 weeks, so 8 of each weekday
@@ -454,9 +454,9 @@ function mulberry32(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; 
 const SUPPLIERS = {
   fish: { id: "fish", name: "Fishmonger", lead: 2, days: [2, 4, 6], cutoff: "14:00" },
   butcher: { id: "butcher", name: "Butcher", lead: 1, days: [1, 3, 5], cutoff: "12:00" },
-  dairy: { id: "dairy", name: "Dairy", lead: 1, days: [1, 2, 3, 4, 5, 6], cutoff: "16:00" },
-  green: { id: "green", name: "Greengrocer", lead: 1, days: [1, 2, 3, 4, 5, 6], cutoff: "15:00" },
-  bakery: { id: "bakery", name: "Bakery", lead: 1, days: [0, 1, 2, 3, 4, 5, 6], cutoff: "17:00" },
+  dairy: { id: "dairy", name: "Dairy", lead: 1, days: [1, 2, 3, 4, 5, 6], cutoff: "19:00" },
+  green: { id: "green", name: "Greengrocer", lead: 1, days: [1, 2, 3, 4, 5, 6], cutoff: "20:00" },
+  bakery: { id: "bakery", name: "Bakery", lead: 1, days: [0, 1, 2, 3, 4, 5, 6], cutoff: "21:00" },
   drinks: { id: "drinks", name: "Drinks wholesaler", lead: 2, days: [2, 5], cutoff: "12:00" },
   dry: { id: "dry", name: "Dry goods", lead: 2, days: [2, 4], cutoff: "12:00" },
 };
@@ -1137,7 +1137,8 @@ function recommendLine(p, batches, orders, opts = {}) {
   const wasteRecent = (opts.waste || []).filter((w) => w.p === p.id && w.dOff >= -14).reduce((a, w) => a + w.qty, 0);
   const wasteCut = Math.min(0.5 * buffer, 0.25 * wasteRecent);
   const bufferR = Math.round((buffer - wasteCut) * 10) / 10;
-  const net = Math.max(0, forecast + bufferR - usable);
+  // Net need from the rounded figures shown on screen, so the sum in the Explain panel gives the order
+  const net = Math.max(0, fq(p, fq(p, forecast) + fq(p, bufferR) - fq(p, usable)));
   const recQ0 = net < 0.3 * p.step && cls !== "D" ? 0 : roundPack(net, p.step, cls);
   // Timing check: stock that only arrives after it is needed must not count. Top up in whole cases until no shortage is left inside the window.
   const winEnd = dd + win;
@@ -1180,6 +1181,9 @@ const orderView = (o) => ({ ...o, orderDate: addDays(TODAY, o.orderOff), eta: ad
 const orderCost = (o) => o.lines.reduce((s, l) => s + l.qty * PBY[l.p].price, 0);
 const orderTotal = (list) => list.reduce((s, o) => s + orderCost(o), 0);
 
+// Earliest deadline first: the day, then the cut-off time on that day
+const byDeadline = (a, b) => a.deadlineOff - b.deadlineOff || a.cutoff.localeCompare(b.cutoff) || a.etaOff - b.etaOff;
+
 // Builds suggested purchase orders (one per supplier) from the pipeline
 function suggestOrders(batches, orders, dismissed, mods = {}) {
   const ov = mods.overrides || {}, removed = mods.removed || {}, added = mods.added || {};
@@ -1211,7 +1215,7 @@ function suggestOrders(batches, orders, dismissed, mods = {}) {
     else if (drv && drv.f.events[0]) reason += ` ${dowName(drv.date)}'s ${drv.f.events[0].name.split(" at ")[0].toLowerCase()} lifts demand.`;
     const late = lines.some((l) => l.L.late);
     return { id: "sug-" + s, sup: s, lines: lines.map((l) => ({ p: l.p, qty: l.qty, rec: l.rec, override: l.override, manual: l.manual })), details: Object.fromEntries(lines.map((l) => [l.p, l.L])), orderOff: dl, etaOff: dd, needOff: g.need === 99 ? dd : g.need, deadlineOff: dl, cutoff: sup.cutoff, status: "suggested", reason, confidence: lines.some((l) => l.L.stockoutBefore !== null) ? "stockout risk" : lines.some((l) => l.L.wasteLevel === "high") ? "waste risk" : "balanced", late };
-  }).sort((a, b) => a.deadlineOff - b.deadlineOff || a.etaOff - b.etaOff);
+  }).sort(byDeadline);
 }
 const fmtQ = (p, q) => { const n = fq(p, q); return `${n.toLocaleString("en-GB")} ${p.unit}`; };
 const fmtQty = fmtQ;
@@ -1260,7 +1264,7 @@ const PERIOD_SHORT = { morning: "morning", dinner: "dinner" };
 // rate = employer cost per hour, GBP. The F&B manager's hour is the £25 used in the ROI calculator.
 const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
 const EMPLOYEES = [
-  { id: "e1", name: "Elena Marchetti", title: "F&B manager", role: "floor", contract: 40, rate: 25, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--AAPP" },
+  { id: "e1", name: "Andrea Marchetti", title: "F&B manager", role: "floor", contract: 40, rate: 25, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "P--AAPP" },
   { id: "e2", name: "Tomás Rivera", title: "Head chef", role: "kitchen", contract: 40, rate: 17.5, avail: "Tue to Sun", days: [0, 2, 3, 4, 5, 6], shifts: "AP", off: [], rota: "--PPPPP" },
   { id: "e3", name: "Priya Nair", title: "Sous chef", role: "kitchen", contract: 40, rate: 15, avail: "Any day", days: ALL_DAYS, shifts: "AP", off: [], rota: "PP-PPP-" },
   { id: "e4", name: "Jonas Weber", title: "Cook", role: "kitchen", contract: 40, rate: 12.5, avail: "Mon to Fri", days: [1, 2, 3, 4, 5], shifts: "AP", off: [], rota: "-AAAAA-" },
@@ -2385,7 +2389,7 @@ function buildAttention(S, nav) {
     const names = uf.map((r) => r.p.name.toLowerCase()).join(", ");
     cards.push({ id: "use", tone: ex.length ? "urgent" : "amber", icon: ex.length ? "alert" : "leaf", title: uf.length ? `${uf.length} ${plural(uf.length, "item")} to use within 48 hours` : `${ex.length} ${plural(ex.length, "item")} past use-by date`, text: (uf.length ? `${cap(names)}. ${uf[0].p.idea}.` : "") + (ex.length ? ` ${ex[0].p.name} has a batch past its use-by date. Please set it aside and log it.` : ""), action: "See what to use first", run: () => nav.go("stock", { filter: "use" }) });
   }
-  const sug = S.suggested.slice().sort((a, b) => a.deadlineOff - b.deadlineOff)[0];
+  const sug = S.suggested.slice().sort(byDeadline)[0];
   if (sug) cards.push({ id: "order", tone: sug.late ? "amber" : "terra", icon: "clipboard", title: `Order ${SUPPLIERS[sug.sup].name.toLowerCase()} ${sug.deadlineOff === 0 ? "today by " + sug.cutoff : "by " + dowShort(addDays(TODAY, sug.deadlineOff)) + " " + sug.cutoff}`, text: sug.reason, action: "Review the order", run: () => nav.go("purchasing") });
   const risky = rows.filter((r) => r.riskWith !== null).sort((a, b) => a.riskWith - b.riskWith)[0];
   if (risky) cards.push({ id: "risk", tone: "urgent", icon: "alert", title: `${risky.p.name} may run short ${dayWord(addDays(TODAY, risky.riskWith))}`, text: `Even with today's recommended order there is a gap before the next delivery. Check the supplier timing.`, action: "Open stock", run: () => nav.go("stock", { filter: "risk" }) });
@@ -2506,7 +2510,7 @@ function TodayScreen() {
   const cards = buildAttention(S, nav);
   const total = S.suggested.reduce((s, o) => s + o.lines.reduce((a, l) => a + l.qty * PBY[l.p].price, 0), 0);
   const nLines = S.suggested.reduce((s, o) => s + o.lines.length, 0);
-  const next = S.suggested.slice().sort((a, b) => a.deadlineOff - b.deadlineOff)[0];
+  const next = S.suggested.slice().sort(byDeadline)[0];
   const changes = changesSinceYesterday().slice(0, 3);
   const m = S.metrics;
   const topLines = S.suggested.flatMap((o) => o.lines.map((l) => ({ o, l, L: o.details[l.p] }))).sort((a, b) => b.l.qty * PBY[b.l.p].price - a.l.qty * PBY[a.l.p].price).slice(0, 5);
@@ -3578,7 +3582,7 @@ function morningTips(S) {
   const tips = [];
   const f1 = fcDay(addDays(TODAY, 1)), m = f1.meals;
   tips.push({ sev: "info", kicker: "Covers", title: `Expect ${m.lunch.covers} lunch and ${m.dinner.covers} dinner covers tomorrow`, why: `${m.breakfast.covers} breakfasts, and dinner is likely ${m.dinner.p10}–${m.dinner.p90}. ${f1.rooms} of ${HOTEL.rooms} rooms are occupied.` });
-  const nxt = S.suggested.slice().sort((a, b) => a.deadlineOff - b.deadlineOff)[0];
+  const nxt = S.suggested.slice().sort(byDeadline)[0];
   if (nxt) {
     const total = nxt.lines.reduce((s, l) => s + l.qty * PBY[l.p].price, 0);
     tips.push({ sev: nxt.deadlineOff === 0 ? "high" : "med", kicker: "Order", title: `Order from ${SUPPLIERS[nxt.sup].name} by ${nxt.deadlineOff === 0 ? "today" : dowShort(addDays(TODAY, nxt.deadlineOff))} ${nxt.cutoff}`, why: `${nxt.lines.length} ${plural(nxt.lines.length, "line")}, about ${gbp(total)}. Review it, change what you want and approve.` });
@@ -4213,7 +4217,7 @@ function HeroCard() {
   const d = addDays(TODAY, 1), f = fcDay(d), bf = f.meals.dinner, fb = f.meals.breakfast, fl = f.meals.lunch;
   // The next order to decide (earliest deadline), with the same figures as Purchasing and the Explain panel
   const [done, setDone] = useState(null);
-  const nxt = done || S.suggested.slice().sort((a, b) => a.deadlineOff - b.deadlineOff || a.etaOff - b.etaOff)[0];
+  const nxt = done || S.suggested.slice().sort(byDeadline)[0];
   const rows = nxt ? nxt.lines.map((l) => ({ l, L: nxt.details[l.p] })).sort((a, b) => b.l.qty * PBY[b.l.p].price - a.l.qty * PBY[a.l.p].price).slice(0, 3) : [];
   const approved = !!done;
   const dday = nxt ? addDays(TODAY, nxt.etaOff) : null;
@@ -4324,8 +4328,8 @@ const Wrap = ({ children }) => html`<div className="max-w-[1180px] mx-auto px-4 
 
 function Problem() {
   const cards = [
-    { stat: "£318m", text: "of food is thrown away by UK hotels every year: 79,000 tonnes, about £0.52 for every meal served.", src: SOURCES.wrapHotels },
-    { stat: "45%", text: "of that waste comes from cooking and preparing too much, because the kitchen did not know how many would eat.", src: SOURCES.wrapHotels },
+    { stat: "£318m", text: "of food is thrown away by UK hotels every year: 79,000 tonnes, and about £0.52 of avoidable waste for every meal served.", src: SOURCES.wrapHotels },
+    { stat: "45%", text: "of food waste in UK hospitality happens in the kitchen, during preparation, before food reaches a plate. That includes food prepared for guests who never came.", src: SOURCES.wrapHotels },
     { stat: "11%", text: "of hotels have a fully integrated tech stack, so bookings, sales and stock rarely meet.", src: SOURCES.otelier },
   ];
   return html`
@@ -4443,7 +4447,7 @@ function roiModel(v) {
   const hoursYear = (v.minutes / 60) * 365;
   const timeSaved = hoursYear * v.rate;
   const priceYear = PRICE_MONTH * 12;
-  return { breakfasts, mealsYear, wasteYear, foodSaved, hoursYear, timeSaved, total: foodSaved + timeSaved, priceYear, net: foodSaved + timeSaved - priceYear, foodMultiple: foodSaved / priceYear, paybackMonths: priceYear / ((foodSaved + timeSaved) / 12) };
+  return { breakfasts, mealsYear, wasteYear, foodSaved, hoursYear, timeSaved, total: foodSaved + timeSaved, priceYear, net: foodSaved + timeSaved - priceYear, foodMultiple: foodSaved / priceYear, perPound: (foodSaved + timeSaved) / priceYear };
 }
 const ROI_BASE = roiModel(ROI_DEFAULTS);
 const round100 = (n) => Math.round(n / 100) * 100;
@@ -4471,8 +4475,8 @@ function OwnerProcess() {
 function Savings() {
   const r = ROI_BASE;
   const cols = [
-    { k: "Thrown away today", n: gbp(round100(r.wasteYear)), s: `about ${NUMBER_FMT(round100(r.mealsYear))} meals a year × £${NUMBER_FMT(ROI_DEFAULTS.wastePerMeal, 2)} of food wasted per meal`, src: SOURCES.wrapHotels },
-    { k: `${PRODUCT_NAME} saves`, n: gbp(round100(r.foodSaved)), s: `of food a year, from a ${ROI_DEFAULTS.cut}% cut in waste, the average first-year result of 42 hotels`, src: SOURCES.champions, hi: true },
+    { k: "Thrown away today", n: gbp(round100(r.wasteYear)), s: `about ${NUMBER_FMT(round100(r.mealsYear))} meals a year × £${NUMBER_FMT(ROI_DEFAULTS.wastePerMeal, 2)} of avoidable food waste per meal`, src: SOURCES.wrapHotels },
+    { k: `${PRODUCT_NAME} saves`, n: gbp(round100(r.foodSaved)), s: `of food a year, from a ${ROI_DEFAULTS.cut}% cut in waste, the average first-year result of 42 hotels that started measuring and cutting their waste`, src: SOURCES.champions, hi: true },
     { k: "Plus your time", n: `${NUMBER_FMT(r.hoursYear / 52, 1)} h`, s: `a week of planning and ordering, worth about ${gbp(round100(r.timeSaved))} a year at £${ROI_DEFAULTS.rate} an hour` },
     { k: "You pay", n: gbp(r.priceYear), s: `a year (£${PRICE_MONTH} a month). ${r.foodMultiple >= 1 ? `The food saved alone pays for it ${NUMBER_FMT(r.foodMultiple, 1)} times over.` : `The food saved alone covers ${Math.round(r.foodMultiple * 100)}% of it, and the time given back covers the rest.`}` },
   ];
@@ -4484,7 +4488,7 @@ function Savings() {
           ${cols.map((c) => html`<article key=${c.k} className=${c.hi ? "hi" : ""}><p className="sv-k">${c.k}</p><p className="sv-n tnum">${c.n}</p><p className="sv-s">${c.s}</p>${c.src && html`<p className="fact-src">Source: <a href=${c.src.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>${c.src.label}</a></p>`}</article>`)}
         </div>
         <div className="rounded-[16px] bg-forest text-on-dark p-6 mt-5 flex flex-wrap items-center justify-between gap-4">
-          <p className="m-0 font-serif text-[24px] md:text-[28px] leading-tight tnum">About <span className="text-amber">${gbp(round100(r.net))} a year</span> better off, paid back in ${Math.max(1, Math.round(r.paybackMonths))} ${plural(Math.max(1, Math.round(r.paybackMonths)), "month")}.</p>
+          <p className="m-0 font-serif text-[24px] md:text-[28px] leading-tight tnum">About <span className="text-amber">${gbp(round100(r.net))} a year</span> better off: about £${NUMBER_FMT(r.perPound, 2)} back for every £1 you pay.</p>
           <a href="#roi" className="btn btn-primary">Use your own numbers<${Icon} name="arrow" size=${18} /></a>
         </div>
       <//>
@@ -4522,7 +4526,7 @@ function Compare() {
   return html`
     <section id="compare" className="py-16 md:py-20 paper">
       <${Wrap}>
-        <${SectionHead} title="How we compare" intro="Bin-measuring tools have proved that London hotels can cut food waste by 37 to 67%. They count waste after it happens, and mostly sell to big chains. We stop the 45% that comes from preparing too much, before it is bought." />
+        <${SectionHead} title="How we compare" intro="Bin-measuring tools have proved that London hotels can cut food waste by 37 to 67%. They count waste after it happens, and mostly sell to big chains. We stop food being bought and prepared for guests who never come." />
         <div className="cmp-wrap">
           <table className="cmp">
             <thead><tr><th scope="col"><span className="sr-only">Feature</span></th>${cols.map((c, i) => html`<th key=${c} scope="col" className=${i === 0 ? "us" : ""}>${c}</th>`)}</tr></thead>
@@ -4552,7 +4556,7 @@ function RoiCalculator() {
             ${slider("uptake", "Guests who eat breakfast", v.uptake + "%", 30, 100, 1)}
             ${slider("restCovers", "Lunch and dinner covers a day", v.restCovers, 0, 200, 5)}
             <p className="m-0 mt-2 text-[13px] font-bold tracking-wider uppercase muted">Assumptions</p>
-            ${slider("wastePerMeal", "Food wasted per meal (UK hotel average £0.52)", "£" + NUMBER_FMT(v.wastePerMeal, 2), 0.2, 1.2, 0.02)}
+            ${slider("wastePerMeal", "Avoidable food waste per meal (UK hotel average £0.52)", "£" + NUMBER_FMT(v.wastePerMeal, 2), 0.2, 1.2, 0.02)}
             ${slider("cut", "Cut in that waste (first-year average 21%)", v.cut + "%", 0, 50, 1)}
             ${slider("minutes", "Manager time saved per day", v.minutes + " min", 0, 90, 5)}
             ${slider("rate", "Cost of that time per hour", "£" + v.rate, 10, 50, 1)}
@@ -4561,8 +4565,8 @@ function RoiCalculator() {
             <p className="m-0 text-[14px] font-bold tracking-wider uppercase">Your hotel saves, per year</p>
             <p className="font-serif text-[56px] leading-none my-3 tnum" aria-live="polite">${gbp(r.total)}</p>
             <p className="m-0 text-[16px] tnum"><b>${gbp(r.foodSaved)}</b> of food no longer thrown away (out of ${gbp(r.wasteYear)} today), plus <b>${gbp(r.timeSaved)}</b> of manager time (${Math.round(r.hoursYear)} hours).</p>
-            <p className="m-0 mt-3 text-[16px] tnum">Against ${gbp(r.priceYear)} a year for ${PRODUCT_NAME} (£${PRICE_MONTH} × 12): <b>${r.net >= 0 ? `${gbp(r.net)} better off` : `${gbp(-r.net)} short`}</b>${r.net > 0 ? `, paid back in about ${Math.max(1, Math.round(r.paybackMonths))} ${plural(Math.max(1, Math.round(r.paybackMonths)), "month")}` : ""}.</p>
-            <p className="m-0 mt-3 text-[14.5px]">How it is worked out: meals a year (breakfasts from your rooms, plus lunch and dinner) × food wasted per meal gives what you throw away today. × the cut gives the food saved. Sources: WRAP (£0.52 per meal, 2011 prices, so likely higher today) and Champions 12.3 (21%). It is not a promise.</p>
+            <p className="m-0 mt-3 text-[16px] tnum">Against ${gbp(r.priceYear)} a year for ${PRODUCT_NAME} (£${PRICE_MONTH} × 12): <b>${r.net >= 0 ? `${gbp(r.net)} better off` : `${gbp(-r.net)} short`}</b>${r.net > 0 ? `, about £${NUMBER_FMT(r.perPound, 2)} back for every £1` : ""}.</p>
+            <p className="m-0 mt-3 text-[14.5px]">How it is worked out: meals a year (breakfasts from your rooms, plus lunch and dinner) × avoidable food waste per meal gives what you throw away today. × the cut gives the food saved. Sources: WRAP (£0.52 per meal, 2011 prices, so likely higher today) and Champions 12.3 (21%). It is not a promise.</p>
           </div>
         </div>
       <//>

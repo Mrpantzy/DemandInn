@@ -44,3 +44,12 @@ Changes from the team call of 23 Oct 2026, on the branch `version-II`. It starts
 ## Updates, 27 Oct 2026
 
 - Price is now £250 a month (about €290), up from £129. Every figure that uses it follows: £3,000 a year, about £4,300 a year better off for the 28-room hotel (was £5,700), paid back in about 5 months (was 3). The food saved alone (about £2,700) no longer covers the price on its own, so the "You pay" card now says it covers 91% and the time given back covers the rest. The calculator and the demo's savings card work from the same price.
+
+## Updates, 28 Oct 2026
+
+- Demo manager renamed from Elena to Andrea (Andrea Marchetti on the Team screen).
+- Supplier cut-offs: dairy 19:00, greengrocer 20:00, bakery 21:00 (were 16:00, 15:00, 17:00), so they fall after the 18:00 order list the site promises. Fishmonger, butcher, drinks and dry goods are unchanged.
+- "First deadline" now sorts by the cut-off time as well as the day (it showed dairy 16:00 while the greengrocer was due 15:00).
+- Order quantities are worked out from the rounded figures shown on screen, so the sum in the Explain panel always gives the order. House wine on Fri 23 Oct goes from 18 to 12 bottles. The order list total is now £700 (was £751); the live booking takes it to £761 and adds 6 bottles of house wine.
+- "Paid back in 5 months" replaced by "about £2.43 back for every £1 you pay": there is no upfront cost to pay back.
+- WRAP wording: £0.52 is avoidable waste per meal; the 45% is preparation waste across UK hospitality, not over-preparation alone. Champions 12.3: the 21% came from hotels that measured and cut their waste.
