@@ -4492,7 +4492,7 @@ function Savings() {
           ${cols.map((c) => html`<article key=${c.k} className=${c.hi ? "hi" : ""}><p className="sv-k">${c.k}</p><p className="sv-n tnum">${c.n}</p><p className="sv-s">${c.s}</p>${c.src && html`<p className="fact-src">Source: <a href=${c.src.url} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "underline" }}>${c.src.label}</a></p>`}</article>`)}
         </div>
         <div className="rounded-[16px] bg-forest text-on-dark p-6 mt-5 flex flex-wrap items-center justify-between gap-4">
-          <p className="m-0 font-serif text-[24px] md:text-[28px] leading-tight tnum">About <span className="text-amber">${gbp(round100(r.net))} a year</span> better off: about £${NUMBER_FMT(r.perPound, 2)} back for every £1 you pay.</p>
+          <p className="m-0 font-serif text-[24px] md:text-[28px] leading-tight tnum">About <span className="text-amber">${gbp(round100(r.net))} a year</span> better off: about £${NUMBER_FMT(r.perPound, 2)} back for every £1 you pay. In the first year, with the £${SETUP_FEE} setup fee, about ${gbp(round100(r.net - SETUP_FEE))}.</p>
           <a href="#roi" className="btn btn-primary">Use your own numbers<${Icon} name="arrow" size=${18} /></a>
         </div>
       <//>
@@ -4569,7 +4569,7 @@ function RoiCalculator() {
             <p className="m-0 text-[14px] font-bold tracking-wider uppercase">Your hotel saves, per year</p>
             <p className="font-serif text-[56px] leading-none my-3 tnum" aria-live="polite">${gbp(r.total)}</p>
             <p className="m-0 text-[16px] tnum"><b>${gbp(r.foodSaved)}</b> of food no longer thrown away (out of ${gbp(r.wasteYear)} today), plus <b>${gbp(r.timeSaved)}</b> of manager time (${Math.round(r.hoursYear)} hours).</p>
-            <p className="m-0 mt-3 text-[16px] tnum">Against ${gbp(r.priceYear)} a year for ${PRODUCT_NAME} (£${PRICE_MONTH} × 12, plus £${SETUP_FEE} once for setup): <b>${r.net >= 0 ? `${gbp(r.net)} better off` : `${gbp(-r.net)} short`}</b>${r.net > 0 ? `, about £${NUMBER_FMT(r.perPound, 2)} back for every £1` : ""}.</p>
+            <p className="m-0 mt-3 text-[16px] tnum">Against ${gbp(r.priceYear)} a year for ${PRODUCT_NAME} (£${PRICE_MONTH} × 12): <b>${r.net >= 0 ? `${gbp(r.net)} a year better off` : `${gbp(-r.net)} a year short`}</b>${r.net > 0 ? `, about £${NUMBER_FMT(r.perPound, 2)} back for every £1` : ""}. The £${SETUP_FEE} setup fee is paid once, in the first year.</p>
             <p className="m-0 mt-3 text-[14.5px]">How it is worked out: meals a year (breakfasts from your rooms, plus lunch and dinner) × avoidable food waste per meal gives what you throw away today. × the cut gives the food saved. Sources: WRAP (£0.52 per meal, 2011 prices, so likely higher today) and Champions 12.3 (21%). It is not a promise.</p>
           </div>
         </div>
